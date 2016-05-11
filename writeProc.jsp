@@ -2,18 +2,15 @@
     pageEncoding="UTF-8"
     import="youhyoo.*"
     %>
-<%--writePro.jsp --%>
 <%
 request.setCharacterEncoding("utf-8");
 %>
-<jsp:useBean id="mgr" class="youhyoo.Mgr">
-	<jsp:setProperty name="mgr" property="*"/>
+<jsp:useBean id="dto" class="youhyoo.Q_pention_Dto">
+	<jsp:setProperty name="dto" property="*"/>
 </jsp:useBean>
 
 <%
-mgr.qp_pension(request.getRemoteAddr());
-
-Dao dao=Dao.getInstance();
-dao.insertArticle(mgr);
+PensionDao dao=PensionDao.getInstance();
+dao.insertQuestion(dto);
 response.sendRedirect("list.jsp");
 %>
