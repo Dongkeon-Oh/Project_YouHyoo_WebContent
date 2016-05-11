@@ -5,10 +5,9 @@ body{
 }
 
 /*top.jsp*/
-td{
-	padding: 0;
-	height: 30px;
-	width: 1000px;
+#top_function{
+	text-align: right;
+	background-color: #D6D6D6;
 }
 
 A:link{
@@ -19,31 +18,6 @@ A:link{
 A:visited{
 	color:#FFFFFF;
 	text-decoration:none
-}
-	
-A:active{
-	color:#FFFFFF;
-	text-decoration:none
-}
-
-A:hover{
-	color:#FFFFFF;
-	text-decoration:none
-}
-
-#funcs{
-	text-align: right;
-	background-color: #D6D6D6;
-}
-
-#searchs{
-	text-align: center;
-	background-color: #3F48CC;
-}
-
-#options{
-	text-align: center;
-	background-color: #E6E6E6;
 }
 
 img{
@@ -58,28 +32,66 @@ img{
 	margin-right: auto;
 }
 
+#top_search{
+	height: 30px;
+	width: 1000px;
+	text-align: center;
+	background-color: #3F48CC;
+}
+
+#top_option{
+	height: 30px;
+	text-align: center;
+	background-color: #E6E6E6;
+}
+
+#top_form{
+	margin: 0 auto;
+}
 
 /*bottom.html*/
-#bottom{
-	width: 170px;
-}
-#btmtable{
+#bottom_mainTab{
 	width: 1000px;
 }
 
-#bottomImg{
+#bottom_Img{
 	padding-left: 10px;
 	padding-right: 10px;
 	height: 100px;
 	width: 150px;
 }
 
-#links{
+#bottom_link{
 	width: 830px;
 	background-color: #3F48CC;
 }
 
-#infos{
+#bottom_info{
 	width: 830px;
 	background-color: #E6E6E6;
+}
+
+/*Index.jsp*/
+#index_mainTab{
+	width: 1000px;
+	margin: 0 auto;
+}
+
+.index_subTab{
+	padding: 20px 0px 20px 0px;
+	margin: 0 auto;
+}
+
+.thumbnail{
+	height: 170px;
+	width: 230px;
+}
+
+.index_link{
+	text-align: center;
+}
+
+#index_pensionName:link{
+	color:#000000;
+	text-decoration:none
 }

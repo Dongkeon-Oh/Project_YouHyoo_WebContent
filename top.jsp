@@ -5,7 +5,7 @@
     %>
 
 
-		<div id="funcs">
+		<div id="top_function">
 			<a href="http://www.google.com">일대일 상담</a>
 			 | <a href="http://www.google.com">로그인</a>
 			 | <a href="http://www.google.com">주민등록 없이 회원가입</a>
@@ -19,7 +19,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td id="searchs">
+					<td id="top_search">
 						<a href="http://www.google.com">지역별 펜션</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<a href="http://www.google.com">단체/워크샵</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<a href="http://www.google.com">잔여객실 즉시할인</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -28,8 +28,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td id="options">
-						<form name="" id="">
+					<td id="top_option">
+						<form name="" id="top_form">
 							<font size="2">실시간 빈방 검색</font>
 							<input type="text" name="quickDate" id="quickDate" size="15">
 							<img name="cal" id="cal"src="imgs/top/cal.png">
@@ -43,7 +43,7 @@
 						    </select>
 							<input type="text" name="quickMember" id="quickMember" size="2"><font size="2">명</font>
 							<img src="imgs/top/search.PNG">
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<font size="2">통합 검색</font>
 							<input type="text" name="totalSearch" id="totalSearch" size="15">
 							<img src="imgs/top/search.PNG">
