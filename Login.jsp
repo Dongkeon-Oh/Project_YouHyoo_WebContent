@@ -4,14 +4,14 @@
   <head>
   <script type="text/javascript">
    function check(){
-	   if(document.login.u_id.value==''){
+	   if(document.loginForm.u_id.value==''){
 		   alert("아이디를 입력하세요");
-		   document.login.u_id.focus();
+		   document.loginForm.u_id.focus();
 		   return false;
 	   }
-	   if(document.login.u_pwd.value==''){
+	   if(document.loginForm.u_pwd.value==''){
 		   alert("비밀번호를 입력하세요");
-		   document.login.u_pwd.focus();
+		   document.loginForm.u_pwd.focus();
 		   return false;
 	   }
    }
@@ -19,7 +19,7 @@
   </head>
   <body align=center>
   <img src="imgs/top/youhyoo.PNG" width=200>
-  <form name=login method=post action=Login_Proc.jsp onsubmit="return check()">
+  <form name=loginForm method=post action=Login_Proc.jsp onsubmit="return check()">
    <table align=center>
    
     <tr>
