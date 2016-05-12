@@ -65,9 +65,9 @@ List<Room_Dto> roomList=indexMgr.getIndexRoomList(pensionNumber);
 						<tr>
 							<td class="index_link">
 								<font size="2">주중 </font>
-								<font size="2" color="red"><%=room.getR_minpri_wd() %></font>~ / 
+								<font size="2" color="red"><%=room.getR_min_wd() %></font>~ / 
 								<font size="2">주말 </font>
-								<font size="2" color="red"><%=room.getR_minpri_we() %></font>~
+								<font size="2" color="red"><%=room.getR_min_we() %></font>~
 							</td>
 								
 			<%
