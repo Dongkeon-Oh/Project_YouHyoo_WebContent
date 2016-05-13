@@ -6,8 +6,8 @@
 <!-- 디테일뷰 우헤헤헤헤~~ -->    
 <%
 request.setCharacterEncoding("utf-8");
-//int p_num=Integer.parseInt(request.getParameter("p_num"));
-int p_num=1;
+int p_num=Integer.parseInt(request.getParameter("p_num"));
+
 DetailMgr detail=DetailMgr.getInstance();
 
 Pension_Dto pension=detail.getPension(p_num);
