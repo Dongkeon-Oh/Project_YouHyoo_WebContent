@@ -18,10 +18,9 @@
   </script>
   </head>
   <body align=center>
-  <img src="imgs/top/youhyoo.PNG" width=200>
+  <img src="imgs/top/youhyoo.PNG" width=200> 
   <form name=loginForm method=post action=Login_Proc.jsp onsubmit="return check()">
-   <table align=center>
-   
+   <table align=center>  
     <tr>
      <td align=center>
       <input type=text name=u_id placeholder="아이디">

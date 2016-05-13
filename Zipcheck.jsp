@@ -10,7 +10,7 @@ User_Dao dao=User_Dao.getInstance(); //dao 객체 얻기
 String check=request.getParameter("check"); //y,n
 String z_addr3=request.getParameter("z_addr3"); //동이름
 
-Vector <Zipcode_Dto>vec=dao.zipcode(z_addr3); //dao 메소드 호출 
+Vector <Zipcode_Dto>vec=dao.zipcodeRead(z_addr3); //dao 메소드 호출 
 int totalList=vec.size(); //동을 검색하는 레코드 수 
 %>
 <html>
@@ -27,14 +27,17 @@ int totalList=vec.size(); //동을 검색하는 레코드 수
   
   function sendAddress(z_zipcode,z_addr1,z_addr2,z_addr3,z_addr4){
 	  var addrAll=z_addr1+" "+z_addr2+" "+z_addr3+" "+z_addr4;
-	  opener.document.joinForm.u_zipcode.value=u_zipcode; //자동입력
 	  opener.document.joinForm.u_addr.value=addrAll; //주소 자동입력
+	  opener.document.joinForm.u_zipcode.value=z_zipcode; //자동입력
+	  
 	  self.close();
   }//sendAddress
   </script>
  </head>
  <body>
+ <div align=center><img src="imgs/top/youhyoo.PNG" width=200>
   <form method=post name=zipForm action=Zipcheck.jsp>
+  
    <table>
     <tr>
      <td><br>
@@ -49,13 +52,13 @@ int totalList=vec.size(); //동을 검색하는 레코드 수
   <%
   if(check.equals("n")){
 	  if(vec.isEmpty()){
+		  
 		  out.println("<tr><td align=center><br>검색된 결과가 없습니다</td></tr>");
 	  }else{ //검색된 주소가 있을때
 		  %>
 		  <tr>
 		   <td align=center><br>
-		          ※ 해당 우편번호 선택하면 주소 자동 입력됩니다
-		   </td>
+		          ※ 해당 우편번호 선택하면 주소 자동 입력됩니다</td>
 	      </tr>
 	      <%
 	      for(int i=0;i<totalList;i++){
@@ -66,6 +69,8 @@ int totalList=vec.size(); //동을 검색하는 레코드 수
 	    	  String z_addr22=dto.getZ_addr2().trim();
 	    	  String z_addr33=dto.getZ_addr3().trim();
 	    	  String z_addr44=dto.getZ_addr4().trim();
+	    	  
+	    	  System.out.println(z_zipcode1);
 	    	  %>
 	    	  <tr>
 	    	   <td>
@@ -88,5 +93,6 @@ int totalList=vec.size(); //동을 검색하는 레코드 수
    </td>
   </tr>
   </table>
+  </div>
  </body>
 </html>
