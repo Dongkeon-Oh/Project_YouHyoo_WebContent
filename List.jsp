@@ -61,11 +61,6 @@ try{
 	<form name="listForm" method="get">
 		<center><b><h1>리스트</h1></b></center>
 		<table width=700 align=center>
-			<tr>
-				<td align="right">
-				<a href="writeForm.jsp"><h3>글쓰기</h3></a>
-				</td>
-			</tr>
 			
 			<%
 			if(count==0){
@@ -140,6 +135,12 @@ try{
 			<%
 			}//for
 			%>
+			
+			<tr>
+				<td colspan=5 align="right">
+				<input type="button" value="문의하기" onClick="document.location.href='writeForm.jsp'">
+				</td>
+			</tr>
 			
 			</table>
 			
