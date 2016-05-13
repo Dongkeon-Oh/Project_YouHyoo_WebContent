@@ -3,10 +3,24 @@
 	contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     %>
+    
+<%
+String memberSession=(String)session.getAttribute("memberSession");
+%>
 
 <div id="top_function">
 	<a href="http://www.google.com">일대일 상담</a>
+<%
+	if(memberSession!=null){
+%>
 	 | <a href="http://www.google.com">로그인</a>
+<%
+	}else{
+%>
+	| <a href="http://www.google.com">로그아웃</a>
+<%
+	}
+%>
 	 | <a href="http://www.google.com">주민등록 없이 회원가입</a>
 	 | <a href="http://www.google.com">업소 관리</a>
 </div>
@@ -22,7 +36,7 @@
 				<a href="S_Location.jsp">지역별 펜션</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<a href="http://www.google.com">단체/워크샵</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<a href="http://www.google.com">잔여객실 즉시할인</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href="http://www.google.com">맞춤으로 한방에 검색</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="S_OneShot.jsp">맞춤으로 한방에 검색</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<a href="http://maps.google.com">지도에서 한눈에 검색</a>
 			</td>
 		</tr>

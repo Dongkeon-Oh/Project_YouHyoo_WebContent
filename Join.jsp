@@ -3,7 +3,22 @@
     import="youhyoo.*"%>
 <html>
  <head>
+ <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
  <script type="text/javascript">
+ $(function(){
+	 $("#agreeall").click(function(){
+		 if($("#agreeall").is(":checked")){
+			 $("#agree1").prop("checked",true);
+			 $("#agree2").prop("checked",true);
+			 $("#agree3").prop("checked",true);
+		 }else{
+			 $("#agree1").prop("checked",false);
+			 $("#agree2").prop("checked",false);
+			 $("#agree3").prop("checked",false);
+		 }
+	 });
+ });
+ 
  function checkIt(){
 	 var join=eval("document.joinForm");
 	 if(!joinForm.u_id.value){
@@ -59,13 +74,13 @@
 	 url="ConfirmId.jsp?u_id="+joinForm.u_id.value;
 	 open(url,"confirm","width=300,height=200");
  }//ConfirmId()
- 
  //주소 자동입력
  function zipCheck(){
 	 //alert("함수");
 	 url="Zipcheck.jsp?check=y";
 	 window.open(url,"zip","width=500,height=300,status=yes,scrollbars=yes");
  }//zipCheck() 
+
  </script>
  </head>
  <body>
@@ -84,7 +99,7 @@
    <tr>
     <td><h3>서비스 이용약관 동의</h3></td>
     <td>
-     <input type="checkbox">동의합니다
+     <input type="checkbox" class=chk name=agree id=agree1>동의
 	</td>
    </tr>   
    <tr>
@@ -142,7 +157,7 @@
    <tr>
     <td><h3>개인정보수집 및 이용 동의</h3></td>
     <td>
-     <input type="checkbox">동의합니다
+     <input type="checkbox" class=chk name=agree id=agree2>동의
 	</td>
    </tr>   
    <tr>
@@ -189,7 +204,7 @@
      <tr>
     <td><h3>개인정보 제3자 제공 동의</h3></td>
     <td>
-     <input type="checkbox">동의합니다
+     <input type="checkbox" class=chk name=agree id=agree3>동의
 	</td>
    </tr>   
    <tr>
@@ -212,7 +227,7 @@
    </tr>
    <tr>
     <td align=center>
-     <input type="checkbox">전체 동의합니다<br><br>
+     <input type="checkbox" class=chk name=agreeall id=agreeall>전체 동의<br><br>
 	</td>
    </tr>
   </table>

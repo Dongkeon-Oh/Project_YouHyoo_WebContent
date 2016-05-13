@@ -7,7 +7,7 @@
     %>
 <%
 request.setCharacterEncoding("utf-8");
-String memberSession=(String)session.getAttribute("memberSession");
+session.setAttribute("userId", "hollo");
 
 IndexMgr indexMgr=IndexMgr.getInstance();
 List<Pension_Dto> pensionList=indexMgr.getIndexPensionList("index");
@@ -62,14 +62,14 @@ List<Room_Dto> roomList=indexMgr.getIndexRoomList(pensionNumber);
 								StringTokenizer pensionPhoto = new StringTokenizer(pension.getP_photo(),"|");
 								if(pensionPhoto.hasMoreTokens()){
 			%>
-								<a href="http://google.com">
+								<a href="DetailView.jsp?p_num=<%=pension.getP_num() %>">
 									<img src="imgs/pension/<%=pension.getP_num() %>/<%=pensionPhoto.nextToken()%>" class="thumbnail">
 								</a>
 							</td>
 						</tr>
 						<tr>
 							<td class="index_link">
-								<a href="http://google.com" id="index_pensionName">
+								<a href="DetailView.jsp?p_num=<%=pension.getP_num() %>" id="index_pensionName">
 									<font size="4"><%=pension.getP_name() %></font>
 								</a>
 								<font size="2" color="gray">(<%=pension.getP_addr1() %> <%=pension.getP_addr2() %>)</font>
