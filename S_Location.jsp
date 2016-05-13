@@ -132,12 +132,10 @@ List<Room_Dto> roomList=indexMgr.getIndexRoomList(pensionNumber);
 										<tr>
 											<td>
 												<form method="post" name="jjim" class="jjim" action="http://www.naver.com">
-												<input type="button" id="index_Button" onclick="javascript:jjimSet(this.form,'<%=pension.getP_num() %>')">
-												<input type="hidden" name="pension">
-												&nbsp;
-												<a href="http://google.com">
-													<img src="imgs/S_Location/detail.jpg">
-												</a>
+													<input type="button" id="index_Button" onclick="javascript:jjimSet(this.form,'<%=pension.getP_num() %>')">
+													<input type="hidden" name="pension">
+													&nbsp;
+													<input type="button" id="index_Detail" onclick="location.href='DetailView.jsp?p_num=<%=pension.getP_num() %>'">
 												</form>
 											</td>
 							<%

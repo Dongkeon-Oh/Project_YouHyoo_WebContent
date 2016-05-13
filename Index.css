@@ -158,10 +158,18 @@ form>a:visited{
 	margin: 0 auto;
 }
 
-#index_Button  { 
+#index_Button{ 
 	width: 60px;
 	vertical-align: bottom;
  	background-image: url('imgs/S_Location/jjim.jpg'); 
+ 	background-position: top right; 
+ 	background-repeat: no-repeat;
+   }
+   
+#index_Detail{ 
+	width: 60px;
+	vertical-align: bottom;
+ 	background-image: url('imgs/S_Location/detail.jpg'); 
  	background-position: top right; 
  	background-repeat: no-repeat;
    }

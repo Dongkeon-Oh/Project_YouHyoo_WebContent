@@ -23,18 +23,17 @@
 		
 		
 		
-	  	<script type="text/javascript">
+	  	<script>
 	 	var locArr=new Array(<%=len%>); 
-	  	function setArray(lng, lat){
-		  	loc[i]=new Array(2);
-		  	loc[i][0]=lng;
-		  	loc[i][1]=lat;
-	  	}
-	  
-	    var locations = [
-	      ['삼익사이버 아파트', 37.0211403, 127.0971617, 28],
-	      ['국립축산과학원 축산자원개발부', 36.93309333, 127.10487485, 10]
-	    ];
+	 	var locArrCounter=0;
+	 	
+	 	for(var i=0; i<locArr.length; i++){
+	 		locArr[i]=new Array(3);
+	 		locArr[i][0]="TEST";
+	 		locArr[i][1]=37+0.1*i;
+	 		locArr[i][2]=127+0.1*i;
+	 	}
+	    
 	    var map = new google.maps.Map(document.getElementById('map'), {
 	      zoom: 8,
 	      center: new google.maps.LatLng(37, 127.1),
@@ -42,14 +41,14 @@
 	    });
 	    var infowindow = new google.maps.InfoWindow();
 	    var marker, i;
-	    for (i = 0; i < locations.length; i++) {  
+	    for (i = 0; i < locArr.length; i++) {  
 	      marker = new google.maps.Marker({
-	        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+	        position: new google.maps.LatLng(locArr[i][1], locArr[i][2]),
 	        map: map
 	      });
 	      google.maps.event.addListener(marker, 'click', (function(marker, i) {
 	        return function() {
-	          infowindow.setContent(locations[i][0]);
+	          infowindow.setContent(locArr[i][0]);
 	          infowindow.open(map, marker);
 	        }
 	      })(marker, i));
