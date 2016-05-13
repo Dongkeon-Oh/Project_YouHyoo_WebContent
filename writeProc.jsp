@@ -12,5 +12,5 @@ request.setCharacterEncoding("utf-8");
 <%
 PensionDao dao=PensionDao.getInstance();
 dao.insertQuestion(dto);
-response.sendRedirect("list.jsp");
+response.sendRedirect("List.jsp");
 %>
