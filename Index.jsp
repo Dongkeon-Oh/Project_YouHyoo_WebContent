@@ -7,6 +7,7 @@
     %>
 <%
 request.setCharacterEncoding("utf-8");
+String memberSession=(String)session.getAttribute("memberSession");
 
 IndexMgr indexMgr=IndexMgr.getInstance();
 List<Pension_Dto> pensionList=indexMgr.getIndexPensionList("index");
@@ -23,6 +24,18 @@ List<Room_Dto> roomList=indexMgr.getIndexRoomList(pensionNumber);
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link href="Index.css" type="text/css" rel="stylesheet">
+		<script>
+			function jjimSet(thisForm,pensionNumber){
+				 
+				if(<%=(String)session.getAttribute("memberSession")%>!=null){
+					alert("로그인이 필요한 메뉴입니다.\n로그인 페이지로 이동합니다.");
+					location.href="http://google.com";
+				}else{
+					thisForm.pension.value=pensionNumber;
+					thisForm.submit();
+				}
+			}
+		</script>
 	</head>
 	<body>
 		<%@ include file="Top.jsp" %>
@@ -46,7 +59,7 @@ List<Room_Dto> roomList=indexMgr.getIndexRoomList(pensionNumber);
 						<tr>
 							<td>
 			<%
-								StringTokenizer pensionPhoto = new StringTokenizer(pension.getPhoto(),"|");
+								StringTokenizer pensionPhoto = new StringTokenizer(pension.getP_photo(),"|");
 								if(pensionPhoto.hasMoreTokens()){
 			%>
 								<a href="http://google.com">
@@ -69,7 +82,19 @@ List<Room_Dto> roomList=indexMgr.getIndexRoomList(pensionNumber);
 								<font size="2">주말 </font>
 								<font size="2" color="red"><%=room.getR_min_we() %></font>~
 							</td>
-								
+						</tr>
+						<tr>
+							<td>
+								<form method="post" name="jjim" class="jjim" action="WishlistProc.jsp">
+								<input type="button" id="index_Button" onclick="javascript:jjimSet(this.form,'<%=pension.getP_num() %>')">
+								<input type="hidden" name="pension">
+								&nbsp;
+								<a href="http://google.com">
+									<img src="imgs/S_Location/detail.jpg">
+								</a>
+								</form>
+							</td>
+							
 			<%
 								}
 			%>
