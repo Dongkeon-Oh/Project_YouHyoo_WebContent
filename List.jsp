@@ -37,10 +37,13 @@ if(a==null){
 }
 int num=Integer.parseInt(a);
 
+try{
+	Q_pension_Dto dto=dao.getArticle(num);
+}catch(Exception ex){}
 %>
 <html>
 	<head>
-	<title>list.jsp</title>
+	<title>List.jsp</title>
 	<!-- 
 	<script>
 	function list(){
@@ -48,8 +51,8 @@ int num=Integer.parseInt(a);
 		document.listForm.action="list.jsp";
 		document.listForm.submit;
 	}
-	 -->
 	</script>
+	-->
 	</head>	
 	<body>
 	<!-- 
@@ -89,7 +92,7 @@ int num=Integer.parseInt(a);
 			
 			<%
 			for(int i=0; i<list.size(); i++){
-				Q_pention_Dto dto=(Q_pention_Dto)list.get(i);
+				Q_pension_Dto dto=(Q_pension_Dto)list.get(i);
 			%>
 			
 			<tr>
@@ -98,13 +101,13 @@ int num=Integer.parseInt(a);
 			if(dto.getQp_state()==true){
 			%>
 			
-				<td><img src="../imgs/commit.JPG"></td>
+				<td><img src="imgs/Q_pension/commit.JPG"></td>
 				
 				<%
 			}else{
 				%>
 				
-				<td><img src="../imgs/wait.JPG"></td>
+				<td><img src="imgs/Q_pension/wait.JPG"></td>
 				
 			<%
 			}//if
@@ -118,7 +121,8 @@ int num=Integer.parseInt(a);
 					<%
 				}else{
 					%>
-					<td><a href="list.jsp?qp_num=<%=dto.getQp_num() %>"><%=dto.getQp_title() %></a></td>
+					<td><a href="List.jsp?qp_num=<%=dto.getQp_num() %>">
+					<%=dto.getQp_title() %></a></td>
 					<%
 				}	
 				
