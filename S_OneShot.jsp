@@ -24,6 +24,7 @@
  .tableshot th{
   background-color:#EAEAEA;
  }
+ 
   #bu{
  width:80px;
  height: 40px;
