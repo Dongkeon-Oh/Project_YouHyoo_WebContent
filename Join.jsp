@@ -1,63 +1,75 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"
+    import="youhyoo.*"%>
 <html>
  <head>
  <script type="text/javascript">
  function checkIt(){
-	 var join=eval("document.JoinForm");
-	 if(!JoinForm.u_id.value){
+	 var join=eval("document.joinForm");
+	 if(!joinForm.u_id.value){
 		 alert("id는 필수 입력입니다");
 		 return false;
 	 }
-	 if(JoinForm.u_name.value==''){
+	 if(joinForm.u_name.value==''){
 		 alert("이름은 필수 입력입니다");
-		 JoinForm.u_name.focus();
+		 joinForm.u_name.focus();
 		 return false;
 	 }
-	 if(JoinForm.u_pwd.value==''){
+	 if(joinForm.u_pwd.value==''){
 		 alert("pwd는 필수 입력입니다");
-		 JoinForm.u_pwd.focus();
+		 joinForm.u_pwd.focus();
 		 return false;
 	 }
-	 if(JoinForm.u_cell.value==''){
+	 if(joinForm.u_cell1.value==''){
 		 alert("핸드폰번호를 입력하시오");
-		 JoinForm.u_cell.focus();
+		 joinForm.u_cell1.focus();
 		 return false;
 	 }
-	 if(JoinForm.u_zipcode.value==''){
+	 if(joinForm.u_cell2.value==''){
+		 alert("핸드폰번호를 다시 입력하시오");
+		 joinForm.u_cell2.focus();
+		 return false;
+	 }
+	 if(joinForm.u_cell3.value==''){
+		 alert("핸드폰번호를 전부 입력하시오");
+		 joinForm.u_cell3.focus();
+		 return false;
+	 }
+	 if(joinForm.u_zipcode.value==''){
 		 alert("우편번호를 입력하시오");
-		 JoinForm.u_zipcode.focus();
+		 joinForm.u_zipcode.focus();
 		 return false;
 	 }
-	 if(JoinForm.u_addr.value==''){
+	 if(joinForm.u_addr.value==''){
 		 alert("주소를 입력하시오");
-		 JoinForm.u_cell.focus();
+		 joinForm.u_addr.focus();
 		 return false;
 	 }
 	 return true;
  }//checkIt()
  
  //아이디 중복 체크 함수  
- function confirmId(formId){
-	 if(formId.u_id.value==''){
+ function confirmId(joinForm){
+	 if(joinForm.u_id.value==''){
+		 //alert(joinForm.u_id.value);
 		 alert("아이디를 입력하시오");
-		 formId.u_id.focus();
+		 joinForm.u_id.focus();
 		 return false;
 	 }
-	 url="confirmId.jsp?id="+formId.u_id.value;
+	 url="ConfirmId.jsp?u_id="+joinForm.u_id.value;
 	 open(url,"confirm","width=300,height=200");
  }//ConfirmId()
  
  //주소 자동입력
  function zipCheck(){
-	 url="zipCheck.jsp?check=y";
+	 //alert("함수");
+	 url="Zipcheck.jsp?check=y";
 	 window.open(url,"zip","width=500,height=300,status=yes,scrollbars=yes");
  }//zipCheck() 
- 
  </script>
  </head>
  <body>
-  <form method=post name=JoinForm action="Join_Proc" onsubmit="return checkIt()">
+  <form method=post name=joinForm action="Join_Proc.jsp" onsubmit="return checkIt()">
   <div align=center><img src="imgs/top/youhyoo.PNG" width=200>
   <table align=center border="0" cellpadding="0" cellspacing="0">
    <tr>
@@ -231,16 +243,16 @@
    <tr>
     <td>핸드폰</td>
     <td>
-     <input type=text name=u_cell id=u_cell maxlength="4" size="4"> -
-     <input type=text name=u_cell id=u_cell maxlength="4" size="4"> -
-     <input type=text name=u_cell id=u_cell maxlength="4" size="4">
+     <input type=text name=u_cell1 id=u_cel1l maxlength="3" size="4"> -
+     <input type=text name=u_cell2 id=u_cell2 maxlength="4" size="4"> -
+     <input type=text name=u_cell3 id=u_cell3 maxlength="4" size="4">
     </td>
    </tr>
    <tr>
    <td>우편번호</td>
     <td>
      <input type=text name=u_zipcode id=u_zipcode size=7>
-     <input type=button value="우편번호" onclick=>
+     <input type=button value="우편번호" onclick="zipCheck()">
     </td>
    </tr>
    <tr>
@@ -261,6 +273,7 @@
      <input type=text name=u_email id=u_email size=40>
     </td>
    </tr>  
+   
    <tr>
     <td colspan=2 align=center>
      <input type=submit value=가입하기 style="width: 200px; height: 30px">

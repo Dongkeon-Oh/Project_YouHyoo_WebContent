@@ -9,7 +9,7 @@
 request.setCharacterEncoding("utf-8");
 
 IndexMgr indexMgr=IndexMgr.getInstance();
-List<Pension_Dto> pensionList=indexMgr.getIndexPensionList();
+List<Pension_Dto> pensionList=indexMgr.getIndexPensionList("index");
 
 int pensionNumber[]=new int[pensionList.size()];
 for(int i=0; i<pensionList.size(); i++){
