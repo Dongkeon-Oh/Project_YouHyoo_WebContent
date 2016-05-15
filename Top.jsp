@@ -37,7 +37,7 @@ String memberSession=(String)session.getAttribute("memberSession");
 				<a href="http://www.google.com">단체/워크샵</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<a href="http://www.google.com">잔여객실 즉시할인</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<a href="S_OneShot.jsp">맞춤으로 한방에 검색</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href="http://maps.google.com">지도에서 한눈에 검색</a>
+				<a href="S_OnMap.jsp">지도에서 한눈에 검색</a>
 			</td>
 		</tr>
 		<tr>
