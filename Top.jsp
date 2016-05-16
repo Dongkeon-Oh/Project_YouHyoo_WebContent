@@ -8,6 +8,7 @@
 String memberSession=(String)session.getAttribute("memberSession");
 %>
 
+<script src="calendar.js"></script>
 <div id="top_function">
 	<a href="http://www.google.com">일대일 상담</a>
 <%
@@ -45,7 +46,7 @@ String memberSession=(String)session.getAttribute("memberSession");
 				<form name="" id="top_form">
 					<font size="2">실시간 빈방 검색</font>
 					<input type="text" name="quickDate" id="quickDate" size="15">
-					<img name="cal" id="cal"src="imgs/top/cal.png">
+					<img name="cal" id="cal"src="imgs/top/cal.png" Onclick="showCalendar()">
 					<select name="quickTerm" id="quickTerm" size="1"> 
 				        <option value="1박 2일">1박 2일</option> 
 				        <option value="2박 3일">2박 3일</option> 
