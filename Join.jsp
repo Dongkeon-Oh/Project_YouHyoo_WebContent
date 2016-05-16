@@ -5,8 +5,10 @@
  <head>
  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
  <script type="text/javascript">
+ /*
  $(function(){
 	 $("#agreeall").click(function(){
+		 alert("동의");
 		 if($("#agreeall").is(":checked")){
 			 $("#agree1").prop("checked",true);
 			 $("#agree2").prop("checked",true);
@@ -18,9 +20,47 @@
 		 }
 	 });
  });
+ */
+ $(function(){
+	$("input:checkbox[class=chk]").click(function(){
+		if($("input:checkbox[class=chk]:checked").length==$(".chk").length){
+			$("#chk").attr("checked",true);
+		}
+		
+		if($("input:checkbox[class=chk]:checked").length<$(".chk").length){
+			$("input:checkbox[id=agreeall]").prop("checked",false);
+		}else{
+			$("input:checked[id=agreeall]").prop("checked",this.checked);
+		}
+	});
+	
+	$("#agreeall").click(function(){
+		if($("input:checkbox[id='agreeall']").is(":checked")){
+			$(".chk").prop("checked", this.checked);
+		}else if($("input:checkbox[id='agreeall']").is(":checked")==false){
+		    $(".chk").prop("checked", false);
+		}
+	});
+ });
  
  function checkIt(){
 	 var join=eval("document.joinForm");
+ 
+	 if(!$("#agree1").is(":checked")){
+		 alert("agree1 약관에 동의하십시오");
+		 $('#agree1').focus();
+		 return false;
+	 }
+	 if(!$("#agree2").is(":checked")){
+		 alert("agree2 약관에 동의하십시오");
+		 $('#agree2').focus();
+		 return false;
+	 }
+	 if(!$("#agree3").is(":checked")){
+		 alert("agree3 약관에 동의하십시오");
+		 $('#agree3').focus();
+		 return false;
+	 }
 	 if(!joinForm.u_id.value){
 		 alert("id는 필수 입력입니다");
 		 return false;
@@ -59,7 +99,7 @@
 		 alert("주소를 입력하시오");
 		 joinForm.u_addr.focus();
 		 return false;
-	 }
+	 }	  
 	 return true;
  }//checkIt()
  
@@ -99,7 +139,7 @@
    <tr>
     <td><h3>서비스 이용약관 동의</h3></td>
     <td>
-     <input type="checkbox" class=chk name=agree id=agree1>동의
+     <label><input type="checkbox" class=chk name=agree1 id=agree1>동의</label>
 	</td>
    </tr>   
    <tr>
@@ -157,7 +197,7 @@
    <tr>
     <td><h3>개인정보수집 및 이용 동의</h3></td>
     <td>
-     <input type="checkbox" class=chk name=agree id=agree2>동의
+     <label><input type="checkbox" class=chk name=agree2 id=agree2>동의</label>
 	</td>
    </tr>   
    <tr>
@@ -204,7 +244,7 @@
      <tr>
     <td><h3>개인정보 제3자 제공 동의</h3></td>
     <td>
-     <input type="checkbox" class=chk name=agree id=agree3>동의
+     <label><input type="checkbox" class=chk name=agree3 id=agree3>동의</label>
 	</td>
    </tr>   
    <tr>
@@ -227,7 +267,7 @@
    </tr>
    <tr>
     <td align=center>
-     <input type="checkbox" class=chk name=agreeall id=agreeall>전체 동의<br><br>
+     <label><input type="checkbox" name=agreeall id=agreeall>전체 동의<br><br></label>
 	</td>
    </tr>
   </table>
@@ -255,6 +295,13 @@
     <td>비밀번호</td>
     <td><input type="password" name="u_pwd" id=u_pwd size=20></td>
    </tr> 
+   <tr>
+    <td>회원유형</td>
+    <td>
+     <input type="radio" name=u_type id=u_type size=20>일반&nbsp;
+     <input type="radio" name=u_type id=u_type size=20>업체&nbsp;
+    </td>
+   </tr>
    <tr>
     <td>핸드폰</td>
     <td>
@@ -291,7 +338,7 @@
    
    <tr>
     <td colspan=2 align=center>
-     <input type=submit value=가입하기 style="width: 200px; height: 30px">
+     <input type=submit value=가입하기 style="width: 200px; height: 30px"> 
     </td>
    </tr>
   </table>
