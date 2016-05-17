@@ -33,7 +33,7 @@
     
     <tr>
      <td align=center>
-      <input type=text name=u_pwd placeholder="비밀번호">
+      <input type=password name=u_pwd placeholder="비밀번호">
      </td>
     </tr>
     
