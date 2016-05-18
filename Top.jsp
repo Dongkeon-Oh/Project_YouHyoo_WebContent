@@ -3,27 +3,70 @@
 	contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     %>
-    
+        
 <%
-String memberSession=(String)session.getAttribute("memberSession");
+String u_id=(String)session.getAttribute("u_id");
 %>
 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/demos/style.css">
 <script src="calendar.js"></script>
+<script>
+  jQuery(function($){
+	  $.datepicker.regional['ko'] = {
+	   closeText: '닫기',
+	   prevText: '이전',
+	   nextText: '다음',
+	   currentText: '오늘',
+	   monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	   monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
+	   dayNames: ['일','월','화','수','목','금','토'],
+	   dayNamesShort: ['일','월','화','수','목','금','토'],
+	   dayNamesMin: ['일','월','화','수','목','금','토'],
+	   weekHeader: 'Wk',
+	   dateFormat: 'yy-mm-dd',
+	   firstDay: 0,
+	   isRTL: false,
+	   showMonthAfterYear: true,
+	   yearSuffix: ''};
+	  $.datepicker.setDefaults($.datepicker.regional['ko']);
+
+	  $('#datepicker').datepicker({
+	      showOn: "button",
+	      buttonImage: "imgs/top/cal.png",
+	      buttonImageOnly: true,
+	      buttonText: "Select date"
+	    });
+	 });
+</script>
+  
 <div id="top_function">
 	<a href="http://www.google.com">일대일 상담</a>
-<%
-	if(memberSession!=null){
-%>
-	 | <a href="http://www.google.com">로그인</a>
-<%
+	<%
+	if(u_id==null){
+		%>
+		| <a href="Login.jsp">로그인</a>
+		<%
 	}else{
-%>
-	| <a href="http://www.google.com">로그아웃</a>
-<%
+		%>
+		| <a href="Log_Out.jsp">로그아웃</a>
+		<%
 	}
-%>
-	 | <a href="http://www.google.com">주민등록 없이 회원가입</a>
-	 | <a href="http://www.google.com">업소 관리</a>
+	%>
+	<%
+	if(u_id==null){
+		%>
+		| <a href="Join.jsp">주민등록 없이 회원가입</a>
+		<%
+	}else{
+		%>
+		| <a href="MyPage.jsp">MyPage</a>
+		<%
+	}
+	%>
+	| <a href="http://www.google.com">업소 관리</a>
 </div>
 <center>
 	<table>
@@ -45,8 +88,7 @@ String memberSession=(String)session.getAttribute("memberSession");
 			<td id="top_option">
 				<form name="" id="top_form">
 					<font size="2">실시간 빈방 검색</font>
-					<input type="text" name="quickDate" id="quickDate" size="15">
-					<img name="cal" id="cal"src="imgs/top/cal.png" Onclick="showCalendar()">
+					<input type="text" name="datepicker" id="datepicker" size="15">
 					<select name="quickTerm" id="quickTerm" size="1"> 
 				        <option value="1박 2일">1박 2일</option> 
 				        <option value="2박 3일">2박 3일</option> 

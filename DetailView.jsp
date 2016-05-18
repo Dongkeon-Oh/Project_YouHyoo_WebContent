@@ -6,16 +6,38 @@
 <!-- 디테일뷰 우헤헤헤헤~~ -->    
 <%
 request.setCharacterEncoding("utf-8");
-int p_num=Integer.parseInt(request.getParameter("p_num"));
-//int p_num=1;
+//int p_num=Integer.parseInt(request.getParameter("p_num"));
+int p_num=1;
 DetailMgr detail=DetailMgr.getInstance();
 
 Pension_Dto pension=detail.getPension(p_num);
+List<Room_Dto> room=detail.getRoom(p_num); 
+List<OrderRoom_Dto> order=detail.getOrder(p_num);
 %>    
 
 <html>
 <head>
-
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    	<script src="moment.js"></script>
+    	<meta charset="utf-8">
+    	<title>Info windows</title>
+    	<style>
+      		html, body {
+        		height: 100%;
+        		margin: 0;
+        		padding: 0;
+     		}
+      		#cal_saturday {
+        		background-color: #0080FF;
+        		
+      		}
+      		#cal_sunday {
+        		background-color: #FF5050;
+      		}
+    	</style>
+    	
+    	
 </head>
 <body>
 <table id="ctt_ctt_tblNavi" class="tblNavi" border="0" style="width: 100%; margin-top:0px;">
@@ -148,6 +170,174 @@ Pension_Dto pension=detail.getPension(p_num);
 	</tr>
 </table>
 <%=detail.getMin_wd(p_num)%>
-<%=detail.getMin_we(p_num)%>
+<%=detail.getMin_we(p_num)%> <br><br><br><br>
+<!-- /////////////////////////////////////////////////////////////////////// -->
+<script>
+	    	var days=new Array("일", "월", "화", "수", "목", "금", "토");
+	    	
+    		var checkDay=moment().format('dddd');
+    		var checkToday=moment().format('DD');
+    		var increaseDate=15;
+
+    		var checkYear=moment().format('YYYY');
+    		
+    		function setDayForm(){
+    	   		var temp=days[0];
+        		for(var j=0; j<6; j++){
+        			days[j]=days[j+1];
+        		}
+        		days[6]=temp;        
+    		}
+    		
+    		switch(checkDay){
+	    		case 'Saturday': setDayForm();
+	    		case 'Friday': setDayForm();
+	    		case 'Thursday': setDayForm();
+	    		case 'Wednesday': setDayForm();
+	    		case 'Tuesday': setDayForm();
+				case 'Monday': setDayForm();
+			}
+    	
+    		function dateAdd(){
+    			increaseDate-=14;
+    		}
+    		
+    		function dateSub(){
+    			increaseDate+=14;
+    		}
+    		
+    		function printDays(){
+	    		//document.write('<div><table><tr>');
+	    		for(var i=0; i<2; i++){
+		    		for(var j=0; j<days.length; j++){
+		    			if(days[j]=='토'){
+		    				document.write('<td id="cal_saturday"><font size="2" color="#FFFFFF">'+days[j]+'</font></td>');
+		    			}else if(days[j]=='일'){
+		    				document.write('<td id="cal_sunday"><font size="2" color="#FFFFFF">'+days[j]+'</font></td>');
+		    			}else{
+			    			document.write('<td><font size="2" color="#000000">'+days[j]+'</font></td>');
+			    		}
+		    		}
+	    		}
+	    		//document.write('</tr></table></div>');
+    		}
+    		
+    		function printDates(){
+		    	for(var j=0; j<days.length*2; j++){
+		    		if((days[j]||days[j-7])=='토'){
+		    			document.write('<td><table><tr><td id="cal_saturday"><font size="2" color="#FFFFFF">'
+		    					+moment().add(j+increaseDate, 'days').format("DD")
+		    					+'</font></td></tr>');
+		    			if((moment().add(j+increaseDate, 'days').format("MM-DD")<"07-15")
+		    					||(moment().add(j+increaseDate, 'days').format("MM-DD")>("08-20"))){
+		    				document.write('<tr><td><font size="2" color="#000000">비수기</font><td></tr></table></td>');
+		    			}else{
+		    				document.write('<tr><td><font size="2" color="#FF6060">성수기</font><td></tr></table></td>');
+		    			}
+		    		}else if((days[j]||days[j-7])=='일'){
+		    			document.write('<td><table><tr><td id="cal_sunday"><font size="2" color="#FFFFFF">'
+		    					+moment().add(j+increaseDate, 'days').format("DD")
+		    					+'</font></td>');
+		    			if((moment().add(j+increaseDate, 'days').format("MM-DD")<"07-15")
+		    					||(moment().add(j+increaseDate, 'days').format("MM-DD")>("08-20"))){
+		    				document.write('<tr><td><font size="2" color="#000000">비수기</font><td></tr></table></td>');
+		    			}else{
+		    				document.write('<tr><td><font size="2" color="#FF6060">성수기</font><td></tr></table></td>');
+		    			}
+		    		}else{
+			   			document.write('<td><table><tr><td><font size="2" color="#000000">'
+			   					+moment().add(j+increaseDate, 'days').format("DD")
+			   					+'</font></td>');
+			   			if((moment().add(j+increaseDate, 'days').format("MM-DD")<"07-15")
+		    					||(moment().add(j+increaseDate, 'days').format("MM-DD")>("08-20"))){
+		    				document.write('<tr><td><font size="2" color="#000000">비수기</font><td></tr></table></td>');
+		    			}else{
+		    				document.write('<tr><td><font size="2" color="#FF6060">성수기</font><td></tr></table></td>');
+		    			}
+		    		}
+	   			}
+    		}
+    		
+    		function priceSetting(roomNum, max_wd, max_we, min_wd, min_we){
+    			for(var j=0; j<days.length*2; j++){
+	    			if((moment().add(j+increaseDate, 'days').format("MM-DD")<"07-15")
+	    					||(moment().add(j+increaseDate, 'days').format("MM-DD")>("08-20"))){
+	    				// 성수기일 때
+	    				if(((days[j]||days[j-7])=='토')||((days[j]||days[j-7])=='일')){	
+	    					// 주말이면
+	    					document.write('<td><font size="2" color="#000000">'
+	    							+max_we+'</font><br>'+bookedDate(roomNum, moment().add(j+increaseDate, 'days').format("YYYY-MM-DD"))+'</td>');
+	    				}else{
+	    					// 주중이면
+	    					document.write('<td><font size="2" color="#000000">'
+	    							+max_wd+'</font><br>'+bookedDate(roomNum, moment().add(j+increaseDate, 'days').format("YYYY-MM-DD"))+'</td>');
+	    				}
+	    			}else{
+	    				// 비수기
+	    				if(((days[j]||days[j-7])=='토')||((days[j]||days[j-7])=='일')){	
+	    					// 주말이면
+	    					document.write('<td><font size="2" color="#000000">'
+	    							+min_we+'</font><br>'+bookedDate(roomNum, moment().add(j+increaseDate, 'days').format("YYYY-MM-DD"))+'</td>');
+	    				}else{
+	    					// 주중이면
+	    					document.write('<td><font size="2" color="#000000">'
+	    							+min_wd+'</font><br>'+bookedDate(roomNum, moment().add(j+increaseDate, 'days').format("YYYY-MM-DD"))+'</td>');
+	    				}
+	    			}
+    			}
+    		}
+    		
+    		function bookedDate(roomNum, dateCheck){
+    			<% 
+    				for(int i=0; i<order.size(); i++){ 
+    				String orderDate=""+order.get(i).getO_date();
+    			%>    			
+    			var orderDate=new String('<%= orderDate%>');
+    			if(dateCheck==orderDate&&roomNum==<%= order.get(i).getO_room()%>){
+    				return '<font size="2" color="#FF0000">SOLD OUT</font>';
+    			}else{
+    				return '<input type="checkbox" id="'+dateCheck+'">';
+    			}
+    			<% } %>
+    		}
+    		/*
+    		$(function(){
+				alert("test");
+        		$('#test1').printDays();
+            		
+    		});
+    		*/
+    		
+	    	</script>
+	    	
+	    	<input type="button" value="이전" onClick="dateSub()">
+	    	<script></script>
+	    	<input type="button" value="다음" onClick="dateAdd()">
+	    	
+	    	<table border="1">
+	    		<tr id="test1">
+	    			<td ></td>
+	    			<script>printDays()</script>
+	    		</tr>
+	    		<tr>
+	    			<td></td>
+	    			<script>printDates()</script>
+	    		</tr>
+	    		<% for(int i=0; i<room.size(); i++){ %>
+		    	<tr>
+		    		<td><font size="2"><%=room.get(i).getR_name() %></font></td>
+		    		<script>
+		    			priceSetting(
+		    				<%=room.get(i).getR_num() %>,	
+		    				<%=room.get(i).getR_max_wd() %>,
+		    				<%=room.get(i).getR_max_we() %>,
+		    				<%=room.get(i).getR_min_wd() %>,
+		    				<%=room.get(i).getR_min_we() %>
+		    			)
+		    		</script>
+		    	</tr>
+	    		<% } %>
+	    		
+	    	</table>
 </body>
 </html>
