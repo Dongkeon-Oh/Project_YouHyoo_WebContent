@@ -1,21 +1,26 @@
 @CHARSET "UTF-8";
 
-body{
+/*S_Location.jsp*/
+#S_LocMainFrame{
 	margin: 0 auto;
-}
-
-/*Index.jsp*/
-#index_mainTab{
 	width: 1000px;
-	margin: 0 auto;
 }
 
-.index_subTab{
-	padding: 20px 0px 20px 0px;
-	margin: 0 auto;
+#S_LocMenu{
+	width: 150px;
+	float: left;
 }
 
-.thumbnail{
+#locationChoice{
+	padding: 30px 0px 0px 30px;
+}
+
+#S_LocmainTab{
+	width: 850px;
+	float: right;
+}
+
+.S_Locthumbnail{
 	height: 170px;
 	width: 230px;
 	display: block; 
@@ -23,17 +28,22 @@ body{
 	margin-right: auto;
 }
 
-.index_link{
+.S_Locindex_link{
 	text-align: center;
-	width: 320px;
+	width: 270px;
 }
 
-#index_pensionName:link{
+.S_LocImg{
+	height: 25px;
+	width: 25px;
+}
+
+form>a:link{
 	color:#000000;
 	text-decoration:none
 }
 
-#index_pensionName:visited{
+form>a:visited{
 	color:#000000;
 	text-decoration:none
 }

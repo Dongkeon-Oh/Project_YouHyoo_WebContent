@@ -20,7 +20,7 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     	<script src="moment.js"></script>
-    	<link href="Index.css" type="text/css" rel="stylesheet">
+    	<link href="TopBottom.css" type="text/css" rel="stylesheet">
     	<meta charset="utf-8">
     	<style>
       		body {
@@ -277,21 +277,21 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
 	    			}
     			}
     		}
-    		
+    		/*
     		function bookedDate(roomNum, dateCheck){
     			<% 
     				for(int i=0; i<order.size(); i++){ 
     				String orderDate=""+order.get(i).getO_date();
     			%>    			
     			var orderDate=new String('<%= orderDate%>');
-    			if(dateCheck==orderDate&&roomNum==<%= order.get(i).getO_room()%>){
+    			if(dateCheck==orderDate&&roomNum==<%= order.get(i).getO_rnum()%>){
     				return '<font size="2" color="#FF0000">SOLD OUT</font>';
     			}else{
     				return '<input type="checkbox" id="'+dateCheck+'">';
     			}
     			<% } %>
     		}
-    		/*
+    		
     		$(function(){
 				alert("test");
         		$('#test1').printDays();

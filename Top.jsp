@@ -5,7 +5,7 @@
     %>
         
 <%
-//String u_id=(String)session.getAttribute("u_id");
+String user_id=(String)session.getAttribute("user_id");
 %>
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
@@ -43,30 +43,33 @@
 </script>
   
 <div id="top_function">
-	<a href="http://www.google.com">일대일 상담</a>
-	<%
-	if(u_id==null){
-		%>
-		| <a href="Login.jsp">로그인</a>
 		<%
-	}else{
+     		if(user_id==null){
+        %>
+   	<a class="top_menu" href="Login.jsp">로그인</a>
+   	<font color="#FFFFFF"> | </font>
+        <%
+      		}else{
+        %>
+    <a class="top_menu" href="Log_Out.jsp">로그아웃</a>
+    <font color="#FFFFFF"> | </font>
+        <%
+     		}
+     	 	if(user_id==null){
+        %>
+    <a class="top_menu" href="Join.jsp">주민등록 없이 회원가입</a>
+    <font color="#FFFFFF"> | </font>
+        <%
+ 	    	}else{
 		%>
-		| <a href="Log_Out.jsp">로그아웃</a>
+    <a class="top_menu" href="MyPage.jsp">MyPage</a>
+    <font color="#FFFFFF"> | </font>
 		<%
-	}
-	%>
-	<%
-	if(u_id==null){
-		%>
-		| <a href="Join.jsp">주민등록 없이 회원가입</a>
-		<%
-	}else{
-		%>
-		| <a href="MyPage.jsp">MyPage</a>
-		<%
-	}
-	%>
-	| <a href="http://www.google.com">업소 관리</a>
+	    	}
+	    %>
+	<a class="top_menu" href="http://www.google.com">업소 관리</a>
+	<font color="#FFFFFF"> | </font>
+	<a class="top_menu" href="http://www.google.com">일대일 상담</a>
 </div>
 <center>
 	<table>
@@ -77,10 +80,10 @@
 		</tr>
 		<tr>
 			<td id="top_search">
-				<a href="S_Location.jsp">지역별 펜션</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href="http://www.google.com">잔여객실 즉시할인</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href="S_OneShot.jsp">맞춤으로 한방에 검색</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href="S_OnMap.jsp">지도에서 한눈에 검색</a>
+				<a class="top_menu" href="S_Location.jsp">지역별 펜션</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a class="top_menu" href="http://www.google.com">잔여객실 즉시할인</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a class="top_menu" href="S_OneShot.jsp">맞춤으로 한방에 검색</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a class="top_menu" href="S_OnMap.jsp">지도에서 한눈에 검색</a>
 			</td>
 		</tr>
 		<tr>

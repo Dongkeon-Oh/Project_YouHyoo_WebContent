@@ -15,7 +15,7 @@ List<Pension_Dto> pensionList=indexMgr.getMapPensionList();
 <html> 
 	<head> 
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-	  	<link href="Index.css" type="text/css" rel="stylesheet">
+	  	<link href="TopBottom.css" type="text/css" rel="stylesheet">
 	  	<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
 	  	<style type="text/css">
 	  		#map{

@@ -27,7 +27,8 @@ List<Room_Dto> roomList=indexMgr.getIndexRoomList(pensionNumber);
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<link href="Index.css" type="text/css" rel="stylesheet">
+		<link href="TopBottom.css" type="text/css" rel="stylesheet">
+	  	<link href="S_Location.css" type="text/css" rel="stylesheet">
 		<script>
 			function jjimSet(thisForm,pensionNumber){
 				 

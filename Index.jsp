@@ -24,6 +24,7 @@ List<Room_Dto> roomList=indexMgr.getIndexRoomList(pensionNumber);
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link href="Index.css" type="text/css" rel="stylesheet">
+		<link href="TopBottom.css" type="text/css" rel="stylesheet">
 		<script>
 			function jjimSet(thisForm,pensionNumber){				 
 				if(<%=(String)session.getAttribute("u_id")%>!=null){

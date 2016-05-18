@@ -5,7 +5,7 @@
 <%response.setCharacterEncoding("utf-8"); %>
 <html>
  <head>
- <link href="Index.css" type="text/css" rel="stylesheet">
+ <link href="TopBottom.css" type="text/css" rel="stylesheet">
  <style type="text/css">
 
  .tableshot{

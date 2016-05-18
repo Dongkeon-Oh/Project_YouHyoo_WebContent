@@ -26,6 +26,10 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
         		margin: 0;
         		padding: 0;
      		}
+     		#periodSpace{
+     			width: 500px;
+     			float: left;
+     		}
     	</style>
   	</head>
   	<body>
@@ -36,7 +40,7 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
 		    	// 달력 세팅
 		    	var days=new Array("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일");
 	    		var checkDay=moment().format('dddd');
-	    		var increaseDate=14;
+	    		var increaseDate=0;
 	    		switch(checkDay){
 		    		case 'Saturday': setDayForm();
 		    		case 'Friday': setDayForm();
@@ -54,141 +58,202 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
 	        		days[days.length-1]=temp;        
 	    		}
 	    	
-	    	$(document).ready(function(){	
-	    		// 요일 출력 // 시작시 한번만 출력하면 되므로 메서드로 선언하지 않음.
-	    		var daysSet='<tr id="days"><td></td>';
-	    		for(var cnt=0; cnt<days.length; cnt++){
-	    			daysSet+="<td class="+moment().add(cnt, 'days').format('dddd')+">"+days[cnt]+"</td>";
-	    		}
-	    		daysSet+="</tr>";
-				$('#addOption').append(daysSet);
-	    		colorSetOnCal();
+		    	$(document).ready(function(){	
+		    		// 기간 출력
+		    		printPeriod();
+		    		
+		    		// 요일 출력 
+		    		printDays();
+		    		
+		    		// 날짜 출력
+		    		printDates();
+		    		
+		    		<% for(int i=0; i<room.size(); i++){ %>
+		    		roomNameGet("<%=room.get(i).getR_name()%>");
+		    		roomPriceGet(
+		    			<%=room.get(i).getR_max_wd() %>,
+		    			<%=room.get(i).getR_max_we() %>,
+		    			<%=room.get(i).getR_min_wd() %>,
+		    			<%=room.get(i).getR_min_we() %>	
+		    		);
+		    		<% } %>
+		    			 
+		    		<% for(int i=0; i<order.size() ; i++){ %>
+		    		roomStateGet("<%=order.get(i).getO_rnum()%>","<%=order.get(i).getO_date()%>");
+		    		<% } %>
+		    		
+		    		// 체크 박스 출력
+		    		printCheckbox();
+		    		
+		    		// 기간 변경 - 이전일
+					$(document).on("click","#back",function(){ 
+						if(increaseDate-14<0){
+							alert("예약이 불가능한 기간입니다.");
+						}else{
+							$('#addOption').html("");
+							$('#periodSpace').html("");
+							increaseDate-=14;
+							printPeriod();
+							printDays();
+							printDates();
+							printCheckbox();
+						}	
+					});
+		    		
+					// 기간 변경 - 이후일
+					$(document).on("click","#prev",function(){ 
+						$('#addOption').html("");
+						$('#periodSpace').html("");
+						increaseDate+=14;
+						printPeriod();
+						printDays();
+						printDates();
+						printCheckbox();
+					});
+		    		
+					// 날짜 선택 버튼
+		    		
+		    	});
 	    		
-	    		// 날짜 출력
-	    		printDates()
-	    		
-	    		<% for(int i=0; i<room.size(); i++){ %>
-	    		pensionNameGet("<%=room.get(i).getR_name()%>");
-	    		<% } %>
-	    		
-	    		// 체크 박스 출력
-	    		printCheckbox()
-	    	});
-    		
-	    	// 색상 설정 // 토요일 : 파랑 , 일요일 or 성수기 : 빨강
-    		function colorSetOnCal(){
-    			$('.Sunday').css({'color':'#FFFFFF','font-size':15,"background-color":"#FF5050"});
-    			$('.Saturday').css({'color':'#FFFFFF','font-size':15,"background-color":"#0080FF"});
-    		}
-    		
-    		// 날짜 출력 
-    		function printDates(){ 
-    			var dateSet='<tr id="dates"><td></td>';
-	    		for(var cnt=0; cnt<days.length; cnt++){
-	    			var date=moment().add(cnt+increaseDate, 'days').format('MM-DD');
-	    			var day=moment().add(cnt+increaseDate, 'days').format('dddd');
-	    			dateSet+="<td class="+day+">"+date+"<br><font size='3'>"
-	    			if(date>"07-15"&&date<"08-31"){
-	    				dateSet+="성수기</font></td>";
-	    			}else{
-	    				dateSet+="비수기</font></td>";
-	    			}
+		    	
+		    	
+		    	// 객실 이름 초기화
+	    		var roomName=new Array();
+				function roomNameGet(room){
+					roomName.push(room);
 	    		}
-	    		dateSet+="</tr>";
-	    		$('#addOption').append(dateSet);
-	    		colorSetOnCal();
-	  		}
-    		
-    		/////////////////////////////////////////
-    		var pensionName=new Array();
-    		var roomPrice=new Array();
-    		
-    		function pensionNameGet(pension){
-    			pensionName.push(pension);
-    		}
-    		
-    		function roomPriceGet(max_wd, max_we, min_wd, min_we){
-    			// 0=성수기_주중, 1=성수기_주말, 2=비수기_주중, 3=비수기_주말
-    			var price=[max_wd, max_we, min_wd, min_we];
-    			roomPrice.push(price);
-    		}
-    		/*
-    		function printCheckbox(){
-    			var checkboxSet='';
-	    		for(var j=0; j<<%=room.size()%>; j++){
-	    			checkboxSet+="<tr id="+pensionName[j]+"><td>"+pensionName[j]+"</td>";
-	    			for(var k=0; k<days.length; k++){
-	    				var date=moment().add(k+increaseDate, 'days').format('MM-DD');
-	    				checkboxSet+="<td><input type='checkbox' id="date+"></td>";
-	    			}
-	    			checkboxSet+="</tr>";
+	    		
+				// 객실 가격 초기화
+	    		var roomPrice=new Array();
+	    		function roomPriceGet(max_wd, max_we, min_wd, min_we){
+	    			// 0=성수기_주중, 1=성수기_주말, 2=비수기_주중, 3=비수기_주말
+	    			var price=[max_wd, max_we, min_wd, min_we];
+	    			roomPrice.push(price);
 	    		}
-	    		$('#addOption').append(checkboxSet);
-    		}
-			*/
-    		function priceSetting(roomNum, max_wd, max_we, min_wd, min_we){
-    			for(var j=0; j<days.length; j++){
-	    			if((moment().add(j+increaseDate, 'days').format("MM-DD")<"07-15")
-	    					||(moment().add(j+increaseDate, 'days').format("MM-DD")>("08-20"))){
-	    				// 성수기일 때
-	    				if(((days[j]||days[j-7])=='토')||((days[j]||days[j-7])=='일')){	
-	    					// 주말이면
-	    					document.write('<td><font size="2" color="#000000">'
-	    							+max_we+'</font><br>'+bookedDate(roomNum, moment().add(j+increaseDate, 'days').format("YYYY-MM-DD"))+'</td>');
-	    				}else{
-	    					// 주중이면
-	    					document.write('<td><font size="2" color="#000000">'
-	    							+max_wd+'</font><br>'+bookedDate(roomNum, moment().add(j+increaseDate, 'days').format("YYYY-MM-DD"))+'</td>');
-	    				}
-	    			}else{
-	    				// 비수기
-	    				if(((days[j]||days[j-7])=='토')||((days[j]||days[j-7])=='일')){	
-	    					// 주말이면
-	    					document.write('<td><font size="2" color="#000000">'
-	    							+min_we+'</font><br>'+bookedDate(roomNum, moment().add(j+increaseDate, 'days').format("YYYY-MM-DD"))+'</td>');
-	    				}else{
-	    					// 주중이면
-	    					document.write('<td><font size="2" color="#000000">'
-	    							+min_wd+'</font><br>'+bookedDate(roomNum, moment().add(j+increaseDate, 'days').format("YYYY-MM-DD"))+'</td>');
-	    				}
+	    		
+	    		// 객실 상태 초기화
+	    		var roomState=new Array();
+	    		function roomStateGet(room, state){
+	    			var roomSet=[room, state];
+	    			roomState.push(roomSet);
+	    		}
+	    		
+		    	// 색상 설정 // 토요일 : 파랑 , 일요일 or 성수기 : 빨강
+	    		function colorSetOnCal(){
+	    			$('.Sunday').css({'color':'#FFFFFF','font-size':15,"background-color":"#FF5050"});
+	    			$('.Saturday').css({'color':'#FFFFFF','font-size':15,"background-color":"#0080FF"});
+	    		}
+	    		
+		    	// 요일 출력
+	    		function printDays(){
+		    		var daysSet='<tr id="days"><td></td>';
+		    		for(var cnt=0; cnt<days.length; cnt++){
+		    			daysSet+="<td class="+moment().add(cnt, 'days').format('dddd')+">"+days[cnt]+"</td>";
+		    		}
+		    		daysSet+="</tr>";
+					$('#addOption').append(daysSet);
+		    		colorSetOnCal();
+	    		}
+		    	
+		    	// 기간 출력
+	    		function printPeriod(){
+		    		var daysSet=moment().add(increaseDate, 'days').format('YYYY-MM-DD')+" ~ "
+		    				+moment().add(increaseDate+13, 'days').format('YYYY-MM-DD');
+					$('#periodSpace').append(daysSet);
+	    		}
+		    	
+	    		// 날짜 출력 
+	    		function printDates(){ 
+	    			var dateSet='<tr id="dates"><td></td>';
+		    		for(var cnt=0; cnt<days.length; cnt++){
+		    			var date=moment().add(cnt+increaseDate, 'days').format('MM-DD');
+		    			var day=moment().add(cnt+increaseDate, 'days').format('dddd');
+		    			dateSet+="<td class="+day+">"+date+"<br><font size='3'>"
+		    			if(date>"07-15"&&date<"08-31"){
+		    				dateSet+="성수기</font></td>";
+		    			}else{
+		    				dateSet+="비수기</font></td>";
+		    			}
+		    		}
+		    		dateSet+="</tr>";
+		    		$('#addOption').append(dateSet);
+		    		colorSetOnCal();
+		  		}
+	    			    		
+	    		// 선택 버튼 초기화
+	    		function printCheckbox(){
+	    			var checkboxSet='';
+	    			var cnt=0;
+	    			
+		    		for(var j=0; j<roomName.length; j++){
+		    			checkboxSet+="<tr class='room' id="+roomName[j]+"><td>"+roomName[j]+"</td>";
+		    			for(var k=0; k<days.length; k++){
+		    				var date=moment().add(k+increaseDate, 'days').format('MM-DD');
+		    				var day=moment().add(k+increaseDate, 'days').format('dddd');
+		    						    				
+		    				if(date<"08-31"&&date>"07-15"){
+		    					if("Saturday"!=day&&"Sunday"!=day){ 
+		    						checkboxSet+="<td>"+roomPrice[j][0]
+		    						+"<br><input class='booking' id="+date+" type='button' value='예약하기' onclick=''></td>"; 
+		    					}else{ 
+		    						checkboxSet+="<td>"+roomPrice[j][1]
+		    						+"<br><input class='booking' id="+date+" type='button' value='예약하기' onclick=''></td>"; 
+		    					}
+		    				}else{
+		    					if("Saturday"!=day&&"Sunday"!=day){ 
+		    						checkboxSet+="<td>"+roomPrice[j][2]
+		    						+"<br><input class='booking' id="+date+" type='button' value='예약하기' onclick=''></td>"; 
+		    					}else{ 
+		    						checkboxSet+="<td>"+roomPrice[j][3]
+		    						+"<br><input class='booking' id="+date+" type='button' value='예약하기' onclick=''></td>"; 
+		    					}
+		    				}
+		    			}
+		    			checkboxSet+="</td>";
+		    		}
+		    		$('#addOption').append(checkboxSet);
+	    		}
+
+	    		$(document).on("click",".booking",function(){
+	    			alert($("this").attr("id"));
+	    			$("this").attr("value","예약선택");
+	    			$("#addOrder").append("<input class='booking' id='' type='button' value='예약하기' onclick=''>");
+	    		});
+	    		
+	    		function stateSet(){
+	    			var lengthOfroomState=$(".room").length;
+	    			var count=0;
+	    				
+	    			//	$(".room").each(function(){
+	    			//		var checkParentclass=$("td").perant.attr("id");
+	    			//		var checkSeifId=$("td").attr("id");
+	    			//		alert(checkSeifId+":"+checkParentclass);
+	    			//	if(roomState[i][0].equals()){}
+	    			//	});
+	    			
+	    			/*	    			
+	    			$(".room > td").each(function(){
+	    				var checkParent=$("td").parent();
+	    				count++;
+	    			});
+	    			alert(count);
+	    			
+	    			for(var i=0; i<$(".room").length; i++){
+	    				if(roomSet[i][0].equals()){}
+	    				$(".room:eq("+i+")").css("color", "red");
 	    			}
-    			}
-    		}
-    		
-    		function bookedDate(roomNum, dateCheck){
-    			<% 
-    				for(int i=0; i<order.size(); i++){ 
-    				String orderDate=""+order.get(i).getO_date();
-    			%>    			
-    			var orderDate=new String('<%= orderDate%>');
-    			if(dateCheck==orderDate&&roomNum==<%= order.get(i).getO_room()%>){
-    				return '<font size="2" color="#FF0000">SOLD OUT</font>';
-    			}else{
-    				return '<input type="checkbox" id="'+dateCheck+'">';
-    			}
-    			<% } %>
-    		}
-    		
+	    			*/
+	    		}
+	    		
 	    	</script>
-	    	<input type="button" value="이전" onClick="">
-	    	<input type="button" value="다음" onClick="">
+	    	<input type="button" id="back" value="이전" onClick="">
+	    	<div id="periodSpace"></div>
+	    	<input type="button" id="prev" value="다음" onClick="">
 	    	
-	    	<table>
-	    		<tbody id="addOption">
-	    	<!--	
-	    		<tr id="days">
-	    			<td><script>printDays()</script></td>
-	    		</tr>
-	    		
-	    		<tr id="date">
-	    			<td><script>printDates()</script></td>
-	    		</tr>
-	    		<tr id="choices">
-		    		<td><script>printCheckbox()</script></td>
-	    		</tr>
-	    		-->
+	    	<table id="addOption">
 	    	</table>
-	    	
+	    	<table id="addOrder">
+	    	</table>
 	    </div>
   	</body>
 </html>
