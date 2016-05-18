@@ -25,6 +25,7 @@
   background-color:#EAEAEA;
  }
  
+ 
   #bu{
  width:80px;
  height: 40px;
@@ -210,7 +211,7 @@ and ra_pnum=(select p_num from pension where p_addr2='가평군'))
 	  </tr>
 
 <%
-  You you=new You();
+  One_shotDao you=new One_shotDao();
     
   List p_list=you.get_P_List(sql);
 	 if(p_list.size()>0){
@@ -242,7 +243,7 @@ and ra_pnum=(select p_num from pension where p_addr2='가평군'))
    
    <label><b><%=p_dto.getP_name()%></b><br>
    <%=p_dto.getP_addr1()%> <%=p_dto.getP_addr2()%><br>
-   <a href="DetailView.jsp" id="linkshot">미리보기</a>
+   <a href="DetailView.jsp?p_num=<%=p_num%>" id="linkshot">미리보기</a>
    </label>
    </td>
    </tr>
@@ -292,7 +293,6 @@ and ra_pnum=(select p_num from pension where p_addr2='가평군'))
 	  <%
 	  }//if
 	 %>
-	 
  </body>
  <%@ include file="Bottom.html" %>
 </html>
