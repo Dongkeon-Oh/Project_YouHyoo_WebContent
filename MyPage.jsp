@@ -7,12 +7,19 @@
 //String u_id=(String)session.getAttribute("u_id");
 String u_id="dj";
 
-int wishCheck=0;
-
+//회원정보 얻기
 User_Dao uDao=User_Dao.getInstance();
 User_Dto uDto=uDao.getUser(u_id);
+
+//찜리스트 얻기
 IndexMgr mgr=IndexMgr.getInstance();
 List<Pension_Dto> wList=mgr.getWishlist(u_id);
+
+//예약정보 얻기
+List<OrderRoom_Dto> oList=mgr.getOrder(u_id);
+
+//일대일상담내역(펜션질문)
+List<Q_pension_Dto> qList=mgr.getQList(u_id);
 %>    
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -100,7 +107,7 @@ $(document).ready(function(){
 						</td>
 					</tr>
 				</table>
-				<div class="btnArea">
+	<div class="btnArea">
 		<a href="Modify.jsp" class="btn"><span class="bt">회원정보수정</span></a>
 	</div>
 			</td>
@@ -131,7 +138,7 @@ $(document).ready(function(){
 	<div class="help">예약번호를 클릭하시면 보다 상세한 예약정보를 확인 할 수 있습니다.</div>
 	<div class="help">비회원 예약건은 조회가 안될수 있습니다. 고객센터로 연락주시면 조회 가능하도록 처리 해드립니다.</div>
 	
-	<div id="ctt_ctt_upp">
+<div id="ctt_ctt_upp">
 	
 			<div style="margin:10px 0px 10px 0px; text-align:right;">
 				예약일 
@@ -141,14 +148,91 @@ $(document).ready(function(){
 				<a onclick="" id="" class="" href="UserPoint.aspx">
 				<span class="bt">예약내역 확인</span></a>
 			</div>	
-			<div id="ctt_ctt_list1"><!-- 여기에 예매내역이 들어온다!! -->
-	<div class='emptyMsg'>최근 예매 내역이 존재하지 않습니다.</div>
+	<div id="ctt_ctt_list1"><!-- 여기에 예매내역이 들어온다!! -->
+	<%
+	if(!oList.isEmpty()){
+	%>	
+	<table>
+	<tr>
+		<td>에약번호</td>
+		<td>예약일</td>
+		<td>업소명</td>
+		<td>예약자명</td>
+		<td>예약상태</td>
+		<td>이용후기</td>
+	</tr>
+	<%
+		for(int i=0;i<oList.size();i++ ){
+			OrderRoom_Dto o=oList.get(i);
+	%>
+			<tr id="Ordertr">
+			<td><%=o.getO_num() %></td>
+			<td><%=o.getO_date() %></td>
+			<td><%=o.getO_pname() %></td>
+			<td><%=o.getO_customer() %>(<%=o.getO_emercall() %>)</td>
+			<%
+		if(o.getO_state()==true){%>	
+		<td>결재완료</td>
+		<%
+		}else{%>
+		<td>결재대기</td>	
+		<%}%>
+			<td><a href="Review.jsp"><button>이용후기</button></a></td>
+			</tr>
+<%
+		}//for
+%>
+	</table>
+<%
+	}//if	
+	else{
+%>		
+<div class='emptyMsg'>최근 예메내역이 존재하지 않습니다.</div>
+<%
+	}//else
+%>
 	</div>
 	
-	<div class="dtitle">
-		일대일상담내역</div>
-	<div id="ctt_ctt_list2"><!-- 여기에 일대일상담내역이 들어온다!! -->
-<div class='emptyMsg'>문의 내역이 존재하지 않습니다.</div>
+<div class="dtitle">일대일상담내역</div>
+<div id="ctt_ctt_list2"><!-- 여기에 일대일상담내역이 들어온다!! -->
+<%
+	if(!qList.isEmpty()){
+	%>	
+	<table>
+	<tr>
+		<td>번호</td>
+		<td>제목</td>
+		<td>상태</td>
+		<td>등록일</td>
+	</tr>
+	<%
+	for(int i=0;i<qList.size();i++ ){
+		Q_pension_Dto q=qList.get(i);
+	%>
+	<tr id="Qtr">
+		<td><%=q.getQp_num() %></td>
+		<td><%=q.getQp_title() %></td>
+		<%
+		if(q.getQp_state()==true){%>	
+		<td>답변완료</td>
+		<%
+		}else{%>
+		<td>답변대기</td>	
+		<%}%>
+		<td><%=q.getQp_date() %></td>
+	</tr>
+<%
+	}//for
+%>
+	</table>
+<%
+	}//if	
+	else{
+%>		
+<div class='emptyMsg'>문의내역이 존재하지 않습니다.</div>
+<%
+	}//else
+%>
 </div>
 
 	<div class="btnArea">
@@ -187,7 +271,7 @@ $(document).ready(function(){
 			}//if
 		}//for
 %>
-</table>
+	</table>
 <%
 	}//if	
 	else{
