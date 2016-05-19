@@ -33,14 +33,14 @@
     </tr>
     <tr>
      <th>제목</th>
-     <td colspan=3><input type="text" name="rv_answer"></td>
+     <td colspan=3><input type="text" name="rv_title"></td>
     </tr>
     <tr>
      <th>이미지첨부</th>
      <td colspan=3><input type="file" name="rv_photo"></td>
     </tr>
     <tr>
-     <td colspan=4><textarea rows="30" cols="30" name="rv_question" ></textarea></td>
+     <td colspan=4><textarea rows="30" cols="30" name="rv_content" ></textarea></td>
     </tr>
     <tr>
      <td colspan=4 align="right">

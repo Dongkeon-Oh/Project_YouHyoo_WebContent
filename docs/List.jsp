@@ -22,7 +22,6 @@ $(function GetUseAfter()
 {
 	jQuery(".link").click(function(){
 		
-		
 		var aft = jQuery(this).attr("aft_count");
 		var trdes = jQuery(this).closest("tr").next();
 			
@@ -69,20 +68,20 @@ $(function GetUseAfter()
 				BoardDto dto=(BoardDto)vec.get(i);
 			%>
 				<tr>
-				<td><%=dto.getNum() %></td>
-				<%-- <td><%=subject %></td> --%>
-				<!-- 제목을 클릭하면 글내용 보기로 가기 -->
-				<td>
-				<a class="link" aft_count="<%=dto.getNum() %>">
-					<%=dto.getSubject() %>
-				</a>
-				</td>
-				
-				<td><%=dto.getWriter() %></td>
-				
-				<td><%=dto.getWdate() %></td>
-				
-				<td><%=dto.getReadcount() %></td>
+					<td><%=dto.getNum() %></td>
+					<%-- <td><%=subject %></td> --%>
+					<!-- 제목을 클릭하면 글내용 보기로 가기 -->
+					<td>
+						<a class="link" aft_count="<%=dto.getNum() %>">
+						<%=dto.getSubject() %>
+						</a>
+					</td>
+					
+					<td><%=dto.getWriter() %></td>
+					
+					<td><%=dto.getWdate() %></td>
+					
+					<td><%=dto.getReadcount() %></td>
 				</tr>
 				<tr class="aft">
 					<td colspan=5>

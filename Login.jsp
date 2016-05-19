@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <html>
-  <head>
+  <head>  	
   <script type="text/javascript">
    function check(){
 	   if(document.loginForm.u_id.value==''){
@@ -20,7 +20,7 @@
   <body align=center>
   <img src="imgs/top/youhyoo.PNG" width=200> 
   <form name=loginForm method=post action=Login_Proc.jsp onsubmit="return check()">
-   <table align=center>  
+   <table align=center>   
     <tr>
      <td align=center>
       <input type=text name=u_id placeholder="아이디">
