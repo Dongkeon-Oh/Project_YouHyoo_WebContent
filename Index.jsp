@@ -7,7 +7,7 @@
     %>
 <%
 request.setCharacterEncoding("utf-8");
-session.setAttribute("userId", "hollo");
+//session.setAttribute("userId", "hollo");
 
 IndexMgr indexMgr=IndexMgr.getInstance();
 List<Pension_Dto> pensionList=indexMgr.getIndexPensionList("index");

@@ -5,7 +5,7 @@
     %>
         
 <%
-String user_id=(String)session.getAttribute("user_id");
+String u_id=(String)session.getAttribute("u_id");
 %>
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
@@ -44,10 +44,10 @@ String user_id=(String)session.getAttribute("user_id");
   
 <div id="top_function">
 		<%
-     		if(user_id==null){
+     		if(u_id==null){
         %>
-   	<a class="top_menu" href="Login.jsp">로그인</a>
-   	<font color="#FFFFFF"> | </font>
+   	   <a class="top_menu" href="Login.jsp">로그인</a>
+   	   <font color="#FFFFFF"> | </font>
         <%
       		}else{
         %>
@@ -55,7 +55,7 @@ String user_id=(String)session.getAttribute("user_id");
     <font color="#FFFFFF"> | </font>
         <%
      		}
-     	 	if(user_id==null){
+     	 	if(u_id==null){
         %>
     <a class="top_menu" href="Join.jsp">주민등록 없이 회원가입</a>
     <font color="#FFFFFF"> | </font>
