@@ -5,22 +5,6 @@
  <head>
  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
  <script type="text/javascript">
- /*
- $(function(){
-	 $("#agreeall").click(function(){
-		 alert("동의");
-		 if($("#agreeall").is(":checked")){
-			 $("#agree1").prop("checked",true);
-			 $("#agree2").prop("checked",true);
-			 $("#agree3").prop("checked",true);
-		 }else{
-			 $("#agree1").prop("checked",false);
-			 $("#agree2").prop("checked",false);
-			 $("#agree3").prop("checked",false);
-		 }
-	 });
- });
- */
  $(function(){
 	$("input:checkbox[class=chk]").click(function(){
 		if($("input:checkbox[class=chk]:checked").length==$(".chk").length){

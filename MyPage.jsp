@@ -3,9 +3,28 @@
     import="youhyoo.*"
     import="java.util.*"
     %>
+   
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>유휴~! 마이페이지</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
+<link href="Index.css" type="text/css" rel="stylesheet">
+<style type="text/css">
+#member{
+	width: 1000px;
+	margin: 0 auto;
+}
+div.emptyMsg { border:solid 1px #dddddd; padding:10px; text-align:center; clear:both;}
+span.bt {display:inline-block; border:solid 2px silver; text-decoration:none; cursor:pointer; white-space:nowrap; vertical-align:middle; color:Black; font-size:14px; padding:5px 10px 5px 10px; background-color:White;}
+</style>
+</head>
+<body>
+<%@ include file="Top.jsp" %>
 <%
 //String u_id=(String)session.getAttribute("u_id");
-String u_id="dj";
+//String u_id="dj";
 
 //회원정보 얻기
 User_Dao uDao=User_Dao.getInstance();
@@ -20,28 +39,9 @@ List<OrderRoom_Dto> oList=mgr.getOrder(u_id);
 
 //일대일상담내역(펜션질문)
 List<Q_pension_Dto> qList=mgr.getQList(u_id);
-%>    
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>유휴~! 마이페이지</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-
-<link href="Index.css" type="text/css" rel="stylesheet">
-<style type="text/css">
-#member{
-	width: 1000px;
-	margin: 0 auto;
-}
-.bt{
-	color: blue;
-}
-</style>
-</head>
-<body>
-<%@ include file="Top.jsp" %>
+%> 
 <div id="member">
-	<div>회원정보</div>
+	<div class="mTitle">회원정보</div>
 	<table width="100%">
 		<colgroup>
 			<col width="50%" />
@@ -149,7 +149,7 @@ List<Q_pension_Dto> qList=mgr.getQList(u_id);
 				}else{%>
 				<td>결재대기</td>	<%
 				}%>
-				<td><a href="Review.jsp"><button>이용후기</button></a></td>
+				<td><a href="Review.jsp"><span class="bt">이용후기</span></a></td>
 			</tr>
 	<%
 		}//for
@@ -230,7 +230,7 @@ List<Q_pension_Dto> qList=mgr.getQList(u_id);
 					<td><%=p.getP_name() %></td>
 					<td>
 					<div class="btnArea">
-					<a href="Del_wish.jsp?u_id=<%=u_id %>&pnum=<%=p.getP_num()%>"><button id="btWish">삭제</button></a>
+					<a href="Del_wish.jsp?u_id=<%=u_id %>&pnum=<%=p.getP_num()%>"><span class="bt">삭제</span></a>
 					</div>
 					</td>
 				</tr>
