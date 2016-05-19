@@ -6,9 +6,10 @@
 	</head>
 	
 	<body>
-	<form name="writeForm" method="post" action="writeProc.jsp">
+	
+	<form name="writeForm" method="post" action="Q_YouHyooProc.jsp">
 
-	<table width="500" cellspacing="0" cellpadding="3"
+	<table width="500" cellspacing="0" cellpadding="5"
 	align="center">
 	
 	
@@ -16,22 +17,15 @@
 	<tr>
 		<td>ID</td>
 		<td>
-			<input type="text" name="qp_id" id="qp_id" size=40>
+			<input type="text" name="qy_id" id="qy_id" size=50>
 		</td>
 	</tr>	
-	<!-- 글제목 -->
-	<tr>
-		<td>제목</td>
-		<td>
-			<input type="text" name="qp_title" id="qp_title" size=40>
-		</td>
-	</tr>
 	
 	<!-- 글내용 -->
 	<tr>
 		<td>글내용</td>
 		<td>
-		<textarea name="qp_question" id="qp_question" rows="20" cols="45"></textarea>
+		<textarea name="qy_question" id="qy_question" rows="20" cols="50"></textarea>
 		</td>
 	</tr>
 	
@@ -44,5 +38,6 @@
 	</table>
 	
 	</form>
+	
 	</body>
 </html>
