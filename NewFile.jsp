@@ -91,6 +91,7 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
 		    		
 					// 요금 계산 영역 출력
 					calcPricePoint(0);
+					printOrderedDate();
 		    	});
 		    	
 		    	// 기간 변경 - 이전일
@@ -188,7 +189,7 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
 	    			var checkboxSet='';
 	    			
 		    		for(var j=0; j<roomName.length; j++){
-		    			checkboxSet+="<tr class='room' ><td>"+roomName[j][0]+"</td>";
+		    			checkboxSet+="<tr class='room'><td class='roomOrderCheck' id="+roomName[j][1]+">"+roomName[j][0]+"</td>";
 		    			for(var k=0; k<days.length; k++){
 		    				var dateSet=k+increaseDate;
 		    				var date=moment().add(dateSet, 'days').format('YYYY-MM-DD');
@@ -197,18 +198,18 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
 		    				if(moment().add(dateSet, 'days').format('MM-DD')<"08-31"
 		    						&&moment().add(dateSet, 'days').format('MM-DD')>"07-15"){
 		    					if("Saturday"!=day&&"Sunday"!=day){ 
-		    						checkboxSet+="<td id='"+j+"'>"+roomPrice[j][0]
+		    						checkboxSet+="<td class='"+j+"' id='"+date+"'>"+roomPrice[j][0]
 		    						+"<br><input class='booking' id="+dateSet+" type='button' value='예약하기'></td>"; 
 		    					}else{ 
-		    						checkboxSet+="<td id='"+j+"'>"+roomPrice[j][1]
+		    						checkboxSet+="<td class='"+j+"' id='"+date+"'>"+roomPrice[j][1]
 		    						+"<br><input class='booking' id="+dateSet+" type='button' value='예약하기'></td>"; 
 		    					}
 		    				}else{
 		    					if("Saturday"!=day&&"Sunday"!=day){ 
-		    						checkboxSet+="<td id='"+j+"'>"+roomPrice[j][2]
+		    						checkboxSet+="<td class='"+j+"' id='"+date+"'>"+roomPrice[j][2]
 		    						+"<br><input class='booking' id="+dateSet+" type='button' value='예약하기'></td>"; 
 		    					}else{ 
-		    						checkboxSet+="<td id='"+j+"'>"+roomPrice[j][3]
+		    						checkboxSet+="<td class='"+j+"' id='"+date+"'>"+roomPrice[j][3]
 		    						+"<br><input class='booking' id="+dateSet+" type='button' value='예약하기'></td>"; 
 		    					}
 		    				}
@@ -216,6 +217,23 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
 		    			checkboxSet+="</td>";
 		    		}
 		    		$('#addOption').append(checkboxSet);
+	    		}
+	    		
+	    		function printOrderedDate(){
+	    			for(var i=0; i<roomState.length; i++){
+	    				$(".roomOrderCheck").each(function(index,item){
+	    					if(roomState[i][0]==$(item).attr("id")){
+	    						var innerClass="."+$(item).next().attr("class")
+	    						$(innerClass).each(function(innerIndex,innerItem){
+	    							if(roomState[i][1]==$(innerItem).attr("id")){
+	    								$(innerItem).text("예약불가");
+	    								$(innerItem).attr("class","disable");
+	    								//alert($(innerItem).attr("id"));
+	    							}
+	    						});
+	    					}
+	    				});
+	    			}
 	    		}
 	    		
 	    		// 주문 선택
@@ -228,7 +246,7 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
     				
 	    			$(this).attr('id',originId).attr('class','cancelButton').val('예약대기');
 	    				
-	    			var targetIndex=$(this).parent().attr("id");
+	    			var targetIndex=$(this).parent().attr("class");
 	    			// 0=성수기_주중, 1=성수기_주말, 2=비수기_주중, 3=비수기_주말
     				var targetPrice;
     				if(targetDate.substring( 5 )>"07-15"&&targetDate.substring( 5 )<"08-31"){
@@ -317,8 +335,6 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
 	    				$(".payForm").show();
 	    			}
 	    		}
-	    	
-	    		
 	    	</script>
 	    	<input type="button" id="back" value="이전" onClick="">
 	    	<div id="periodSpace"></div>
