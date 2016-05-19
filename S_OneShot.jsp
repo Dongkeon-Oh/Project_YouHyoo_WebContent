@@ -39,6 +39,7 @@
  </style>
  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
  <script type="text/javascript">
+ 
  tempArea=""; //선택 된 라디오버튼 값 담을변수
  subSql=""; //서브쿼리
  sql=""; //넘겨줄 최종 쿼리
@@ -170,8 +171,7 @@ and ra_pnum=(select p_num from pension where p_addr2='가평군'))
     <tr>
      <th colspan=2 height="40px">이용기준</th>
      <th>
-     이용일 <input type="text" name="quickDate" id="quickDate">
-	  <img name="cal" id="cal"src="imgs/top/cal.png" width=20>부터
+     이용일 <input type="text" name="quickDate" class="datepicker">부터
 	   <select name="quickTerm" id="quickTerm" size="1"> 
 	    <option value="1박 2일">1박 2일</option> 
 	    <option value="2박 3일">2박 3일</option> 

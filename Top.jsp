@@ -33,7 +33,7 @@ String user_id=(String)session.getAttribute("user_id");
 	   yearSuffix: ''};
 	  $.datepicker.setDefaults($.datepicker.regional['ko']);
 
-	  $('#datepicker').datepicker({
+	  $('.datepicker').datepicker({
 	      showOn: "button",
 	      buttonImage: "imgs/top/cal.png",
 	      buttonImageOnly: true,
@@ -90,7 +90,7 @@ String user_id=(String)session.getAttribute("user_id");
 			<td id="top_option">
 				<form name="" id="top_form">
 					<font size="2">실시간 빈방 검색</font>
-					<input type="text" name="datepicker" id="datepicker" size="15">
+					<input type="text" name="datepicker" id="datepicker" class="datepicker" size="15">
 					<select name="quickTerm" id="quickTerm" size="1"> 
 				        <option value="1박 2일">1박 2일</option> 
 				        <option value="2박 3일">2박 3일</option> 
