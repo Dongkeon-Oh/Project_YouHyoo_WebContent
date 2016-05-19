@@ -9,16 +9,22 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>유휴~! 마이페이지</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script src="calendar.js"></script>
+<script>
+  jQuery(function($){
 
-<link href="Index.css" type="text/css" rel="stylesheet">
-<style type="text/css">
-#member{
-	width: 1000px;
-	margin: 0 auto;
-}
-div.emptyMsg { border:solid 1px #dddddd; padding:10px; text-align:center; clear:both;}
-span.bt {display:inline-block; border:solid 2px silver; text-decoration:none; cursor:pointer; white-space:nowrap; vertical-align:middle; color:Black; font-size:14px; padding:5px 10px 5px 10px; background-color:White;}
-</style>
+	  $('#datepicker1').datepicker({
+	      showOn: "button",
+	      buttonImage: "imgs/top/cal.png",
+	      buttonImageOnly: true,
+	      buttonText: "Select date"
+	    });
+	 });
+</script>
+
+<link href="TopBottom.css" type="text/css" rel="stylesheet">
+<link href="MyPage.css" type="text/css" rel="stylesheet">
+
 </head>
 <body>
 <%@ include file="Top.jsp" %>
@@ -50,7 +56,7 @@ List<Q_pension_Dto> qList=mgr.getQList(u_id);
 		</colgroup>
 		<tr>
 			<td>
-				<table>
+				<table class="mInfo">
 					<colgroup>
 						<col width="120" />
 						<col width="*" />
@@ -80,7 +86,7 @@ List<Q_pension_Dto> qList=mgr.getQList(u_id);
 						</td>
 					</tr>
 				</table>
-			<div><a href="Modify.jsp"><span class="bt">회원정보수정</span></a></div>
+			<div class="btnArea"><a href="Modify.jsp"><span class="bt">회원정보수정</span></a></div>
 			</td>
 			<td></td>
 			<td valign="top">
@@ -94,30 +100,28 @@ List<Q_pension_Dto> qList=mgr.getQList(u_id);
 					<div class="help" style="margin-top:10px;">적립금은 사이트내에서 현금처럼 사용이 가능합니다.</div>
 					<div class="help">적립금은 3년간 유효합니다.</div>
 					<div class="help">적립금은 숙박이용일이 지나면 자동 적립됩니다.</div>
-					<div class="help">그밖에 각종이벤트에 의해 적립금이 산정됩니다.</div>
 				</div>
-				<div>
+				<div class="btnArea">
 					<a href="UserPoint.jsp"><span class="bt">적립금 내역보기</span></a>
 				</div>
 			</td>
 		</tr>
 	</table>
 	
-	<div>최근 나의예약내역</div>
-	<div class="help">예약번호를 클릭하시면 보다 상세한 예약정보를 확인 할 수 있습니다.</div>
-	<div class="help">비회원 예약건은 조회가 안될수 있습니다. 고객센터로 연락주시면 조회 가능하도록 처리 해드립니다.</div>
+	<div class="mTitle">최근 나의예약내역</div>
+	<div>예약번호를 클릭하시면 보다 상세한 예약정보를 확인 할 수 있습니다.</div>
 	
 <div>	
 	<div style="margin:10px 0px 10px 0px; text-align:right;">
 		예약일 
 		<span>
-			<input name="" type="text" value="2016-05-01" maxlength="10" size="10" id="" onkeyup="javascript:(this);" />
-		 	<img src='' align='absmiddle' style='cursor:pointer;' onClick="calendar(event, 'ctt_ctt_dt_rsv_s')">
+			<input name="" type="text" value="2016-05-01" maxlength="10" size="10" id="datepicker1" onkeyup="javascript:(this);" />
+		 	<img class="cal" src="imgs/top/cal.png" align='absmiddle' style='cursor:pointer;' onClick="calendar(event, 'ctt_ctt_dt_rsv_s')">
 		</span>
 		부터 
-		<span style="display:inline-block;">
+		<span>
 			<input name="" type="text" value="2016-05-16" maxlength="10" size="10" id="" onkeyup="" />
-			<img src="" align='absmiddle' style='cursor:pointer;' onClick="calendar(event, 'ctt_ctt_dt_rsv_e')">
+			<img class="cal" src="imgs/top/cal.png" align='absmiddle' style='cursor:pointer;' onClick="calendar(event, 'ctt_ctt_dt_rsv_e')">
 		</span>
 		까지
 		<a onclick="" id="" class="" href="">
@@ -126,14 +130,22 @@ List<Q_pension_Dto> qList=mgr.getQList(u_id);
 	<div><!-- 여기에 예매내역이 들어온다!! -->
 	<%
 	if(!oList.isEmpty()){%>	
-	<table>
+	<table class="listb">
+	<colgroup>
+			<col width="8%" />
+			<col width="12%" />
+			<col width="30%" />
+			<col width="25%" />
+			<col width="10%" />
+			<col width="15%" />
+	</colgroup>
 	<tr>
-		<td>에약번호</td>
-		<td>예약일</td>
-		<td>업소명</td>
-		<td>예약자명</td>
-		<td>예약상태</td>
-		<td>이용후기</td>
+		<th>에약번호</th>
+		<th>예약일</th>
+		<th>업소명</th>
+		<th>예약자명</th>
+		<th>예약상태</th>
+		<th>이용후기</th>
 	</tr>
 	<%
 		for(int i=0;i<oList.size();i++ ){
@@ -164,16 +176,22 @@ List<Q_pension_Dto> qList=mgr.getQList(u_id);
 	%>
 	</div>
 	
-	<div>일대일상담내역</div>
+	<div class="mTitle">일대일상담내역</div>
 	<div><!-- 여기에 일대일상담내역이 들어온다!! -->
 	<%
 	if(!qList.isEmpty()){%>	
-		<table>
+		<table class="listb">
+		<colgroup>
+			<col width="8%" />
+			<col width="50%" />
+			<col width="15%" />
+			<col width="27%" />
+		</colgroup>
 		<tr>
-			<td>번호</td>
-			<td>제목</td>
-			<td>상태</td>
-			<td>등록일</td>
+			<th>번호</th>
+			<th>제목</th>
+			<th>상태</th>
+			<th>등록일</th>
 		</tr>
 		<%
 		for(int i=0;i<qList.size();i++ ){
@@ -203,18 +221,17 @@ List<Q_pension_Dto> qList=mgr.getQList(u_id);
 	%>
 	</div>
 
-	<div>
+	<div class="btnArea">
 		<a href="Q_youhyoo.jsp" class="btn"><span class="bt">일대일문의하기</span></a>
 	</div>
-	<div>찜리스트</div>
+	<div class="mTitle">찜리스트</div>
 	<div><!-- 여기에 찜내역이 들어온다!! -->
 	<%
 	if(!wList.isEmpty()){%>	
-	<table>
+	<table class="listb">
 	<tr>
-		<td>업소</td>
-		<td></td>
-		<td>삭제</td>
+		<th>업소</th>
+		<th>삭제</th>
 	</tr>
 	<%
 		for(int i=0;i<wList.size();i++ ){
@@ -223,15 +240,21 @@ List<Q_pension_Dto> qList=mgr.getQList(u_id);
 			if(pensionPhoto.hasMoreTokens()){
 				%>
 				<tr id="JJimtr">
-					<td>
-					<a id="JJim_pnum" href="DetailView.jsp?p_num=<%=p.getP_num()%>">
-					<img src="imgs/pension/<%=p.getP_num()%>/<%=pensionPhoto.nextToken()%>" class="thumbnail"></a>
+					<td align="left">
+					<table>
+					<tr>
+						<td>
+						<a id="JJim_pnum" href="DetailView.jsp?p_num=<%=p.getP_num()%>">
+						<img src="imgs/pension/<%=p.getP_num()%>/<%=pensionPhoto.nextToken()%>" width=112 height=80></a>
+						</td>
+						<td width=50></td>
+						<td><%=p.getP_name() %></td>
+					</tr>
+					</table>
 					</td>
-					<td><%=p.getP_name() %></td>
+					
 					<td>
-					<div class="btnArea">
 					<a href="Del_wish.jsp?u_id=<%=u_id %>&pnum=<%=p.getP_num()%>"><span class="bt">삭제</span></a>
-					</div>
 					</td>
 				</tr>
 			<%
