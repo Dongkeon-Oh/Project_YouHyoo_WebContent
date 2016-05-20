@@ -7,32 +7,75 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 
+<style type="text/css">
+ .review_table{
+ width: 1000px;
+ margin: auto;
+ text-align:center;
+ border-collapse: collapse;
+ border-color: #BDBDBD;
+ border-width: 0;
+ color: #5D5D5D;
+ }
+ </style>
+ 
+<script type="text/javascript">
+function question(this_num,this_tr,this_photo,this_view){
+	var tr = $(this_tr).parents("tr:first");
+	var temptd=$(this_tr).parents()[0];
+	var td=$(temptd).next().next().next();
+	
+	if($('#id'+this_num).length==0){
+
+	$.ajax({
+		type:'POST',
+		url:'Review_question.jsp',
+		data:'rv_num='+this_num+'&rv_view'+this_view,
+		//"name=홍길동&location=서울"
+		dataType:'json',
+	success:function(data){	
+	
+		$(tr).after('<tr id=id'+this_num+'><td id=idd'+this_num+' colspan=5 align=left><br>'+data.question+'</td></tr>');
+		if(this_photo!=null){
+			alert(data.view);
+			$('#idd'+this_num).prepend("<img width=250 src='imgs/"+this_photo+"'>");
+			$(td).text(data.view);
+		}//photo
+	
+	}//success
+	});//ajax
+	}else{
+		$('#id'+this_num).remove();
+	}//else
+}//question
+</script>
+</head>
+
+<body>
    <%
-   
    request.setCharacterEncoding("utf-8");
    
    Review review=new Review();//객체생성
-   
+ 
+/*
    if(request.getParameter("flag").equals("insert")){
 	review.Insert_Review(request);//등록메서드 호출
-	
-   }else if(request.getParameter("flag").equals("list")){
+   }
+*/
+
 	   List list=review.List_Review();
 	   Review_Dto review_dto=null;
+	   
 	   if(list.size()>=0){
-		   %>
-		   <table border=1 width=1000px>
-		   <%
 		   for(int i=0;i<list.size();i++){
 			   review_dto=(Review_Dto)list.get(i);
 			   %>
+			   <table border=1 class=review_table>
 			   <tr>
-			     <td>
-			     <%
+			     <td width=100px>
+			         <%
 			     switch(review_dto.getRv_score()){
 			     case 0:{
 			    	 %>
@@ -61,7 +104,8 @@
 			     }//switch
 			     %>
 			     </td>
-			     <td><a href="ReviewProc.jsp?flag=list&num=<%=review_dto.getRv_num()%>">
+			     
+			     <td width=490 align="left">
 			     <%
 
 			     if(!(review_dto.getRv_photo().equals("ready"))){
@@ -70,48 +114,29 @@
 			    	 <%
 			     }
 			     %>
-			     <%=review_dto.getRv_answer()%></td></a><%--제목으로 대체--%>
-			     <td><%=review_dto.getRv_id()%>
-			     <td><%=review_dto.getRv_date()%></td>
-			     <td><%=review_dto.getRv_view()%></td>
+			     <input type="text" value="<%=review_dto.getRv_title()%>" style="outline-style: none; border: transparent;"  readonly="readonly" onclick="question('<%=review_dto.getRv_num()%>',this,'<%=review_dto.getRv_photo()%>','<%=review_dto.getRv_view()%>')">
+			     </td>
+			     
+			     <td width=100px><%=review_dto.getRv_id()%></td>
+			     
+			     <td width=100px><%=review_dto.getRv_date()%></td>
+			     
+			     <td width=50px><%=review_dto.getRv_view()%></td>
 			   </tr>
-			    <%
-			    String num=request.getParameter("num");
-			     if(num!=null){
-			     if(review_dto.getRv_num()==Integer.parseInt(num)){
-			    	 review.View_Review(num);
-			     %>
-			    	 <tr>
-			    	 <td colspan=5>
-			    	 <%
-			    	  if(!(review_dto.getRv_photo().equals("ready"))){
-			    	 %>
-			    	  <img src="imgs/<%=review_dto.getRv_photo()%>"><br>
-			    	 <%=review_dto.getRv_question()%></td>
-			    	 </tr>
-			    	 
-			    	 <%
-			    	  }//사진여부if
-			      }//num확인
-			     }//
-			     %>
-			   <%
-		   }
-		   %>
 
-		   </table>
-		   <%
-	   }else{
+			   <%
+
+		   }//for
+	   }else{ //후기가 없으면
 		   %>
-		   <table>
+			<table>
 		    <tr>
 		     <td><b>이용 후기가 없습니다</b></td>
 		    </tr>
 		   </table>
 		   <%
-		   
-	   }//else
-   }
+	  }//else
    %>
+  </table>
 </body>
 </html>

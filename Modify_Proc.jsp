@@ -10,8 +10,11 @@
  <%@ include file="Top.jsp" %>
  <%
  String id=(String)session.getAttribute("u_id");
- dto.setU_id(u_id); //모델빈에 setter
- 
+ dto.setU_id(id); //모델빈에 setter
+ String c=request.getParameter("u_cell1");
+ c=c+request.getParameter("u_cell2");
+ c=c+request.getParameter("u_cell3");
+ dto.setU_cell(c);
  User_Dao dao=User_Dao.getInstance(); //dao 객체 얻기 
  dao.updateUser(dto); //dao 메소드 호출 
  response.sendRedirect("MyPage.jsp");

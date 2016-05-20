@@ -9,7 +9,7 @@ User_Dto dto=dao.getUser(id);
 %>
 <html>
 <head>
- <link href="Index.css" type="text/css" rel="stylesheet">
+ <link href="TopBottom.css" type="text/css" rel="stylesheet">
  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
  <script type="text/javascript">
  
@@ -109,15 +109,16 @@ User_Dto dto=dao.getUser(id);
      <input type=text name=u_email size=40 value=<%=im%>>
     </td>
    </tr>  
-   </table>
+   
    <tr>
-    <td colspan=2 align=left>
-     <input type=submit value=수정하기 style="width:200px; height:30px">
+    <td colspan=2 align=right>
+     <input type=submit value=회원정보수정>
+     <input type=button value=회원탈퇴신청 onclick="location='Delete.jsp'">
     </td>
-   </tr> 
+   </tr>
+   </table> 
  </form>
 </div>
  <%@ include file="Bottom.html" %>
 </body>
-
 </html>
