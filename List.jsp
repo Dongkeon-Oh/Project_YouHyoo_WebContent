@@ -7,7 +7,6 @@
     %>
 <%
 request.setCharacterEncoding("utf-8");
-String u_id=(String)session.getAttribute("u_id");
 %>
 <%!
 int pageSize=10;
@@ -50,6 +49,7 @@ try{
 	<head>
 	<title>List.jsp</title>
 	<link href="Index.css" type="text/css" rel="stylesheet">
+	<link href="TopBottom.css" type="text/css" rel="stylesheet">
 	<style type="text/css">
 	.QuestionList{
 	width : 1000px;
@@ -68,8 +68,8 @@ try{
 	$(function ReadAfter(){
 		
 		jQuery(".link").click(function(){
-			
-			var qp=jQuery(this).attr("q_count");
+			console.log(jQuery(this).attr("id"));
+			var qp=jQuery(this).attr("id");
 			var ques=jQuery(this).closest("tr").next();
 			
 			jQuery("#QuestionList tr.ques").hide();
@@ -80,8 +80,19 @@ try{
 			}else{
 				jQuery(".ques").attr("abc",qp);
 				ques.show();
+				$.ajax({
+					type:'POST',
+					url:'Q_Proc.jsp',
+					data:'qp_num='+qp,
+					dataType:'json',
+				success:function(data){
+					$(data.view);
+				},
+				error:function(data){
+					alert("실패");
+				}
+				});
 			}
-				
 		});
 	});
 	
@@ -104,7 +115,7 @@ try{
 	<!-- 
 	<form name="listForm" method="post" action="list.jsp">
 	-->
-	
+	 <%@ include file="Top.jsp" %>
 		<table width=700 align=center id="qList">
 			
 			<%
@@ -121,20 +132,6 @@ try{
 			}else{
 			%>
 			
-			<table align="center" width="300">
-			<tr>
-				<div style="height:55px;">
-						<div style="float:left;height:55px; font-size:11px; color:Silver; margin-left:5px;">
-							근거없는 비방/욕설 혹은 질문답변 성격에 맞지 않는 내용인 경우 사전 통보없이 삭제됩니다.<br />
-							질문 등록시 담당자 휴대폰으로 등록 내역이 전송됩니다. 최대한 빠른 답변을 위해 최선을 다하겠습니다.<br />
-							근무시간 외 문의는 답변시간이 지연될수 있는점 양해 부탁드립니다.
-						</div>
-						<div style="float:right; margin-top:15px;color:#ff83a6; padding-right:5px;">
-							최근 10일 평균 답변소요시간 : <b id="ctt_ctt_qaTimeAvg">42분</b>
-						</div>
-				</div>
-			</tr>
-			</table>
 		<!-- 글 리스트 -->
 		<div class="aa">	
 		<table id="QuestionList" align="center">
@@ -168,9 +165,12 @@ try{
 				}//if
 				%>
 				<td align="center">
-				<a class="link" q_count="<%=dto.getQp_num() %>">
+				
+				<!-- link -->
+				<a class="link" id="<%=dto.getQp_num() %>">
 				<%=dto.getQp_title() %>
 				</a>
+				
 				</td>
 				
 				<td align="center"><%=dto.getQp_id() %></td>
@@ -265,7 +265,7 @@ try{
 			<tr>
 				<td>ID</td>
 				<td>
-					<input type="text" name="qp_id" id="qp_id" size=40 value="u_id" readonly>
+					<input type="text" name="qp_id" id="qp_id" size=40>
 				</td>
 			</tr>	
 			<!-- 글제목 -->
@@ -305,4 +305,5 @@ try{
 			</tr>
 		</table>
 	</body>
+	<%@ include file="Bottom.html" %>
 </html>
