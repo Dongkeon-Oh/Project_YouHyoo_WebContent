@@ -6,6 +6,7 @@ request.setCharacterEncoding("utf-8");
 String id=(String)session.getAttribute("u_id");
 User_Dao dao=User_Dao.getInstance(); //dao 객체 얻기 
 User_Dto dto=dao.getUser(id);
+
 %>
 <html>
 <head>
@@ -17,12 +18,63 @@ User_Dto dto=dao.getUser(id);
 	 url="Zipcheck.jsp?check=y";
 	 window.open(url,"zip","width=500,height=300,status=yes,scrollbars=yes");
  }
+ 
+ function checkIt(){
+	 var join=eval("document.joinForm");
+ 
+	 if(joinForm.u_name.value==''){
+		 alert("이름은 필수 입력입니다");
+		 joinForm.u_name.focus();
+		 return false;
+	 }
+	 if(joinForm.u_pwd.value==''){
+		 alert("pwd는 필수 입력입니다");
+		 joinForm.u_pwd.focus();
+		 return false;
+	 }
+	 if(joinForm.u_cell1.value==''){
+		 alert("핸드폰번호를 입력하시오");
+		 joinForm.u_cell1.focus();
+		 return false;
+	 }
+	 if(joinForm.u_cell2.value==''){
+		 alert("핸드폰번호를 다시 입력하시오");
+		 joinForm.u_cell2.focus();
+		 return false;
+	 }
+	 if(joinForm.u_cell3.value==''){
+		 alert("핸드폰번호를 전부 입력하시오");
+		 joinForm.u_cell3.focus();
+		 return false;
+	 }
+	 if(joinForm.u_zipcode.value==''){
+		 alert("우편번호를 입력하시오");
+		 joinForm.u_zipcode.focus();
+		 return false;
+	 }
+	 if(joinForm.u_addr.value==''){
+		 alert("주소를 입력하시오");
+		 joinForm.u_addr.focus();
+		 return false;
+	 }
+	 if(join.u_birth.value==''){
+		 alert("생년월일을 입력하세요");
+		 joinForm.u_birth.focus();
+		 return false;
+	 }
+	 if(join.u_email.value==''){
+		 alert("이메일을 입력하세요");
+		 joinForm.u_email.focus();
+		 return false;
+	 }
+	 return true;
+ }//checkIt()
  </script>
 </head>
 <body>
 <%@ include file="Top.jsp" %>
 <div align=center>
- <form style="margin-top: 10" method=post name=modiForm action=Modify_Proc.jsp>
+ <form name="joinForm" style="margin-top: 10" method=post name=modiForm action="Modify_Proc.jsp" onsubmit="return checkIt()">
   <table align=center width=750 cellspacing=0 cellpadding=3>
    <tr>
     <td colspan=2 height=30>
@@ -35,14 +87,13 @@ User_Dto dto=dao.getUser(id);
    <table border=1 align=center width=750 cellspacing=0 cellpadding=3>
    <tr> 
     <td width=150>아이디</td>
-    <td><%=dto.getU_id()%>
-    </td>
+    <td><%=dto.getU_id()%></td>
    </tr>
    
    <tr>
     <td>사용자 이름</td>
     <td>
-     <input type=text name=u_name size=10 value=<%=dto.getU_name()%>>
+     <input type=text name=u_name size=10 value="<%=dto.getU_name()%>">
     </td>
    </tr>
    
@@ -53,10 +104,16 @@ User_Dto dto=dao.getUser(id);
     
    <tr>
     <td>핸드폰</td>
+    <%
+    String fullCell=dto.getU_cell();
+    String c1=fullCell.substring(0, 3);
+    String c2=fullCell.substring(3, 7);
+    String c3=fullCell.substring(7);
+    %>
     <td>
-     <input type=text name=u_cell1 maxlength="3" size="4"> -
-     <input type=text name=u_cell2 maxlength="4" size="4"> -
-     <input type=text name=u_cell3 maxlength="4" size="4">
+     <input type=text name=u_cell1 maxlength="3" size="4" value="<%=c1 %>"> -
+     <input type=text name=u_cell2 maxlength="4" size="4" value="<%=c2 %>"> -
+     <input type=text name=u_cell3 maxlength="4" size="4" value="<%=c3 %>">
     </td>
    </tr>
    
@@ -64,14 +121,7 @@ User_Dto dto=dao.getUser(id);
    <tr>
    <td>우편번호</td>
     <td>
-    <%
-    String im="";
-    im=dto.getU_zipcode();
-    if(im==null){
-    	im="";
-    }
-    %>
-     <input type=text name=u_zipcode size=7 value=<%=im%>>
+     <input type=text name=u_zipcode size=7 value="<%=dto.getU_zipcode()%>">
      <input type=button value="우편번호" onclick="zipCheck()">
     </td>
    </tr>
@@ -80,40 +130,30 @@ User_Dto dto=dao.getUser(id);
    <tr>
     <td>주소</td>
     <td>
-    <%
-    im=dto.getU_addr();
-    if(im==null){
-    	im="";
-    }
-    %>
-     <input type=text name=u_addr size=40 value=<%=im%>>
+     <input type=text name=u_addr size=40 value="<%=dto.getU_addr()%>">
     </td>
    </tr>
    
-   <!-- 생년월일 -->
    <tr>
     <td>생년월일</td>
     <td>
-     <input type=text name=u_birth size=6 value=<%=dto.getU_birth()%>>
+     <input type=text name=u_birth size=6 value="<%=dto.getU_birth()%>">
     </td> 
    </tr>
    <tr>
+   
+   <!-- 이메일 -->
+   <tr>
     <td>이메일</td>
     <td>
-    <%
-    im=dto.getU_email();
-    if(im==null){
-    	im="";
-    }
-    %>
-     <input type=text name=u_email size=40 value=<%=im%>>
+     <input type=text name=u_email size=40 value="<%=dto.getU_email()%>">
     </td>
    </tr>  
    
    <tr>
     <td colspan=2 align=right>
      <input type=submit value=회원정보수정>
-     <input type=button value=회원탈퇴신청 onclick="location='Delete.jsp'">
+     <input type=button value=회원탈퇴신청 onclick="location='Withdrawal.jsp'">
     </td>
    </tr>
    </table> 

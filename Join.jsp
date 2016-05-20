@@ -83,7 +83,17 @@
 		 alert("주소를 입력하시오");
 		 joinForm.u_addr.focus();
 		 return false;
-	 }	  
+	 }
+	 if(join.u_birth.value==''){
+		 alert("생년월일을 입력하세요");
+		 joinForm.u_birth.focus();
+		 return false;
+	 }
+	 if(join.u_email.value==''){
+		 alert("이메일을 입력하세요");
+		 joinForm.u_email.focus();
+		 return false;
+	 } 
 	 return true;
  }//checkIt()
  

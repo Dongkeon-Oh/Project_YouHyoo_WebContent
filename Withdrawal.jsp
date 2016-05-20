@@ -17,7 +17,7 @@ User_Dto dto=dao.getUser(id);
 	 document.delForm.u_pwd.focus();
  }
  function checkIt(){
-	 if(!document.delForm.u_pwd.value){
+	 if(document.delForm.u_pwd.value==""){
 		 alert("비밀번호를 입력하시오");
 		 document.delForm.u_pwd.focus();
 		 return false;
@@ -28,13 +28,12 @@ User_Dto dto=dao.getUser(id);
 <body>
 <%@ include file="Top.jsp" %>
  <div align=center>
-  <form style="margin-top: 10" method=post name=delForm action="Delete_Proc.jsp">
+  <form style="margin-top: 10" method=post name=delForm action="Withdrawal_Proc.jsp" onSubmit="return checkIt()">
    <table align=center width=750 cellspacing=0 cellpadding=3>
     <tr>
      <td colspan=2 height=30>
       <h3>회원탈퇴</h3>
-      <p>회원탈퇴 동시에 고객님과 관련된 회원정보는 모두 영구 삭제되며 복구 할 수 없습니다.<br>
-         탈퇴사유를 입력해주시면 보다 좋은 서비스를 위해 노력하겠습니다.</p>
+      <p>회원탈퇴 동시에 고객님과 관련된 회원정보는 모두 영구 삭제되며 복구 할 수 없습니다.</p>
      </td>
     </tr>
    </table>

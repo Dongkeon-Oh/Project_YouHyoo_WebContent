@@ -13,6 +13,17 @@ String eDate=request.getParameter("eDate");
 IndexMgr mgr=IndexMgr.getInstance();
 List<OrderRoom_Dto> oList=mgr.getOrder(u_id,sDate,eDate);
 %>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".onum_bt").click(function(){
+		var o_num=eval($(this).text());
+		//alert(num);
+		
+		window.open("OrderDetail.jsp?o_num="+o_num,+"예약내역상세","left=600,top=250,width=800,height=500");
+	});
+});	
+</script>
 <link href="MyPage.css" type="text/css" rel="stylesheet">
 	<%
 	if(!oList.isEmpty()){%>	
@@ -37,7 +48,7 @@ List<OrderRoom_Dto> oList=mgr.getOrder(u_id,sDate,eDate);
 		for(int i=0;i<oList.size();i++ ){
 			OrderRoom_Dto o=oList.get(i);%>
 			<tr id="Ordertr">
-				<td><%=o.getO_num() %></td>
+				<td><span class="onum_bt"><%=o.getO_num() %></span></td>
 				<td><%=o.getO_date() %></td>
 				<td><%=o.getO_pname() %></td>
 				<td><%=o.getO_customer() %>(<%=o.getO_emercall() %>)</td>
