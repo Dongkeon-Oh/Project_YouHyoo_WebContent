@@ -31,6 +31,7 @@ List<Room_Dto> roomList=indexMgr.getIndexRoomList(pensionNumber);
 					alert("로그인이 필요한 메뉴입니다.\n로그인 페이지로 이동합니다.");
 					location.href="Login.jsp";
 				}else{
+					alert("dd");
 					thisForm.pension.value=pensionNumber;
 					thisForm.submit();
 				}

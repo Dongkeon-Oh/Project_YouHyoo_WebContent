@@ -10,16 +10,42 @@
 <title>유휴~! 마이페이지</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 <script src="calendar.js"></script>
+<script src="moment.js"></script>
 <script>
-  jQuery(function($){
-
-	  $('#datepicker1').datepicker({
-	      showOn: "button",
-	      buttonImage: "imgs/top/cal.png",
-	      buttonImageOnly: true,
-	      buttonText: "Select date"
-	    });
-	 });
+  	$(function($){
+		$("#sDate").val(moment().add(-13,'days').format('YYYY-MM-DD'));
+		$("#eDate").val(moment().format('YYYY-MM-DD'));
+		
+		var u_id=$("#u_id").val();
+		var sDate=$("#sDate").val();
+		var eDate=$("#eDate").val();
+		
+		$.ajax({
+			type : 'POST',
+			url : 'OrderList.jsp',
+			data : "u_id="+u_id+"&sDate="+sDate+"&eDate="+eDate,
+			dataType : 'html',
+			success : function(data){//콜백 성공 응답시 실행
+				$("#oList").html(data);	
+			}
+		});
+		
+		$("#oCheck").click(function(){
+			var u_id=$("#u_id").val();
+			var sDate=$("#sDate").val();
+			var eDate=$("#eDate").val();
+			
+			$.ajax({
+				type : 'POST',
+				url : 'OrderList.jsp',
+				data : "u_id="+u_id+"&sDate="+sDate+"&eDate="+eDate,
+				dataType : 'html',
+				success : function(data){//콜백 성공 응답시 실행
+					$("#oList").html(data);	
+				}
+			});
+	  	});
+	});
 </script>
 
 <link href="TopBottom.css" type="text/css" rel="stylesheet">
@@ -32,6 +58,9 @@
 //String u_id=(String)session.getAttribute("u_id");
 //String u_id="dj";
 
+//오늘 날짜 얻기
+Calendar cal=Calendar.getInstance();
+
 //회원정보 얻기
 User_Dao uDao=User_Dao.getInstance();
 User_Dto uDto=uDao.getUser(u_id);
@@ -41,7 +70,7 @@ IndexMgr mgr=IndexMgr.getInstance();
 List<Pension_Dto> wList=mgr.getWishlist(u_id);
 
 //예약정보 얻기
-List<OrderRoom_Dto> oList=mgr.getOrder(u_id);
+//List<OrderRoom_Dto> oList=mgr.getOrder(u_id,sDate,eDate);
 
 //일대일상담내역(펜션질문)
 List<Q_pension_Dto> qList=mgr.getQList(u_id);
@@ -64,7 +93,8 @@ List<Q_pension_Dto> qList=mgr.getQList(u_id);
 					<tr>
 						<th>아이디</th>
 						<td>
-							<span><%=u_id %></span>
+							<span ><%=u_id %></span>
+							<input id="u_id" type="hidden" value="<%=u_id %>">
 						</td>
 					</tr>
 					<tr>
@@ -115,65 +145,18 @@ List<Q_pension_Dto> qList=mgr.getQList(u_id);
 	<div style="margin:10px 0px 10px 0px; text-align:right;">
 		예약일 
 		<span>
-			<input name="" type="text" value="2016-05-01" maxlength="10" size="10" id="datepicker1" onkeyup="javascript:(this);" />
-		 	<img class="cal" src="imgs/top/cal.png" align='absmiddle' style='cursor:pointer;' onClick="calendar(event, 'ctt_ctt_dt_rsv_s')">
+			<input id="sDate" name="" type="text" value="" maxlength="10" size="10" class="datepicker" />
 		</span>
 		부터 
 		<span>
-			<input name="" type="text" value="2016-05-16" maxlength="10" size="10" id="" onkeyup="" />
-			<img class="cal" src="imgs/top/cal.png" align='absmiddle' style='cursor:pointer;' onClick="calendar(event, 'ctt_ctt_dt_rsv_e')">
+			<input id="eDate" name="" type="text" value="" maxlength="10" size="10" class="datepicker"/>
 		</span>
 		까지
-		<a onclick="" id="" class="" href="">
-		<span class="bt">예약내역 확인</span></a>
+		
+		<span class="bt" id="oCheck">예약내역 확인</span>
 	</div>	
-	<div><!-- 여기에 예매내역이 들어온다!! -->
-	<%
-	if(!oList.isEmpty()){%>	
-	<table class="listb">
-	<colgroup>
-			<col width="8%" />
-			<col width="12%" />
-			<col width="30%" />
-			<col width="25%" />
-			<col width="10%" />
-			<col width="15%" />
-	</colgroup>
-	<tr>
-		<th>에약번호</th>
-		<th>예약일</th>
-		<th>업소명</th>
-		<th>예약자명</th>
-		<th>예약상태</th>
-		<th>이용후기</th>
-	</tr>
-	<%
-		for(int i=0;i<oList.size();i++ ){
-			OrderRoom_Dto o=oList.get(i);%>
-			<tr id="Ordertr">
-				<td><%=o.getO_num() %></td>
-				<td><%=o.getO_date() %></td>
-				<td><%=o.getO_pname() %></td>
-				<td><%=o.getO_customer() %>(<%=o.getO_emercall() %>)</td>
-				<%
-				if(o.getO_state()==true){%>	
-				<td>결재완료</td><%
-				}else{%>
-				<td>결재대기</td>	<%
-				}%>
-				<td><a href="Review.jsp"><span class="bt">이용후기</span></a></td>
-			</tr>
-	<%
-		}//for
-		%>
-	</table>
-	<%
-	}//if	
-	else{%>		
-		<div class="emptyMsg">최근 예메내역이 존재하지 않습니다.</div>
-	<%  
-	}//else
-	%>
+	<div id="oList"><!-- 여기에 예매내역이 들어온다!! -->
+
 	</div>
 	
 	<div class="mTitle">일대일상담내역</div>
