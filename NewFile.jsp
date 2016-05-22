@@ -85,15 +85,31 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
      			float: left;
 	     		font-size: 20px;
      		}
+     		select{
+     			width: 100px;
+     		}
      		
      		.payForm > td{
      			text-align: right;
      		}
      		
      		#warning{
+     			background-color: #EEEEEE;
+     			padding : 5px;
+     			font-size : 15px;
      			width:400px;
      			float: left;
+     			text-align: left;
      		}
+     		
+     		#pay_Button{ 
+				width: 150px;
+				height: 60px;
+				vertical-align: bottom;
+			 	background-image: url('imgs/DetailView/orderButton.jpg'); 
+			 	background-position: top right; 
+			 	background-repeat: no-repeat;
+			}
     	</style>
   	</head>
   	<body>
@@ -136,7 +152,7 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
 		    			"<%=room.get(i).getR_name()%>",
 		    			<%=room.get(i).getR_num()%>,
 		    			<%=room.get(i).getR_maxcapa()%>,
-		    			<%=room.get(i).getR_maxcapa()%>
+		    			<%=room.get(i).getR_mincapa()%>
 		    		);
 		    		roomPriceGet(
 		    			<%=room.get(i).getR_max_wd() %>,
@@ -205,7 +221,7 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
 	    			roomPrice.push(price);
 	    		}
 	    		
-	    		// 객실 상태 초기화
+	    		// 이용중인 객실 상태 초기화
 	    		var roomState=new Array();
 	    		function roomStateGet(room, state){
 	    			var roomSet=[room, state];
@@ -347,27 +363,38 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
 	    			var orderSet=
 	    				'<tr id="'+orderCount+'" class="orders">'
 	    					+'<td id="'+'rnumOrder'+targetIndex+'">'+roomName[targetIndex][0]
-	    						+'<br><font size="2">최소 : '+roomName[targetIndex][3]+'명 / 최대 : '
+	    						+'<br><font size="2">추천 : '+roomName[targetIndex][3]+'명 / 최대 : '
 	    						+roomName[targetIndex][2]+'명</font>'
 	    					+'</td>'
 	    					+'<td>'
 	    						+targetDate+"<br>("+targetDay+"요일)"
 	    					+'</td>'
 	    					+'<td>'
-	    						+'<select>'
-	    						
-	    			for(var i=1; i<=roomName[targetIndex][2]; i++){
-	    				orderSet+='<option " value="'+i+'">'+i+' 명</option>';		
-	    			}
+	    						+'<select class="people" name="people">'
+		    						+'<optgroup label="추천 인원">'
+		    			for(var i=1; i<=roomName[targetIndex][3]; i++){
+		    				orderSet+='<option " value="'+i+'">'+i+' 명</option>';		
+		    			}
+		    				orderSet+='<optgroup label="추가 인원">'
+		    					// 추가 인원만큼만 for문이 작동해야 함.
+		    					var extrapeople=roomName[targetIndex][2]-roomName[targetIndex][3];
+		    			for(var i=1; i<=extrapeople; i++){
+		    				// 추가인원은 처리방법을 모색하던중 100의 자리로 관리가 가능 할 것으로 여겨 백의 자리로 주었음.
+		    				orderSet+='<option " value="'+(i*100+roomName[targetIndex][3])+'">'+(roomName[targetIndex][3]+i)+' 명</option>';		
+		    			}
 	    						
 					orderSet+=	'</select>'
+								+'<input type="hidden" name="price" id="price" value="'+(targetPrice-targetPrice/5)+'">'
+								+'<input type="hidden" name="exPrice" id="exPrice" value="0">'
+								+'<input type="hidden" name="date" value='+targetDate+'>'
+								+'<input type="hidden" name="r_num" value='+roomName[targetIndex][1]+'>'
     						+'</td>'
-    						+'<td>'
+    						+'<td id="personPerPrice">' // id는 최대인원에 따라 가격을 변경하는 로직이 접근 할 수 있도록 하기 위해 주었음
 	    						+'<font size="3">기본가 :'+targetPrice+" 원 </font>"
 	    						+'<br><font size="3" color="#FF5050">객실 할인가 : - '+targetPrice/5+" 원 </font>"
 	    					+'</td>'
 	    					+'<td>'
-	    						+'<font size="4">'+targetPrice/50+'</font>'
+	    						+'<font class="points" size="4">'+(targetPrice*4/5)/50+'</font>'
 	    						+'<font size="4"> 점 </font>'
 	    					+'</td>'
 	    					+'<td>'
@@ -384,11 +411,45 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
 	    			calcPricePoint(1);
 	    		});
 	    		
+	    		// 인원수 변경시 추가요금 계산
+	    		$(document).on("click",".people",function(){
+	    			// 일단 추가 요금에 관한 정보를 지움
+	    			$(this).parent().next().children(".exPriceBlock").remove();
+	    			$(this).parent().next().children(".exPriceSet").remove();
+	    			
+	    			//Math.floor()는 버림을 처리하는 부분임. 이 함수가 없으면 2.02명 같은 이상한 수가 출력됨
+	    			var overPeole=Math.floor($(this).val()/100);
+	    			
+	    			// 바뀔 가격 계산
+	    			var changedPrice=($(this).next().val()*1)+overPeole*10000;
+	    			
+	    			// 만약 추가인원 (overPeole)이 0보다 크면 추가 요금은 계산한다.
+	    			if(overPeole>0){
+	    				// 추가요금이 발생함을 알린다.
+	    				$(this).parent().next().append('<br class="exPriceBlock"><font class="exPriceSet" size="3" color="red">추가 요금 : '
+	    						+overPeole+"명 ("+overPeole*10000+'원)</font>');
+	    				
+	    				// 추가요금을 input 태그에 값으로 입력한다.
+		    			$(this).next().next("#exPrice").attr("value",overPeole*10000);
+	    				
+	    			// 추가인원이 없으면 추가요금을 출력하는 코드를 지우고, 추가요금을 전달하는 input 태그는 0으로 초기화하여 주문사항에서 제외한다.
+	    			}else{
+	    				$(this).parent().next().children(".exPriceBlock").remove();
+		    			$(this).parent().next().children(".exPriceSet").remove();
+		    			$(this).next().next("#exPrice").attr("value",0);
+	    			}
+					
+	    			// 요금 출력
+	    			$(this).parent().parent().children(":eq(5)").children(":first").text(changedPrice);
+	    			calcPricePoint(0);
+	    		});
+	    		
+	    		// 취소 버튼 클릭시 목록 삭제
 	    		$(document).on("click",".cancelButton",function(){
 	    			var fullId='#'+$(this).attr("id");
 	    			var originId=$(this).attr("id").substring(5);
 	    			var orderNum='#'+$(this).attr("id").substring(0,5);
-	    			$(orderNum).html("");
+	    			$(orderNum).remove();
 	    		
 	    			$(this).attr("id",originId).attr("class","booking").val('예약');
 	    			$(fullId).attr("id",originId).attr("class","booking").val('예약');
@@ -407,27 +468,45 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
 								+"<td>취소</td>"
 							+"	</tr>"
 	    		function calcPricePoint(sizeSet){
-	    			// 객실 총 임대료 계산
+					// 객실 총 임대료 계산
 	    			var t_price=0;
 	    			$(".prices").each(function(index,item){
 	    				t_price+=($(item).text()-0);
 	    			});
 	    			$("#totalPrice").text(t_price);
 	    			
-	    			// 객실 총 임대료에 다른 2% 포인트 계산
-	    			$("#totalPoint").text(t_price/50);
+	    			// 객실 임대료에 다른 2% 포인트 계산. 추가 비용은 포인트에 합산되지 않음
+	    			var t_point=0;
+	    			$(".points").each(function(index,item){
+	    				t_point+=($(item).text()-0);
+	    			});
+	    			$("#totalPoint").text(t_point);
 	    			
 	    			// 객실 선택 내용이 없는 경우 총 금액, 포인트, 버튼등은 출력되지 않음
-	    			orderListSet+=sizeSet;
+	    			orderListSet+=sizeSet;    			
 	    			if(orderListSet==0){
-	    				$(".payForm").hide();
+	    				$("#addOrder").hide();
 	    		//		$("#orderMenuBar").html("");
-	    				//$('#addOrder').prepend("");
 	    			}else{
-	    				$(".payForm").show();
-	    		//		$('#addOrder').prepend(orderMenu);
+	    				$("#addOrder").show();
 	    			}
+	    			
+	    			$('#orderMenuBar').remove();
+	    			$('#addOrder').prepend(orderMenu);
+	    			$(".orders").css("background-color", "#EEEEEE" );
 	    		}
+							
+				function submitOrder(){
+					$(".orders").each(function(index, item){
+						$(item).find(":input").each(function(innerIdx, innerItm){
+							var temp=$(innerItm).attr("name");
+							$(innerItm).attr("name",temp+""+index);
+						});
+						$("#orderAmount").attr("value",index+1);
+					});
+					$("#goPay").submit();
+				}
+				
 	    	</script>
 	    	<!-- Size tester /////////////////////////////////////////////////////////// -->
 	    	<div style="width:1000px; height:15px; background-color:#0080FF;"></div>
@@ -444,6 +523,7 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
 	    	
 	    	<table id="addOption">
 	    	</table>
+	    	<form method="post" id="goPay" action="pay.jsp">
 	    	<table id="addOrder">
 	    		<tr class="payForm">
 	    			<td colspan="7">
@@ -465,10 +545,14 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
 							기준인원 초과시 추가요금이 있습니다.<br>
 							최대인원 초과로 인한 입실 거부시 환불도 되지 않으니 유의하시기 바랍니다.
 						</div>
-						<input type="button" value="결제하기">
+						<!-- 주문의 총 수를 구한다. -->
+						<input type="hidden" id="orderAmount" name="orderAmount" value="">
+						<input type="hidden" name="p_num" value="<%=p_num %>">
+						<input type="button" id="pay_Button" name="pay_Button" Onclick="submitOrder()">
 					</td>
 	    		</tr>
 	    	</table>
+	    	</form>
 	    </div>
   	</body>
 </html>

@@ -324,6 +324,11 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
 	    				$(".payForm").show();
 	    			}
 	    		}
+	    		
+	    		function submitOrder(){
+	    			
+	    		}
+	    		
 	    	</script>
 		<style>
       		body {
