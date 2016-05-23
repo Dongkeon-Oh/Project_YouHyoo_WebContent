@@ -66,7 +66,6 @@ try{
 	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script>
 	$(function ReadAfter(){
-		
 		jQuery(".link").click(function(){
 			console.log(jQuery(this).attr("id"));
 			var qp=jQuery(this).attr("id");
