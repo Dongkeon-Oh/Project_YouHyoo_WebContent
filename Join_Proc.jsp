@@ -4,6 +4,8 @@
     import="java.sql.*"%>
 <%
 request.setCharacterEncoding("utf-8");
+request.getParameter("u_type");
+System.out.println(request.getParameter("u_type"));
 %>
 <jsp:useBean id="dto" class="youhyoo.User_Dto">
  <jsp:setProperty name="dto" property="*"/>

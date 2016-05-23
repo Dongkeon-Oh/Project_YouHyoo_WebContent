@@ -29,24 +29,29 @@
  
  function checkIt(){
 	 var join=eval("document.joinForm");
- 
+	
 	 if(!$("#agree1").is(":checked")){
-		 alert("agree1 약관에 동의하십시오");
+		 alert("서비스 이용약관 동의 약관에 동의하십시오");
 		 $('#agree1').focus();
 		 return false;
 	 }
 	 if(!$("#agree2").is(":checked")){
-		 alert("agree2 약관에 동의하십시오");
+		 alert("개인정보수집 및 이용 동의 약관에 동의하십시오");
 		 $('#agree2').focus();
 		 return false;
 	 }
 	 if(!$("#agree3").is(":checked")){
-		 alert("agree3 약관에 동의하십시오");
+		 alert("개인정보 제3자 제공 동의 약관에 동의하십시오");
 		 $('#agree3').focus();
 		 return false;
 	 }
 	 if(!joinForm.u_id.value){
 		 alert("id는 필수 입력입니다");
+		 return false;
+	 }
+	 var checkid=document.all.checkid.value;
+	 if(checkid==0){
+		 alert("중복확인을 하세요");
 		 return false;
 	 }
 	 if(joinForm.u_name.value==''){
@@ -77,26 +82,51 @@
 	 if(joinForm.u_zipcode.value==''){
 		 alert("우편번호를 입력하시오");
 		 joinForm.u_zipcode.focus();
-		 return false;
+		 return false; 
 	 }
 	 if(joinForm.u_addr.value==''){
 		 alert("주소를 입력하시오");
 		 joinForm.u_addr.focus();
 		 return false;
 	 }
-	 if(join.u_birth.value==''){
-		 alert("생년월일을 입력하세요");
+	 if(joinForm.u_birth.value=='' || joinForm.u_birth.value.length!='6'){
+		 alert("생년월일 6자로 입력하세요");
 		 joinForm.u_birth.focus();
 		 return false;
 	 }
-	 if(join.u_email.value==''){
+	 	 
+	 var month=Number(joinForm.u_birth.value.substr(2,2));
+	 var day=Number(joinForm.u_birth.value.substr(4,2));
+	 var today=new Date(); 
+	 var yearNow=today.getFullYear();
+	 var adultYear=yearNow-20;
+	 if(month<1 || month>12){
+		 alert("1월부터 12월 입력 가능");
+		 return false;
+	 }
+	 if(day<1 || day>31){
+		 alert("1일부터 31까지 입력 가능");
+		 return false;
+	 }
+	 if((month==4 || month==6 || month==9 || month==11) && day==31){
+		 alert(month+"월은 31일 존재하지 않음");
+		 return false;
+	 }
+	 if(month==2){
+		 var isleap=(year%4==0 && (year%100!=0 || year%400==0));
+		 if(day>29 || (day==29 && !isleap)){
+			 alert(year+"년 2월은"+day+"일 없음");
+			 return false;
+		 }
+	 }
+	 if(joinForm.u_email.value==''){
 		 alert("이메일을 입력하세요");
 		 joinForm.u_email.focus();
 		 return false;
 	 } 
 	 return true;
  }//checkIt()
- 
+
  //아이디 중복 체크 함수  
  function confirmId(joinForm){
 	 if(joinForm.u_id.value==''){
@@ -108,9 +138,9 @@
 	 url="ConfirmId.jsp?u_id="+joinForm.u_id.value;
 	 open(url,"confirm","width=300,height=200");
  }//ConfirmId()
+ 
  //주소 자동입력
  function zipCheck(){
-	 //alert("함수");
 	 url="Zipcheck.jsp?check=y";
 	 window.open(url,"zip","width=500,height=300,status=yes,scrollbars=yes");
  }//zipCheck() 
@@ -276,6 +306,7 @@
     <td width=150>아이디</td>
     <td>
      <input type=text name=u_id id=u_id size=20> 
+     <input type=hidden name=checkid id=checkid value=0>
      <input type="button" value="중복확인" onclick="confirmId(this.form)">
     </td>
    </tr>
@@ -292,8 +323,8 @@
    <tr>
     <td>회원유형</td>
     <td>
-     <input type="radio" name=u_type id=u_type size=20>일반&nbsp;
-     <input type="radio" name=u_type id=u_type size=20>업체&nbsp;
+     <input type="radio" name=u_type id=u_type size=20 value="일반">일반&nbsp;
+     <input type="radio" name=u_type id=u_type size=20 value="업체">업체&nbsp;
     </td>
    </tr>
    <tr>
@@ -320,7 +351,7 @@
    <tr>
     <td>생년월일</td>
     <td>
-     <input type=text name=u_birth id=u_birth size=6>
+     <input type=text name=u_birth id=u_birth size=6 placeholder="900101">
     </td> 
    </tr>
    <tr>

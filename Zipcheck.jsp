@@ -70,7 +70,7 @@ int totalList=vec.size(); //동을 검색하는 레코드 수
 	    	  String z_addr33=dto.getZ_addr3().trim();
 	    	  String z_addr44=dto.getZ_addr4().trim();
 	    	  
-	    	  System.out.println(z_zipcode1);
+	    	  //System.out.println(z_zipcode1);
 	    	  %>
 	    	  <tr>
 	    	   <td>

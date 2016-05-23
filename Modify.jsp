@@ -98,7 +98,7 @@ User_Dto dto=dao.getUser(id);
    </tr>
    
    <tr>
-    <td>새 비밀번호</td>
+    <td>비밀번호</td>
     <td><input type="password" name="u_pwd" size=20></td>
    </tr>
     
