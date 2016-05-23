@@ -9,7 +9,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>유휴~! 마이페이지</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-<script src="calendar.js"></script>
 <script src="moment.js"></script>
 <script>
   	$(function($){
