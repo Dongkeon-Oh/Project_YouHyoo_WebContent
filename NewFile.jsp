@@ -523,7 +523,7 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
 	    	
 	    	<table id="addOption">
 	    	</table>
-	    	<form method="post" id="goPay" action="pay.jsp">
+	    	<form method="post" id="goPay" action="Payment.jsp">
 	    	<table id="addOrder">
 	    		<tr class="payForm">
 	    			<td colspan="7">
