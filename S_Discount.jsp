@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"
+    import="youhyoo.*"
+    import="java.util.*"
+    %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,9 +25,69 @@ body {width: 1000px; margin: 0 auto;}
 <script>
 
 $(document).ready(function(){
-	
 	calendar();
+	today();
 	
+	var location="경기";
+	$("#setLo").text(location);
+
+	$(".location").click(function(){
+		var location=$(this).text()
+		$("#setLo").text(location);
+		var kYear=$("#sYear").text();
+		var kMonth=$("#sMonth").text();
+		var kDate=$("#sDate").text();
+		var o_date=kYear+"-"+kMonth+"-"+kDate;
+		alert("location : "+location+" o_date : "+o_date);
+		
+		$.ajax({
+			type : 'POST',
+			url : 'S_Discount_rs.jsp',
+			data : "location="+location+"&o_date="+o_date,
+			dataType : 'html',
+			success : function(data){//콜백 성공 응답시 실행
+				$("#result").html(data);	
+			}
+		});
+	});
+	
+	$("#kCal td").click(function(){
+		var kYear=$("#sYear").text();
+		var kMonth=$("#sMonth").text();
+		var kDate=$("#sDate").text();
+		var o_date=kYear+"-"+kMonth+"-"+kDate;
+		var location=$("#setLo").text();
+		alert("location : "+location+" o_date : "+o_date);
+		
+		$.ajax({
+			type : 'POST',
+			url : 'S_Discount_rs.jsp',
+			data : "location="+location+"&o_date="+o_date,
+			dataType : 'html',
+			success : function(data){//콜백 성공 응답시 실행
+				$("#result").html(data);	
+			}
+		});
+		
+	});
+	
+	/*
+	$("#location").click(function(){
+		var location=$("#location").val();
+		var p_num=$("#p_num").val();
+		var o_date=$("#o_date").val();
+		
+		$.ajax({
+			type : 'POST',
+			url : 'S_Discount_rs.jsp',
+			data : "location="+location+"&o_date="+o_date,
+			dataType : 'html',
+			success : function(data){//콜백 성공 응답시 실행
+				$("#result").html(data);	
+			}
+		});
+  	});
+	*/
 });
 
 </script>
@@ -54,33 +117,42 @@ $(document).ready(function(){
 	<div id="cal"></div>
 	</td>
 	<td>
-	<div id="selDate">2016년 5월 23일(월)</div>
+	<!-- 날짜 부분 -->
+	<div id="selDate">
+	<span id="sYear"></span>년
+	<span id="sMonth"></span>월
+	<span id="sDate"></span>일
+	<span id="sYoil"></span>
+	</div>
 	</td>
 </tr>
 </table>
 <hr>
 <div>
-<a href="#" OnClick="locationDetail('hot용인')"><font size="3">경기도</font></a>
-<a href="#" OnClick="locationDetail('hot용인')"><font size="3">강원도</font></a>
-<a href="#" OnClick="locationDetail('hot용인')"><font size="3">충청도</font></a>
-<a href="#" OnClick="locationDetail('hot용인')"><font size="3">경상도</font></a>
-<a href="#" OnClick="locationDetail('hot용인')"><font size="3">전라도</font></a>
-<a href="#" OnClick="locationDetail('hot용인')"><font size="3">제주도</font></a><br>
-<a href="#" OnClick="locationDetail('hot가평')"><font size="3">가평</font></a>
-<a href="#" OnClick="locationDetail('hot양평')"><font size="3">양평</font></a>
-<a href="#" OnClick="locationDetail('hot강화')"><font size="3">인천 강화도</font></a>
-<a href="#" OnClick="locationDetail('hot춘천')"><font size="3">춘천/강촌/홍천</font></a>
-<a href="#" OnClick="locationDetail('hot태안')"><font size="3">태안/안면도</font></a><br>
-<a href="#" OnClick="locationDetail('hot평창')"><font size="3">평창/횡성</font></a>
-<a href="#" OnClick="locationDetail('hot포천')"><font size="3">포천</font></a>
-<a href="#" OnClick="locationDetail('hot남양주')"><font size="3">남양주</font></a>
-<a href="#" OnClick="locationDetail('hot속초')"><font size="3">속초/설악산</font></a><br>
-<a href="#" OnClick="locationDetail('hot경주')"><font size="3">경주/속초/강릉</font></a>
-<a href="#" OnClick="locationDetail('hot거제')"><font size="3">거제/여수</font></a>
-<a href="#" OnClick="locationDetail('hot용인')"><font size="3">용인/안성</font></a><br>
+<a href="#"><span class="location">경기도</span></a>
+<a href="#"><span class="location">충청도</span></a>
+<a href="#"><span class="location">경상도</span></a>
+<a href="#"><span class="location">전라도</span></a>
+<a href="#"><span class="location">제주도</span></a>
+<a href="#"><span class="location">가평</span></a>
+<a href="#"><span class="location">양평</span></a>
+<a href="#"><span class="location">강화</span></a>
+<a href="#"><span class="location">춘천</span></a>
+<a href="#"><span class="location">태안</span></a>
+<a href="#"><span class="location">평창</span></a>
+<a href="#"><span class="location">포천</span></a>
+<a href="#"><span class="location">남양주</span></a>
+<a href="#"><span class="location">강릉</span></a>
+<a href="#"><span class="location">경주</span></a>
+<a href="#"><span class="location">여수</span></a>
+<a href="#"><span class="location">용인</span></a>
 </div>
 <hr>
-
+<!-- 검색결과 -->
+<div id="result">
+		
+</div>
+<span id="setLo"></span>
 <%@ include file="Bottom.html" %>
 </body>
 </html>
