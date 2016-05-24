@@ -15,8 +15,10 @@ int check=dao.confirmId(u_id);
   <script type="text/javascript">
   function setId(){
 	  opener.document.joinForm.u_id.value="<%=u_id%>";
+	  opener.document.joinForm.checkid.value="1";
 	  self.close(); 
   }
+  
   </script>
  </head>
  <body>
