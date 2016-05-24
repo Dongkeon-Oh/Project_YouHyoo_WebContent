@@ -6,10 +6,6 @@
 
 <html>
  <head>
- <script type="text/javascript">
- open("width=300, height=200");
- 
- </script>
  <style type="text/css">
  .review_table{
  width: 550px;
@@ -66,7 +62,9 @@
     </tr>
     <tr>
      <td colspan=4 align="right" style="border: none;">
-      <input type="hidden" name="rv_pension" value=1>
+     
+     <%--★★★★hidden 값 "rv_pension,rv_id" - 임의로 값 준것임 --%>
+      <input type="hidden" name="rv_pension" value=1> 
       <input type="hidden" name="rv_id" value=1>
       <input type="submit" value="저장하기">
       <input type="button" onclick="self.close()"value="작성취소">
