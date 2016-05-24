@@ -13,6 +13,7 @@ DetailMgr detail=DetailMgr.getInstance();
 Pension_Dto pension=detail.getPension(p_num);
 List<Room_Dto> room=detail.getRoom(p_num); 
 List<OrderRoom_Dto> order=detail.getOrder(p_num);
+
 %>    
 
 <html>
@@ -28,6 +29,8 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
     	<!-- 주문부에 필요한 스크립트 파일과 css 파일 -->
     	<script src="DetailOrder.js"></script>
     	<link href="DetailOrder.css" type="text/css" rel="stylesheet">
+    	
+    	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     	
     	<script>
     	$(document).ready(function(){	
@@ -162,8 +165,10 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
 				</tr>
 			</table>
 			<br>
+	    	
 			
 			<!-- 주문영역 출력부 /////////////////////////////////////////////////////////// -->
+			
 	    	<div id="calsetdiv">
 		    	<div id="calSet">
 			    	<input type="button" id="back" value="이전" onClick="">
@@ -206,7 +211,13 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
 	    		</tr>
 	    	</table>
 	    	</form>
+	    	<div id="PhotoList"></div>
+	    	<div id="RoomOptionList"></div>
 	    </div>
+	   
+	    
+	    <%@ include file="Review.jsp" %>
+	       
 	<%@ include file="Bottom.html" %>
 </body>
 </html>

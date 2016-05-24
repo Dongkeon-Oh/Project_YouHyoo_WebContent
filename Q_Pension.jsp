@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     import="youhyoo.*"
@@ -7,13 +6,13 @@
     %>
 <%
 request.setCharacterEncoding("utf-8");
-%>
-<%!
+// 추가사항 -- 세션을 통해 아이디를 전달 받음. 아이디는 변경이 불가능함.
+String u_id=(String)session.getAttribute("u_id");
+//String u_id="dj";
+
 int pageSize=10;
 SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-%>
 
-<%
 String pageNum=request.getParameter("pageNum");
 if(pageNum==null){
 	pageNum="1";
@@ -24,7 +23,7 @@ int startRow=(currentPage-1)*pageSize+1;
 int endRow=currentPage*pageSize;
 int count=0;	
 int number=0;
-List list=null;
+List<Q_pension_Dto> list=null;
 
 PensionDao dao=PensionDao.getInstance();
 count=dao.getArticleCount();
@@ -48,20 +47,37 @@ try{
 <html>
 	<head>
 	<title>List.jsp</title>
-	<link href="Index.css" type="text/css" rel="stylesheet">
-	<link href="TopBottom.css" type="text/css" rel="stylesheet">
-	<style type="text/css">
-	.QuestionList{
-	width : 1000px;
-	margin : auto;
-	text-align : center;
-	border-collapse : collapse;
-	border-color : #BDBDBD;
-	color : #5D5D5D;
+	<style>
+	#qList{
+		margin : 0 auto;
 	}
-	.ques{display:none;}
-	a.link{cursor:pointer;}
-	.bb{display:none;}
+	
+	#QuestionList{
+		text-align : center;
+		border : 1px solid #BDBDBD;
+		color : #5D5D5D;
+	}
+	
+	.ques{
+		display:none;
+		text-align: left;
+	}
+	.ques > td{
+		padding-left: 100px;
+		border : 1px solid #FF0000;
+	}
+	
+	a.link{
+		cursor:pointer;
+	}
+	
+	.bb{
+		display:none;
+	}
+	
+	.tableList{
+		background-color : #CDCDCD;
+	} 
 	</style>
 	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script>
@@ -93,13 +109,19 @@ try{
 				});
 			}
 		});
+		$("#qp_id").attr({"readonly":"readonly","value":"<%=u_id%>"}); 
 	});
 	
 	$(document).ready(function(){
 		$("#btn1").click(function(){
-			$(".aa").hide();
-			$("#btn1").hide();
-			$(".bb").show();
+			if(<%=u_id%>==null){
+				alert("로그인이 필요한 메뉴입니다.\n로그인 페이지로 이동합니다.");
+				location.href="Login.jsp";
+			}else{
+				$(".aa").hide();
+				$("#btn1").hide();
+				$(".bb").show();
+			}
 		});
 		$("#btn2").click(function(){
 			$(".aa").show();
@@ -114,33 +136,37 @@ try{
 	<!-- 
 	<form name="listForm" method="post" action="list.jsp">
 	-->
-	 <%@ include file="Top.jsp" %>
-		<table width=700 align=center id="qList">
+		<table id="qList">
 			
 			<%
 			if(count==0){
 			%>
-			
-			<table width="700" border="1" cellspacing="0" cellpadding="0">
 			<tr>
-				<td align="center">게시판에 저장된 글이 없습니다</td>
+				<td>
+					<table>
+						<tr>
+							<td align="center">게시판에 저장된 글이 없습니다</td>
+						</tr>
+					</table>
+				</td>
 			</tr>
-			</table>
-			
 			<%
 			}else{
 			%>
 			
 		<!-- 글 리스트 -->
+		
+		<tr>
+		<td width="1000px">
 		<div class="aa">	
-		<table id="QuestionList" align="center">
-			<tr height="20">
-				<td align="center" width="50">답변상태</td>
-				<td align="center" width="185">글제목</td>
-				<td align="center" width="100">작성자</td>
-				<td align="center" width="103">작성일</td>
-				<td align="center" width="63">조회수</td>
-				<td align="center" width="63">글번호</td>
+		<table id="QuestionList">
+			<tr>
+				<td class="tableList" align="center" width="80">답변상태</td>
+				<td class="tableList" align="center" width="500">글제목</td>
+				<td class="tableList" align="center" width="100">작성자</td>
+				<td class="tableList" align="center" width="160">작성일</td>
+				<td class="tableList" align="center" width="80">조회수</td>
+				<td class="tableList" align="center" width="80">글번호</td>
 			</tr>
 			<%
 			for(int i=0; i<list.size(); i++){
@@ -183,7 +209,7 @@ try{
 			</tr>
 			
 			<tr class="ques">
-				<td colspan="5">
+				<td colspan="6">
 				<%=dto.getQp_question() %>
 				</td>
 			</tr>
@@ -243,66 +269,57 @@ try{
 					<%
 					}
 					%>
-					</td>
-				</tr>
+							</td>
+						</tr>
 			<%
 			}
 			%>
-			</table>
-			</div>
-		</table>
-		
-		<!-- 문의하기 -->
-		<div class="bb">
-		<form name="writeForm" method="post" action="writeProc.jsp">
-	
-			<table width="500" cellspacing="0" cellpadding="3"
-			align="center">
-			
-			
-			<!-- ID -->
-			<tr>
-				<td>ID</td>
-				<td>
-					<input type="text" name="qp_id" id="qp_id" size=40>
-				</td>
-			</tr>	
-			<!-- 글제목 -->
-			<tr>
-				<td>제목</td>
-				<td>
-					<input type="text" name="qp_title" id="qp_title" size=40>
-				</td>
-			</tr>
-			
-			<!-- 글내용 -->
-			<tr>
-				<td>글내용</td>
-				<td>
-				<textarea name="qp_question" id="qp_question" rows="20" cols="45"></textarea>
-				</td>
-			</tr>
-			
-			<tr>
-				<td colspan="2" align="center">
-					<input type="submit" value="글쓰기">
-					<input type="reset" value="다시쓰기">
-				</td>
-			</tr>
-			</table>
-		</form>
-		</div>
-		<!-- 문의하기 end -->
-		<table align=center>
-			<tr>
-				<td colspan=5 align="right">
-				<input type="button" id="btn1" value="문의하기">
-				</td>
-				<td>
-				<input type="reset" id="btn2" value="돌아오기">
+						<tr>
+							<td colspan=6 align="right">
+								<input type="button" id="btn1" value="문의하기">
+							</td>
+						</tr>
+						</table>
+					</div>
+					<div class="bb">
+						<form name="writeForm" method="post" action="Q_PensionProc.jsp">
+							<table>
+							
+							<!-- ID -->
+							<tr>
+								<td class="tableList">ID</td>
+								<td>
+									<input type="text" name="qp_id" id="qp_id" size=40>
+								</td>
+							</tr>	
+							<!-- 글제목 -->
+							<tr>
+								<td class="tableList">제목</td>
+								<td>
+									<input type="text" name="qp_title" id="qp_title" size=40>
+								</td>
+							</tr>
+							
+							<!-- 글내용 -->
+							<tr>
+								<td class="tableList">글내용</td>
+								<td>
+								<textarea name="qp_question" id="qp_question" rows="10" cols="140"></textarea>
+								</td>
+							</tr>
+							
+							<tr>
+								<td colspan="2" align="center">
+									<input type="submit" value="글쓰기">
+									<input type="reset" value="다시쓰기">
+									<input type="reset" id="btn2" value="돌아가기">
+								</td>
+							</tr>
+							</table>
+						</form>
+					</div>
 				</td>
 			</tr>
 		</table>
 	</body>
-	<%@ include file="Bottom.html" %>
 </html>

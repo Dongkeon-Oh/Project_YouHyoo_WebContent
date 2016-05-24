@@ -8,7 +8,6 @@
  <head>
  <script type="text/javascript">
  open("width=300, height=200");
- alert("ddd");
  
  </script>
  <style type="text/css">

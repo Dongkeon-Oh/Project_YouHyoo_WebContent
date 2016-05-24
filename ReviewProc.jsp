@@ -59,11 +59,11 @@ function question(this_num,this_tr,this_photo,this_view){
    
    Review review=new Review();//객체생성
  
-/*
+
    if(request.getParameter("flag").equals("insert")){
 	review.Insert_Review(request);//등록메서드 호출
    }
-*/
+
 
 	   List list=review.List_Review();
 	   Review_Dto review_dto=null;

@@ -4,16 +4,16 @@
     %>
 <%
 request.setCharacterEncoding("utf-8");
-
+PensionDao dao=PensionDao.getInstance();
 %>
-<html lang="en">
-<head>
+
   <meta charset="utf-8">
-  <title>jQuery UI Tabs - Default functionality</title>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-  <link rel="stylesheet" href="/resources/demos/style.css">
+  <style>
+  	#tabs{
+  		width:1000px;
+  	}
+  </style>
   <script>
   $(function() {
     $( "#tabs" ).tabs();
@@ -28,9 +28,9 @@ request.setCharacterEncoding("utf-8");
 	  
   }
   </script>
-</head>
-<body>
- 
+  
+
+
 <div id="tabs">
   <ul>
     <li><a href="#tabs-1">소개/인사말</a></li>
@@ -39,9 +39,7 @@ request.setCharacterEncoding("utf-8");
   </ul>
   <div id="tabs-1">
     <%
-    PensionDao dao=PensionDao.getInstance();
-    //int p_num=Integer.parseInt(request.getParameter("p_num"));
-    int p_num=1;
+    
     InsertDto dto=dao.PensionDetail(p_num);
     %>
     <p><%=dto.getP_intro() %></p>
@@ -173,6 +171,3 @@ request.setCharacterEncoding("utf-8");
 <script>
 nullDestroy();
 </script>
- 
-</body>
-</html>
