@@ -9,7 +9,7 @@ if(request.getParameter("rv_num")!=null){
 int num=Integer.parseInt(request.getParameter("rv_num"));
 Review review=new Review();
 review.View_Review(request.getParameter("rv_num"));
-List review_list=review.List_Review();
+List review_list=review.List_Review(Integer.parseInt(request.getParameter("rv_pension")));
 for(int i=0;i<review_list.size();i++){
 	Review_Dto dto=(Review_Dto)review_list.get(i);
 	
