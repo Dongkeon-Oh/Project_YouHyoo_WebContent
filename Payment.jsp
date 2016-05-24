@@ -142,10 +142,11 @@ for(int i=0; i<orderAmount; i++){
 	    		$(id).prevAll().attr("checked", false);
 	    	});
 	    	
+	    	
 	    	function commitInput(){
-	    		var e_call=$("select").val();
-	    		e_call+='-'+$("#ou_emercall2").val();
-	    		e_call+='-'+$("#ou_emercall3").val();
+	    		var e_call=$("#ou_emercall1").val()
+	    		e_call+=$("#ou_emercall2").val();
+	    		e_call+=$("#ou_emercall3").val();
 	    		
 	    		$("input[name=ou_emercall]").val(e_call);
 	    		
@@ -191,8 +192,7 @@ for(int i=0; i<orderAmount; i++){
 	    				$(item).prop("checked",true);
 	    			}
 	    		});
-	    	}
-	    	
+	    	}	    	
 		</script>
 	</head>
 	<body>
@@ -333,7 +333,7 @@ for(int i=0; i<orderAmount; i++){
 					<tr>
 						<td class="payForm">비상 연락처</td>
 						<td>
-							<select>
+							<select id="ou_emercall1" >
 								<option value="010">010</option>
 								<option value="016">016</option>
 								<option value="017">017</option>

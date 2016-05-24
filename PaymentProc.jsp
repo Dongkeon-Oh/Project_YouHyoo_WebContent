@@ -55,7 +55,7 @@ OU_dto.setOu_customer(request.getParameter("ou_customer"));
 OU_dto.setOu_birth(Integer.parseInt(request.getParameter("ou_birth")));
 OU_dto.setOu_emercall(request.getParameter("ou_emercall"));
 OU_dto.setOu_request(request.getParameter("ou_request"));
-OU_dto.setOu_id("test");
+OU_dto.setOu_id((String)session.getAttribute("u_id"));
 OU_dto.setOu_cell(detail.orderUserCell("test"));
 OU_dto.setOu_paytype(ou_paytype);
 OU_dto.setOu_group(maxOrderNum);
