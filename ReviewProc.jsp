@@ -58,14 +58,14 @@ function question(this_num,this_tr,this_photo,this_view,this_pension){
    
    Review review=new Review();//객체생성
 
-   if(request.getParameter("flag").equals("insert")){
-	review.Insert_Review(request);//등록메서드 호출
-   }
+//   if(request.getParameter("flag").equals("insert")){
+//	review.Insert_Review(request);//등록메서드 호출
+//   }
 
-   		//★★★int pension_num=Integer.parseInt(request.getParameter("num"); -> 디테일뷰에서 num 받아오는 부분
-   		int pension_num=1; //★★★임의로 줌
+   		int pension_num=Integer.parseInt(request.getParameter("p_num"));// -> 디테일뷰에서 num 받아오는 부분
+   	//★★★int pension_num=1; //★★★임의로 줌
    		
-	   List list=review.List_Review(pension_num);
+	   List<Review_Dto> list=review.List_Review(pension_num);
    		
 	   Review_Dto review_dto=null;
 	   
@@ -129,7 +129,7 @@ function question(this_num,this_tr,this_photo,this_view,this_pension){
 		   }//for
 	   }else{ //후기가 없으면
 		   %>
-			<table>
+			<table border=1 class=review_table>
 		    <tr>
 		     <td><b>이용 후기가 없습니다</b></td>
 		    </tr>

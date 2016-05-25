@@ -7,8 +7,8 @@
 <%
 request.setCharacterEncoding("utf-8");
 // 추가사항 -- 세션을 통해 아이디를 전달 받음. 아이디는 변경이 불가능함.
-String u_id=(String)session.getAttribute("u_id");
-//String u_id="dj";
+String u_id=request.getParameter("u_id");
+int p_num=Integer.parseInt(request.getParameter("p_num"));
 
 int pageSize=10;
 SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
@@ -23,30 +23,30 @@ int startRow=(currentPage-1)*pageSize+1;
 int endRow=currentPage*pageSize;
 int count=0;	
 int number=0;
-List<Q_pension_Dto> list=null;
+List<Q_pension_Dto> q_List=null;
 
-PensionDao dao=PensionDao.getInstance();
-count=dao.getArticleCount();
+PensionDao qp_dao=PensionDao.getInstance();
+count=qp_dao.getArticleCount();
 
 if(count>0){
-	list=dao.getList(startRow, pageSize);
+	q_List=qp_dao.getList(startRow, pageSize, p_num);
 }
 number=count-(currentPage-1)*pageSize;
 
 //글번호
-String a = request.getParameter("qp_num");
-if(a==null){
-	a="0";
+String qp_num = request.getParameter("qp_num");
+if(qp_num==null){
+	qp_num="0";
 }
-int num=Integer.parseInt(a);
+int qp_number=Integer.parseInt(qp_num);
 
 try{
-	Q_pension_Dto dto=dao.ViewsIncrease(num);
+	Q_pension_Dto dto=qp_dao.ViewsIncrease(qp_number);
 }catch(Exception ex){}
 %>
 <html>
-	<head>
-	<title>List.jsp</title>
+<head>
+	<title>Q_Pension.jsp</title>
 	<style>
 	#qList{
 		margin : 0 auto;
@@ -109,7 +109,7 @@ try{
 				});
 			}
 		});
-		$("#qp_id").attr({"readonly":"readonly","value":"<%=u_id%>"}); 
+		 
 	});
 	
 	$(document).ready(function(){
@@ -128,13 +128,13 @@ try{
 			$("#btn1").show();
 			$(".bb").hide();
 		});
+		$("#qp_id").attr({"readonly":"readonly","value":"<%=u_id%>"});
 	});
 	</script>
-	
-	</head>	
-	<body>
+</head>	
+<body>
 	<!-- 
-	<form name="listForm" method="post" action="list.jsp">
+	<form name="listForm" method="post" action="Q_Pension.jsp">
 	-->
 		<table id="qList">
 			
@@ -169,8 +169,8 @@ try{
 				<td class="tableList" align="center" width="80">글번호</td>
 			</tr>
 			<%
-			for(int i=0; i<list.size(); i++){
-				Q_pension_Dto dto=(Q_pension_Dto)list.get(i);
+			for(int i=0; i<q_List.size(); i++){
+				Q_pension_Dto dto=(Q_pension_Dto)q_List.get(i);
 			%>
 			
 			<tr>
@@ -244,7 +244,7 @@ try{
 					//이전블럭
 					if(startPage>10){
 					%>
-					<a href="List.jsp?pageNum=<%=startPage-10 %>">[이전블럭]</a>
+					<a href="Q_Pension.jsp?pageNum=<%=startPage-10 %>">[이전블럭]</a>
 					
 					
 					<%
@@ -255,7 +255,7 @@ try{
 					for(int i=startPage; i<=endPage; i++){
 					%>
 					
-					<a href="List.jsp?pageNum=<%=i %>">[<%=i %>]</a>
+					<a href="Q_Pension.jsp?pageNum=<%=i %>">[<%=i %>]</a>
 					
 					<%	
 					}
@@ -264,7 +264,7 @@ try{
 					<%
 					if(endPage<pageCount){
 					%>
-					<a href="List.jsp?pageNum=<%=startPage+10 %>">[다음블럭]</a>
+					<a href="Q_Pension.jsp?pageNum=<%=startPage+10 %>">[다음블럭]</a>
 					
 					<%
 					}

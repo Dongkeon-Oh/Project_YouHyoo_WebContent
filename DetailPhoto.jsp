@@ -3,11 +3,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="youhyoo.*" import="java.util.List"
 	import="java.util.StringTokenizer"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
 <style>
 /*tab*/
 ul.tabs {
@@ -139,8 +134,7 @@ html ul.tabs li.active, html ul.tabs li.active lable:hover {
 	});
 	
 </script>
-</head>
-<body>
+	
 	<ul class=tabs>
 		<li><lable id="la_tab1">펜션전경사진</lable></li>
 		<li><lable id="la_tab2">객실사진 및 소개</lable></li>
@@ -148,12 +142,14 @@ html ul.tabs li.active, html ul.tabs li.active lable:hover {
 	<div class=tab_container>
 		<div id="tab1" class="tab_content">
 			<table>
+			
+			
 				<tr>
 				<td rowspan=2><img src="" id="insertimg_pension"></td>
 					<%
 						PensionDao dao = PensionDao.getInstance();
-						//String num=request.getParameter("p_num");
-						String num = "1";
+						String num=request.getParameter("p_num");
+						//String num = "1";
 
 						String p_photo = dao.get_pension_photo(num);
 
@@ -221,6 +217,3 @@ html ul.tabs li.active, html ul.tabs li.active lable:hover {
 
 		</div>
 	</div>
-
-</body>
-</html>
