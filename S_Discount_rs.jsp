@@ -8,14 +8,13 @@ request.setCharacterEncoding("utf-8");
 String location=request.getParameter("location");
 //int p_num=Integer.parseInt(request.getParameter("p_num"));
 String o_date=request.getParameter("o_date");
-System.out.println("location : "+location+" o_date : "+o_date);
 //String location="경기";
 //int p_num=1;
 //String o_date="2016-05-30";
 			
 %>
 
-		<table border=1 style="text-align: left;" class="tableshot">
+		<table width="100%" border=1 style="text-align: left;" class="tableshot">
 			<tr style="text-align: center;">
 				<th colspan="2">업소</th>
 				<th>빈객실</th>
@@ -50,7 +49,7 @@ System.out.println("location : "+location+" o_date : "+o_date);
 									} else {
 										p_num2 = "P00" + p_num1;
 									}
-					%> <img src="imgs/pension/<%=p_num1%>/<%=p_num2%>_F01.jpg"
+					%> <img width="150px" height="120px" src="imgs/pension/<%=p_num1%>/<%=p_num2%>_F01.jpg"
 					class="imgshot">
 				</td>
 				<td rowspan="<%=r_size + 1%>" style="border-left: 0;"><label><b><%=p_dto.getP_name()%></b><br>

@@ -9,24 +9,26 @@ request.setCharacterEncoding("utf-8");
 String u_id=request.getParameter("u_id");
 String sDate=request.getParameter("sDate");
 String eDate=request.getParameter("eDate");
+
 //예약정보 얻기
 IndexMgr mgr=IndexMgr.getInstance();
 List<OrderRoom_Dto> oList=mgr.getOrder(u_id,sDate,eDate);
+List<OrderUser_Dto> ouList=mgr.getUser(u_id,sDate,eDate);
 %>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	$(".onum_bt").click(function(){
-		var o_num=eval($(this).text());
+	$(".ou_numBt").click(function(){
+		var ou_num=eval($(this).text());
 		//alert(num);
 		
-		window.open("OrderDetail.jsp?o_num="+o_num,+"예약내역상세","left=600,top=250,width=800,height=500");
+		window.open("OrderDetail.jsp?ou_num="+ou_num,+"예약내역상세","left=600,top=250,width=800,height=500");
 	});
 });	
 </script>
 <link href="MyPage.css" type="text/css" rel="stylesheet">
 	<%
-	if(!oList.isEmpty()){%>	
+	if(!ouList.isEmpty()){%>	
 	<table class="listb">
 	<colgroup>
 			<col width="8%" />
@@ -38,26 +40,23 @@ $(function(){
 	</colgroup>
 	<tr>
 		<th>에약번호</th>
-		<th>예약일</th>
+		<th>주문날짜</th>
 		<th>업소명</th>
 		<th>예약자명</th>
 		<th>예약상태</th>
 		<th>이용후기</th>
 	</tr>
 	<%
-		for(int i=0;i<oList.size();i++ ){
-			OrderRoom_Dto o=oList.get(i);%>
+		for(int i=0;i<ouList.size();i++ ){
+			OrderUser_Dto ou=ouList.get(i);
+			OrderRoom_Dto o=oList.get(i);
+			%>
 			<tr id="Ordertr">
-				<td><span class="onum_bt"><%=o.getO_num() %></span></td>
-				<td><%=o.getO_date() %></td>
+				<td><span class="ou_numBt"><%=ou.getOu_num() %></span></td>
+				<td><%=ou.getOu_date() %></td>
 				<td><%=o.getO_pname() %></td>
-				<td><%=o.getO_customer() %>(<%=o.getO_emercall() %>)</td>
-				<%
-				if(o.getO_state()==true){%>	
-				<td>결재완료</td><%
-				}else{%>
-				<td>결재대기</td>	<%
-				}%>
+				<td><%=ou.getOu_customer() %>(<%=ou.getOu_cell() %>)</td>
+				<td>결재완료</td>		
 				<td><a href="Review.jsp"><span class="bt">이용후기</span></a></td>
 			</tr>
 	<%
