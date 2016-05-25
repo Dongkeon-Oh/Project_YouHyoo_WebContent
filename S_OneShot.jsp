@@ -295,7 +295,7 @@ and ra_pnum=(select p_num from pension where p_addr2='가평군'))
 			<%=r_dto.getR_name()%> 
 			<a onclick="open('DetailView.jsp?p_num=<%=p_num%>','ord','width=1050,height=800,scrollbars=yes')">
 				<input type="button" name="ord" value="예약"></a> 
-			<a	onclick="open('Photo_view.jsp?p_num=<%=p_num%>','view','width=1050,height=800,scrollbars=yes')">
+			<a	onclick="open('DetailPhoto.jsp?p_num=<%=p_num%>','view','width=1050,height=800,scrollbars=yes')">
 				<img alt="미리보기" src="imgs/search/view.jpg"></a>
 			</td>
 			<td>
@@ -319,7 +319,7 @@ and ra_pnum=(select p_num from pension where p_addr2='가평군'))
 	 }else{ //검색리스트 결과가 없으면
 		  %>
 		<tr>
-			<td colspan="6"><font color="blue"><b>검색결과가 없습니다.</b></font></td>
+			<td colspan="7"><font color="blue"><b>검색결과가 없습니다.</b></font></td>
 		</tr>
 	</table>
 	<%
