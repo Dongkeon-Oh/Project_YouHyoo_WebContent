@@ -82,6 +82,20 @@ try{
 	
 	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script>
+	function checkForm(){
+		if($("#qp_title").val()==''){
+			alert("제목을 입력하시기 바랍니다.");
+			$("#qp_title").focus();
+			return false;
+		}else if($("#qp_question").val()==''){
+			alert("질문 사항을 입력하시기 바랍니다.");
+			$("#qp_question").focus();
+			return false;
+		}else{
+			$("#writeForm").submit();
+		}
+	}
+	
 	$(function ReadAfter(){
 		jQuery(".link").click(function(){
 			console.log(jQuery(this).attr("id"));
@@ -288,7 +302,7 @@ try{
 						<input type="button" id="btn1" value="문의하기">
 					</div>
 					<div class="bb">
-						<form name="writeForm" method="post" action="Q_PensionProc.jsp">
+						<form id="writeForm" method="post" action="Q_PensionProc.jsp">
 							<input type="hidden" name="p_num" value="<%=p_num %>">
 							<table>
 							
@@ -317,7 +331,7 @@ try{
 							
 							<tr>
 								<td colspan="2" align="center">
-									<input type="submit" value="글쓰기">
+									<input type="button" value="글쓰기" onclick="checkForm()">
 									<input type="reset" value="다시쓰기">
 									<input type="reset" id="btn2" value="돌아가기">
 								</td>
