@@ -1,0 +1,83 @@
+@CHARSET "UTF-8";
+    		
+     		/* 달력 범위 변경 버튼 and 달력 범위 표시부 */ 
+     		#calsetdiv{
+     			background-color: #CCCCCC;
+     		}
+     		
+     		#calSet{
+     			padding: 5px;
+     			width: 350px;
+     			margin: 0 auto;
+     		}
+     		
+     		#back{
+     			float: left;
+     			margin: 0px 30px 0px 0px;
+     		}
+     		
+     		#periodSpace{
+     			float: left;
+     			margin: 0px 30px 0px 0px;
+     		}
+     		     		
+     		/* 요일, 날짜, 성or비수기 출력부*/
+     		#days{
+     			background-color: #71BFFF;
+     			color: #FFFFFF;
+     			font-size: 17px;
+     		}
+     		
+     		#dates{
+     			background-color: #71BFFF;
+     			color: #FFFFFF;
+     			font-size: 17px;
+     		}
+     		
+     		/* 펜션 정보 출력부 */ 
+     		#addOption{
+	     		text-align: center;
+	     		width: 100%;
+     			float: left;
+	     		font-size: 13px;
+     		}
+     		
+     		.roomOrderCheck{
+     			padding: 3px;
+     			text-align: center;
+     			font-size: 20px; 
+     			color: #ffffff;
+     			background-color: #0080FF;
+     		}
+     		
+     		/* 주문부 */
+     		#addOrder{
+	     		width: 100%;
+     			float: left;
+	     		font-size: 20px;
+     		}
+     		select{
+     			width: 100px;
+     		}
+     		
+     		.payForm > td{
+     			text-align: right;
+     		}
+     		
+     		#warning{
+     			background-color: #EEEEEE;
+     			padding : 5px;
+     			font-size : 15px;
+     			width:400px;
+     			float: left;
+     			text-align: left;
+     		}
+     		
+     		#pay_Button{ 
+				width: 150px;
+				height: 60px;
+				vertical-align: bottom;
+			 	background-image: url('imgs/DetailView/orderButton.jpg'); 
+			 	background-position: top right; 
+			 	background-repeat: no-repeat;
+			}

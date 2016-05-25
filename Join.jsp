@@ -8,7 +8,7 @@
  $(function(){
 	$("input:checkbox[class=chk]").click(function(){
 		if($("input:checkbox[class=chk]:checked").length==$(".chk").length){
-			$("#chk").attr("checked",true);
+			$("#agreeall").prop("checked",true);
 		}
 		
 		if($("input:checkbox[class=chk]:checked").length<$(".chk").length){
@@ -49,11 +49,12 @@
 		 alert("id는 필수 입력입니다");
 		 return false;
 	 }
-	 var checkid=document.all.checkid.value;
-	 if(checkid==0){
+	 
+	 if(joinForm.checkid.value==0){
 		 alert("중복확인을 하세요");
 		 return false;
 	 }
+	 
 	 if(joinForm.u_name.value==''){
 		 alert("이름은 필수 입력입니다");
 		 joinForm.u_name.focus();
@@ -138,6 +139,10 @@
 	 url="ConfirmId.jsp?u_id="+joinForm.u_id.value;
 	 open(url,"confirm","width=300,height=200");
  }//ConfirmId()
+ 
+ function rechkId(){
+	 joinForm.checkid.value=0;
+ }
  
  //주소 자동입력
  function zipCheck(){
@@ -305,8 +310,8 @@
    <tr> 
     <td width=150>아이디</td>
     <td>
-     <input type=text name=u_id id=u_id size=20> 
-     <input type=hidden name=checkid id=checkid value=0>
+     <input type=text name=u_id id=u_id size=20 onclick="rechkId()"> 
+     <input type=hidden name=checkid id=checkid value="0">
      <input type="button" value="중복확인" onclick="confirmId(this.form)">
     </td>
    </tr>

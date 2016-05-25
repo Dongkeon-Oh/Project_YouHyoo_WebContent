@@ -15,9 +15,6 @@ List<Room_Dto> room=detail.getRoomMin(p_num);
 //Pension_Dto pension=detail.getPension(p_num);
 //List<OrderRoom_Dto> order=detail.getOrder(p_num);
 
-
-
-
 String orders[][]=new String[orderAmount][5];
 for(int i=0; i<orderAmount; i++){
 	orders[i][0]=request.getParameter("r_num"+i);
@@ -30,18 +27,30 @@ for(int i=0; i<orderAmount; i++){
 
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">	
+		<link href="TopBottom.css" type="text/css" rel="stylesheet">
 		<script src="moment.js"></script>
     	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-    	
     	<script>
 	    	$(document).ready(function(){
 	    		// 이게 정답인지는 모르겠다.
-	    		dataSet(<%=orderAmount%>);
-	    		
+	    		<% for(int k=0; k<orderAmount; k++){ 
+	    			String YYYY=(orders[k][1]).substring(0,4);
+	    			String MM=(orders[k][1]).substring(5,7);
+	    			String DD=(orders[k][1]).substring(8,10);
+	    		%>	
+	    			dataSet(
+		    			<%= orders[k][0] %>,
+		    			<%= YYYY %>,
+		    			<%= MM %>,
+		    			<%= DD %>,
+		    			<%= orders[k][2] %>,
+		    			<%= orders[k][3] %>,
+		    			<%= orders[k][4] %>
+	    			);
+	    		<% } %>
 	    		
 	    		// 전역 설정
-	    		$("#mainSizeSet").css("width","1000px");
+	    		$("#mainSizeSet").css({"width":"1000px","margin":"0 auto"});
 	    		$("table").css("width","100%");
 	    		$("td").css("padding","3px");
 	    		
@@ -66,15 +75,23 @@ for(int i=0; i<orderAmount; i++){
 	    		$("textarea").css({"font-size":"13pt","width":"580px","height":"160px"});
 	    		});
 	    	
-	    	function dataSet(cnt){
-	    		for(var i=0; i<cnt; i++){
-	    			var tossDatas='<br>'
-	    				  // What should I do???
-			    		 
-			    		    			
-		    		$("#insertData").append(tossDatas);
-					alert($("#insertData").html());
-				}
+	    	var dataNumSet=0;
+	    	function dataSet(r_num, YYYY, MM, DD, people, price, exPrice){
+	    		var tossDatas='';
+	    		
+	    		var zero1='';
+	    		var zero2='';
+	    		if(MM<10){zero1='0';}
+	    		if(DD<10){zero2='0';}
+	    		
+	    		tossDatas+='<input type="hidden" name="r_num'+dataNumSet+'" value="'+r_num+'">';
+	    		tossDatas+='<input type="hidden" name="date'+dataNumSet+'" value="'+YYYY+'-'+zero1+MM+'-'+zero2+DD+'">';
+	    		tossDatas+='<input type="hidden" name="people'+dataNumSet+'" value="'+people+'">';
+	    		tossDatas+='<input type="hidden" name="price'+dataNumSet+'" value="'+price+'">';
+	    		tossDatas+='<input type="hidden" name="exPrice'+dataNumSet+'" value="'+exPrice+'">';
+	   			// What should I do???
+	    		$("#insertData").append(tossDatas);	
+	    		dataNumSet+=1;
 	    	}
 	    	
 	    	function getWeekday(yy, mm, dd, i){
@@ -82,12 +99,12 @@ for(int i=0; i<orderAmount; i++){
 	    		
 	    		if(mm==7){
 	    			if(dd>=15){
-	    				$(idSet).append("<b><font color='#71BFFF'>성수기</font></b>");
+	    				$(idSet).append("<b><font color='#FF5050'>성수기</font></b>");
 	    			}else{
 	    				$(idSet).append("<b><font>비수기</font></b>");
 	    			}
 	    		}else if(mm==8){
-	    			$(idSet).append("<b><font color='#71BFFF'>성수기</font></b>");
+	    			$(idSet).append("<b><font color='#FF5050'>성수기</font></b>");
 	    		}else{
 	    			$(idSet).append("<b><font>비수기</font></b>");
 	    		}
@@ -95,7 +112,7 @@ for(int i=0; i<orderAmount; i++){
 	    	    var daySet = new Date(yy, mm-1, dd);
 	    	    
 	    	    if(daySet.getDay()==0||daySet.getDay()==6){
-	    	    	$(idSet).append("<br><b><font color='#71BFFF'>주말</font></b>");
+	    	    	$(idSet).append("<br><b><font color='#FF5050'>주말</font></b>");
 	    	    }else{
 	    	    	$(idSet).append("<br><b><font color='#0080FF'>주중</font></b>");
 	    	    }
@@ -113,8 +130,60 @@ for(int i=0; i<orderAmount; i++){
 	    			}
 	    		});
 	    		if(checker==5){
-	    			$("#goPayProc").submit();
+	    			commitInput();
 	    		}	    		
+	    	}
+	    	
+	    	$(document).on("click",".userInput",function(){
+	    		var id='#'+$(this).attr("id");
+	    		$(id).attr("checked", true);
+	    		$("input[name=ou_paytype]").attr("value",$(id).val());	
+	    		$(id).nextAll().attr("checked", false);
+	    		$(id).prevAll().attr("checked", false);
+	    	});
+	    	
+	    	
+	    	function commitInput(){
+	    		var e_call=$("#ou_emercall1").val()
+	    		e_call+=$("#ou_emercall2").val();
+	    		e_call+=$("#ou_emercall3").val();
+	    		
+	    		$("input[name=ou_emercall]").val(e_call);
+	    		
+	    		var radioSet=0;
+	    		$("input[name=payTypeSet]").each(function(idx,item){
+	    			if($(item).attr("checked")=='checked'){
+	    				radioSet+=1;
+	    			}
+	    		});
+	    		
+	    		if($("input[name=ou_customer]").val()==''){
+	    			$("input[name=ou_customer]").focus();
+	    			alert("예약자명을 확인해주시기 바랍니다.");
+	    		}else if($("input[name=ou_birth]").val()==''){
+	    			$("input[name=ou_birth]").focus();
+	    			alert("생년월일을 확인해주시기 바랍니다.");
+	    		}else if($("input[name=ou_emercall2]").val()==''){
+	    			$("input[name=ou_emercall2]").focus();
+	    			alert("전화번호를 확인해주시기 바랍니다.");
+	    		}else if($("input[name=ou_emercall3]").val()==''){
+	    			$("input[name=ou_emercall3]").focus();
+	    			alert("전화번호를 확인해주시기 바랍니다.");
+	    		}else if(radioSet==0){
+	    			$("input[class=payTypeSet]").focus();
+	    			alert("결제 정보를 확인해주시기 바랍니다.");
+	    		}else{
+	    			if($("textarea[name=ou_request]").val()==''){
+	    				if(confirm("요청사항 없이 결제를 진행하시겠습니까?")){
+	    					
+	    				}
+	    				else{
+	    					$("textarea[name=ou_request]").focus();
+	    					return false;
+	    				}
+	    			}
+	    			$("#goPayProc").submit();
+	    		}
 	    	}
 
 			function allCommitPay(){
@@ -123,11 +192,12 @@ for(int i=0; i<orderAmount; i++){
 	    				$(item).prop("checked",true);
 	    			}
 	    		});
-	    	}
-	    	
+	    	}	    	
 		</script>
 	</head>
 	<body>
+	<%@ include file="Top.jsp" %>
+	<br>
 		<div id="mainSizeSet">
 			<table id="showOrderList" >
 				<tr id="shoppingList">
@@ -219,7 +289,7 @@ for(int i=0; i<orderAmount; i++){
 			
 			<br>
 			
-			<form method="post" id="goPayProc" action="payProc.jsp">
+			<form method="post" id="goPayProc" action="PaymentProc.jsp">
 				<table>
 					<tr>
 						<td colspan="2"><font size="5">개인정보 제 3자 제공 동의</font></td>
@@ -254,28 +324,29 @@ for(int i=0; i<orderAmount; i++){
 					</tr>
 					<tr>
 						<td class="payForm">예약자명</td>	
-						<td><input type="text"></td>			
+						<td><input name="ou_customer" class="userInput" type="text"></td>			
 					</tr>
 					<tr>
 						<td class="payForm">생년월일</td>
-						<td><input type="text"> ex : 890607</td>
+						<td><input name="ou_birth" class="userInput" type="text"> ex : 890607</td>
 					</tr>
 					<tr>
 						<td class="payForm">비상 연락처</td>
 						<td>
-							<select>
+							<select id="ou_emercall1" >
 								<option value="010">010</option>
 								<option value="016">016</option>
 								<option value="017">017</option>
 								<option value="019">019</option>
 							</select>
-							- <input type="text">
-							- <input type="text">
+							- <input id="ou_emercall2" name="ou_emercall2" type="text">
+							- <input id="ou_emercall3" name="ou_emercall3" type="text">
+							<input name="ou_emercall" class="userInput" type="hidden">
 						</td>
 					</tr>
 					<tr>
 						<td class="payForm">예약시 요청사항</td>
-						<td><textarea></textarea></td>
+						<td><textarea name="ou_request"></textarea></td>
 					</tr>
 					<tr>
 						<td class="payForm">결재 금액</td>
@@ -283,9 +354,10 @@ for(int i=0; i<orderAmount; i++){
 					</tr>
 					<tr>
 						<td colspan="2">
-							<input type="radio" name="payTypeSet" value="신용카드">신용카드&nbsp;
-							<input type="radio" name="payTypeSet" value="실시간 계좌이체">실시간 계좌이체&nbsp;
-							<input type="radio" name="payTypeSet" value="무통장 입금">무통장 입금
+							결제 정보 :&nbsp;
+							<input type="radio" class="userInput" id="creditCard" name="payTypeSet" value="100">신용카드&nbsp;
+							<input type="radio" class="userInput" id="realtimeSend" name="payTypeSet" value="10">실시간 계좌이체&nbsp;
+							<input type="radio" class="userInput" id="SendToAccount" name="payTypeSet" value="1">무통장 입금
 						</td>
 					</tr>
 					<tr>
@@ -295,11 +367,16 @@ for(int i=0; i<orderAmount; i++){
 						</td>
 					</tr>
 					<tr>
-						<td id="insertData">123</td>
+						<td id="insertData">
+							<input type="hidden" name="orderAmount" value='<%= orderAmount %>'>
+							<input type="hidden" name="p_num" value='<%= p_num %>'>
+							<input type="hidden" name="ou_paytype">
+						</td>
 					</tr>
 				</table>
 			</form>
 		</div>
+	<%@ include file="Bottom.html" %>
 	</body>
 </html>
 

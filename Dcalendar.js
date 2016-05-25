@@ -1,11 +1,42 @@
+function today(){
+	var nowDate = new Date(); //오늘 날짜 객체 선언  
+	var nYear = nowDate.getFullYear(); //오늘의 년도  
+	var nMonth = nowDate.getMonth()+1; //오늘의 월 ※ 0월부터 시작  
+	var nDate = nowDate.getDate(); //오늘의 날
+
+	switch(nowDate.getDay())
+	{
+	case 0: day="일";break;
+	case 1: day="월";break;
+	case 2: day="화";break;
+	case 3: day="수";break;
+	case 4: day="목";break;
+	case 5: day="금";break;
+	case 6: day="토";break;
+	}//switch
+	$("#sYear").text(nYear);
+	$("#sMonth").text(nMonth);
+	$("#sDate").text(nDate);
+	$("#sYoil").text(day);
+}//today() end
+
 function datePicker(tYear,tMonth,tDay,tYoil){ // 텍스트박스에 날짜 넣기 위해 만든 함수 
 	  
 	picDate = new Date(tYear, tMonth, tDay); // 변경된 날짜 객체 선언후 날짜셋팅
+	/*
 		var aa = picDate.getFullYear() + "년 " + (picDate.getMonth() + 1) + "월 "
 				+ picDate.getDate() + "일" + "(" + tYoil + ")"
+	*/			
 	//	alert(aa);
 	//	document.getElementById('selDate').innerHTML=eval(aa);
-	$("#selDate").text(aa);
+	var sYear=picDate.getFullYear();
+	var sMonth=picDate.getMonth() + 1;
+	var sDate=picDate.getDate();
+	var sYoil=tYoil;
+	$("#sYear").text(sYear);
+	$("#sMonth").text(sMonth);
+	$("#sDate").text(sDate);
+	$("#sYoil").text(sYoil);
 		
 	return aa;
 }
@@ -44,7 +75,7 @@ function calendar(tYear, tMonth) { //달력 함수
 			lastDay = 29;
 		} // 0월 부터 시작하므로 1는 2월임. 윤달 계산 4년마다 29일 , 100년는 28일, 400년 째는 29일  
 
-		calendarStr = "<TABLE>"
+		calendarStr = "<TABLE id='kCal'>"
 		calendarStr += "<TR align=center><TD valign=middle>"
 		calendarStr += "<a href=javascript:calendar(" + tYear + ","
 				+ (tMonth - 1) + ") class=preNext>◀</a>" //월을 넘길때 빼기 -1을 해서 넘긴다(년도는 자동 계산됨)  

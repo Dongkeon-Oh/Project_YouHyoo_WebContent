@@ -22,7 +22,7 @@
  </style>
  
 <script type="text/javascript">
-function question(this_num,this_tr,this_photo,this_view){
+function question(this_num,this_tr,this_photo,this_view,this_pension){
 	var tr = $(this_tr).parents("tr:first");
 	var temptd=$(this_tr).parents()[0];
 	var td=$(temptd).next().next().next();
@@ -32,14 +32,13 @@ function question(this_num,this_tr,this_photo,this_view){
 	$.ajax({
 		type:'POST',
 		url:'Review_question.jsp',
-		data:'rv_num='+this_num+'&rv_view'+this_view,
+		data:'rv_num='+this_num+'&rv_view'+this_view+"&rv_pension="+this_pension,
 		//"name=홍길동&location=서울"
 		dataType:'json',
 	success:function(data){	
 	
 		$(tr).after('<tr id=id'+this_num+'><td id=idd'+this_num+' colspan=5 align=left><br>'+data.question+'</td></tr>');
-		if(this_photo!=null){
-			alert(data.view);
+		if(this_photo!="ready"){
 			$('#idd'+this_num).prepend("<img width=250 src='imgs/"+this_photo+"'>");
 			$(td).text(data.view);
 		}//photo
@@ -58,17 +57,19 @@ function question(this_num,this_tr,this_photo,this_view){
    request.setCharacterEncoding("utf-8");
    
    Review review=new Review();//객체생성
- 
-/*
+
    if(request.getParameter("flag").equals("insert")){
 	review.Insert_Review(request);//등록메서드 호출
    }
-*/
 
-	   List list=review.List_Review();
+   		//★★★int pension_num=Integer.parseInt(request.getParameter("num"); -> 디테일뷰에서 num 받아오는 부분
+   		int pension_num=1; //★★★임의로 줌
+   		
+	   List list=review.List_Review(pension_num);
+   		
 	   Review_Dto review_dto=null;
 	   
-	   if(list.size()>=0){
+	   if(!(list.isEmpty())){
 		   for(int i=0;i<list.size();i++){
 			   review_dto=(Review_Dto)list.get(i);
 			   %>
@@ -111,10 +112,11 @@ function question(this_num,this_tr,this_photo,this_view){
 			     if(!(review_dto.getRv_photo().equals("ready"))){
 			    	 %>
 			    	 <img src="imgs/review/ifimage.jpg">
+			  
 			    	 <%
 			     }
 			     %>
-			     <input type="text" value="<%=review_dto.getRv_title()%>" style="outline-style: none; border: transparent;"  readonly="readonly" onclick="question('<%=review_dto.getRv_num()%>',this,'<%=review_dto.getRv_photo()%>','<%=review_dto.getRv_view()%>')">
+			     <input type="text" value="<%=review_dto.getRv_title()%>" style="outline-style: none; border: transparent;"  readonly="readonly" onclick="question('<%=review_dto.getRv_num()%>',this,'<%=review_dto.getRv_photo()%>','<%=review_dto.getRv_view()%>','<%=pension_num%>')">
 			     </td>
 			     
 			     <td width=100px><%=review_dto.getRv_id()%></td>
@@ -123,9 +125,7 @@ function question(this_num,this_tr,this_photo,this_view){
 			     
 			     <td width=50px><%=review_dto.getRv_view()%></td>
 			   </tr>
-
 			   <%
-
 		   }//for
 	   }else{ //후기가 없으면
 		   %>

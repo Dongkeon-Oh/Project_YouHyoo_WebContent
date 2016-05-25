@@ -1,2 +1,46 @@
 @CHARSET "UTF-8";
 
+body {
+        		height: 100%;
+        		margin: 0;
+        		padding: 0;
+     		}
+     		
+     		th{
+     			width:150px;
+     		}
+     		     		
+      		#outLine{
+      			margin: 0 auto;
+      			width: 1000px;
+      		}
+      		
+      		#pensionImg{
+				width: 320px;
+      			height: 240px;
+				display: block; 
+				margin-left: auto; 
+				margin-right: auto;
+      		}      		
+      		
+      		#imgMenu{
+      			text-align:center;
+      		}
+      		
+      		.btnSet{
+      			background-color:#bbbbbb; 
+      			margin-left:5px; 
+      			color:White; 
+      			padding:2px; 
+      			border:solid 1px gray; 
+      			font-size:11px;"
+      		}
+      		
+      		.highlightFont{
+      			color:#ff6c00;
+      		}
+      		
+      		#pensionName{
+      			font-weight: bold; 
+      			text-align: center;"
+      		}
