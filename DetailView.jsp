@@ -504,5 +504,6 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
 	    	</table>
 	</div>
 	<%@ include file="Bottom.html" %>
+	<%@ include file="Detail_intro.jsp" %>
 </body>
 </html>
