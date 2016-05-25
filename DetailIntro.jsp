@@ -5,8 +5,70 @@
 <%
 request.setCharacterEncoding("utf-8");
 PensionDao dao=PensionDao.getInstance();
-%>
+int p_num=Integer.parseInt(request.getParameter("p_num"));
 
+InsertDto dto=dao.PensionDetail(p_num);
+%>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <style>
+	/*tab*/
+	ul.tabs {
+		margin: 0;
+		padding: 0;
+		float: left;
+		list-style: none;
+		height: 32px; /*--Set height of tabs--*/
+		border-bottom: 1px solid #999;
+		border-left: 1px solid #999;
+		width: 100%;
+	}
+	ul.tabs li {
+		float: left;
+		margin: 0;
+		padding: 0;
+		height: 31px; /*--Subtract 1px from the height of the unordered list--*/
+		line-height: 31px; /*--Vertically aligns the text within the tab--*/
+		border: 1px solid #999;
+		border-left: none;
+		margin-bottom: -1px; /*--Pull the list item down 1px--*/
+		overflow: hidden;
+		position: relative;
+		background: #e0e0e0;
+	}
+	ul.tabs li lable{
+		text-decoration: none;
+		color: #000;
+		display: block;
+		font-size: 1.2em;
+		padding: 0 20px;
+		border: 1px solid #fff; /*--Gives the bevel look with a 1px white border inside the list item--*/
+		outline: none;
+	}
+	ul.tabs li lable:hover {
+		background: #ccc;
+	}
+	html ul.tabs li.active, html ul.tabs li.active lable:hover  { /*--Makes sure that the active tab does not listen to the hover properties--*/
+		background: #fff;
+		border-bottom: 1px solid #fff; /*--Makes the active tab look like it's connected with its content--*/
+	}
+	
+	/*content*/
+		border: 1px solid #999;
+		border-top: none;
+		overflow: hidden;
+		clear: both;
+		float: left; width: 100%;
+		background: #fff;
+	}
+	.tab_content {
+		padding: 20px;
+		font-size: 1.2em;
+	}
+  </style>
+  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
   <meta charset="utf-8">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <style>
@@ -15,8 +77,25 @@ PensionDao dao=PensionDao.getInstance();
   	}
   </style>
   <script>
-  $(function() {
-    $( "#tabs" ).tabs();
+  $(function(){
+    $("#tabs-2").hide();
+    $("#tabs-3").hide();
+    
+    $(document).on("click","#la_tab1",function(){
+      	$("#tabs-1").show();
+      	$("#tabs-2").hide();
+      	$("#tabs-3").hide();
+      });
+    $(document).on("click","#la_tab2",function(){
+      	$("#tabs-1").hide();
+      	$("#tabs-3").hide();
+      	$("#tabs-2").show();
+      });
+    $(document).on("click","#la_tab3",function(){
+      	$("#tabs-2").hide();
+      	$("#tabs-1").hide();
+      	$("#tabs-3").show();
+      });
   });
   
   function nullDestroy(){
@@ -26,25 +105,37 @@ PensionDao dao=PensionDao.getInstance();
 		  }
 	  });
 	  
-  }
+  };
   </script>
-  
+</head>
+<body>
 
-
-<div id="tabs">
-  <ul>
-    <li><a href="#tabs-1">소개/인사말</a></li>
-    <li><a href="#tabs-2">이용/시설 안내</a></li>
-    <li><a href="#tabs-3">주의/이용/취소안내</a></li>
-  </ul>
-  <div id="tabs-1">
-    <%
-    
-    InsertDto dto=dao.PensionDetail(p_num);
-    %>
-    <p><%=dto.getP_intro() %></p>
+<table>
+		<tr>
+			<td width="1000px" height="40px"></td>
+		</tr>
+		<tr>
+	<tr>
+		<td>
+		
+		
+<ul class="tabs">
+	<li><lable id="la_tab1">소개/인사말</lable></li>
+	<li><lable id="la_tab2">이용/시설안내</lable></li>
+	<li><lable id="la_tab3">주의/이용/취소안내</lable></li>
+</ul>
+<div class=tab_container>
+  <!-- 소개/인사말 -->
+  <div id="tabs-1" class="tab_content">
+  	<table>
+  	<tr>
+  		<td><p><%=dto.getP_intro() %></p></td>
+  	</tr>
+  	</table>
   </div>
-  <div id="tabs-2">
+  
+  <!-- 이용/시설안내 -->
+  <div id="tabs-2" class="tab_content">
     <p><%=dto.getRs_meal() %></p>
     <p><%=dto.getRs_party() %></p>
     <p><%=dto.getRs_board()%></p>
@@ -67,9 +158,10 @@ PensionDao dao=PensionDao.getInstance();
     <p><%=dto.getRf_servival()%></p>
   </div>
   
-  <div id="tabs-3">
+  <!-- 주의/이용/취소안내 -->
+  <div id="tabs-3" class="tab_content">
 	<div style="font-weight:bold; color:Black; margin:0px 0px 5px 0px;">이용시유의사항</div>
-		<div class="smtView">
+		<div>
 			<p>떠나요닷컴은 통신판매 중개자로써. 펜션운영은 펜션주의 책임하에 운영되고 있습니다.<br>
 			펜션 현장에서 일어난 일에 대해서는 떠나요닷컴은 책임이 없습니다.<br>
 			예약관리는 특성상 약간의 시간차에 의하여 오차가 발생할수 있습니다.<br>
@@ -93,7 +185,7 @@ PensionDao dao=PensionDao.getInstance();
 			취소수수료는 결제금액이 아닌 예약금(객실요금+기타옵션요금) 기준으로 책정됩니다.<br>
 			<b>취소수수료가 100% 인 경우 전액 환불되지 않습니다.</b><br>
 			수수료 내역은 아래와 같습니다.</p>
-		<table class="cancelfee">
+		<table>
 		<tr>
 			<th>
 				기준
@@ -148,7 +240,7 @@ PensionDao dao=PensionDao.getInstance();
 			<td>90% 환불</td>
 		</tr>
 		
-		<tr id="ctt_ctt_CancelFee_tr_basefee" class="basefee">
+		<tr>
 			<td>기본 취소 수수료</td>
 			<td>10%</td>
 			<td>90% 환불</td>
@@ -159,15 +251,67 @@ PensionDao dao=PensionDao.getInstance();
 		<br>
 		
 	<div style="font-weight:bold; color:Black; margin:0px 0px 5px 0px;">무통장 입금안내</div>
-		<div class="inputbankmemo">
+		<div>
 			<p>입금계좌 : 국민 448601-01-509071 피크소프트(떠나요닷컴)<br>
 			<span style="color: rgb(255, 108, 0);">예약시 입력하신 휴대폰으로 입금계좌가 전송됩니다.</span><br>
 			예약신청 하신뒤 정해진 시간내에 입금 하시면 예약이 완료 됩니다.<br>
 			<span style="color: rgb(255, 108, 0);">입금확인이 되면. 예약완료정보(업소연락처,예약번호등)가 핸드폰으로 전송</span>됩니다.<br>
-			무통장입금시 반드시 예약자명으로 입금하셔야합니다. 입금확인이 되지 않을 수 있습니다.</p><br>
+			무통장입금시 반드시 예약자명으로 입금하셔야합니다. 입금확인이 되지 않을 수 있습니다.</p>
 		</div>
+		<p class="b">현지 사정상 입금시간이 지체되면 예약이 중복 될 수 있어 빠른 입금을 부탁 드립니다.<br>
+		현지 사정상 중복이 발생한 경우 먼저 입금한 사람에게 우선권이 주어지게 됩니다.<br>
+		아래 시간내 예약자명으로 입금이 완료되지 않는 경우 다음 예약자를 위해 자동 취소 됩니다.<br></p>
+		<table>
+			<tr>
+				<th>예약 신청 시간</th>
+				<th>입금 완료 시간</th>
+			</tr>
+			<tr>
+				<td>당일 새벽 0시 부터 오전 8시 이전</td>
+				<td>오전 10시 이전까지 입금</td>
+			</tr>
+			<tr>
+				<td>
+					오전 8시 부터 낮 12시 이전
+				</td>
+				<td>
+					오후 2시 이전까지 입금
+				</td>
+			</tr>
+			<tr>
+				<td>
+					오후 12시 부터 오후 4시 이전
+				</td>
+				<td>
+					오후 6시 이전까지 입금
+				</td>
+			</tr>
+			<tr>
+				<td>
+					오후 4시 부터 밤 8시 이전
+				</td>
+				<td>
+					오후 9시 이전까지 입금
+				</td>
+			</tr>
+			<tr>
+				<td>
+					오후 8시 부터 밤 12시 이전
+				</td>
+				<td>
+					다음날 오전 10시 이전까지 입금
+				</td>
+			</tr>
+		</table>
+		<br>
 	  </div>
-	</div>
+</div>
+			<tr>
+				<td width="1000px" height="40px"></td>
+			</tr>
+		</td>
+	</tr>
+</table>
 <script>
 nullDestroy();
 </script>

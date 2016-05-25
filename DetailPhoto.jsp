@@ -3,11 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="youhyoo.*" import="java.util.List"
 	import="java.util.StringTokenizer"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+	
 <style>
 /*tab*/
 ul.tabs {
@@ -137,90 +133,103 @@ html ul.tabs li.active, html ul.tabs li.active lable:hover {
 			});
 		});
 	});
-	
 </script>
-</head>
-<body>
-	<ul class=tabs>
-		<li><lable id="la_tab1">펜션전경사진</lable></li>
-		<li><lable id="la_tab2">객실사진 및 소개</lable></li>
-	</ul>
-	<div class=tab_container>
-		<div id="tab1" class="tab_content">
-			<table>
-				<tr>
-				<td rowspan=2><img src="" id="insertimg_pension"></td>
-					<%
-						PensionDao dao = PensionDao.getInstance();
-						//String num=request.getParameter("p_num");
-						String num = "1";
-
-						String p_photo = dao.get_pension_photo(num);
-
-						if (p_photo != null) {
-							StringTokenizer st = new StringTokenizer(p_photo, "|");
-
-							while (st.hasMoreTokens()) {
-								p_photo = st.nextToken();
-					%>
-					<td valign="top"><img src="imgs/pension/<%=num%>/<%=p_photo%>" class="pension" width=100></td>
-					<%
-						}//while
-						}//if
-					%>
-				</tr>
-
-			</table>
-
-		</div>
-		<div id="tab2" class="tab_content">
-			<table>
-				<tr>
-				
-					<%
-						List list = dao.get_room_photo(num);
-						for (int i = 0; i < list.size(); i++) {
-							Room_Dto r_dto = (Room_Dto) list.get(i);
-							%>
-							<td><input type="radio" name="r_radio" value="photo_<%=i%>"><%=r_dto.getR_name()%></td>
+	<table>
+		<tr>
+			<td width="1000px" height="20px"></td>
+		</tr>
+		<tr>
+			<td width="1000px" height="30px" style="background-color:#CDCDCD;"></td>
+		</tr>
+		<tr>
+			<td width="1000px" height="20px"></td>
+		</tr>
+		<tr>
+			<td>
+			
+			
+			<ul class=tabs>
+				<li><lable id="la_tab1">펜션전경사진</lable></li>
+				<li><lable id="la_tab2">객실사진 및 소개</lable></li>
+			</ul>
+			<div class=tab_container>
+				<div id="tab1" class="tab_content">
+					<table>
+					
+					
+						<tr>
+						<td rowspan=2><img src="" id="insertimg_pension"></td>
 							<%
-								}//for
+								PensionDao dao = PensionDao.getInstance();
+								String num=request.getParameter("p_num");
+								//String num = "1";
+		
+								String p_photo = dao.get_pension_photo(num);
+		
+								if (p_photo != null) {
+									StringTokenizer st = new StringTokenizer(p_photo, "|");
+		
+									while (st.hasMoreTokens()) {
+										p_photo = st.nextToken();
+							%>
+							<td valign="top"><img src="imgs/pension/<%=num%>/<%=p_photo%>" class="pension" width=100></td>
+							<%
+								}//while
+								}//if
 							%>
 						</tr>
+		
 					</table>
-
+		
+				</div>
+				<div id="tab2" class="tab_content">
 					<table>
 						<tr>
-						<td rowspan=2><img src="" id="insertimg_room"></td>
-					<%
-						List list2 = dao.get_room_photo(num);
-						for (int i = 0; i < list2.size(); i++) {
-							int j=0;// 사진2개씩 변수
-							Room_Dto r_dto = (Room_Dto) list2.get(i);
-
-							StringTokenizer st = new StringTokenizer(r_dto.getR_photo(),"|");
-
-							while (st.hasMoreTokens()) {
-								j++;
-					%>
-					
-					<td valign="top" rowspan=2><img src="imgs/pension/<%=num%>/room/<%=st.nextToken()%>" class="photo_<%=i%>" width=100></td>
-					
-					<% 
-					if(j%2==0){//줄바꿈 위치
+						
+							<%
+								List list = dao.get_room_photo(num);
+								for (int i = 0; i < list.size(); i++) {
+									Room_Dto r_dto = (Room_Dto) list.get(i);
+									%>
+									<td><input type="radio" name="r_radio" value="photo_<%=i%>"><%=r_dto.getR_name()%></td>
+									<%
+										}//for
+									%>
+								</tr>
+							</table>
+		
+							<table>
+								<tr>
+								<td rowspan=2><img src="" id="insertimg_room"></td>
+							<%
+								List list2 = dao.get_room_photo(num);
+								for (int i = 0; i < list2.size(); i++) {
+									int j=0;// 사진2개씩 변수
+									Room_Dto r_dto = (Room_Dto) list2.get(i);
+		
+									StringTokenizer st = new StringTokenizer(r_dto.getR_photo(),"|");
+		
+									while (st.hasMoreTokens()) {
+										j++;
+							%>
+							
+							<td valign="top" rowspan=2><img src="imgs/pension/<%=num%>/room/<%=st.nextToken()%>" class="photo_<%=i%>" width=100></td>
+							
+							<% 
+							if(j%2==0){//줄바꿈 위치
+								%>
+								</tr>
+								<tr>
+								<%
+									}//if
+								}//while
+							}//for
 						%>
 						</tr>
-						<tr>
-						<%
-							}//if
-						}//while
-					}//for
-				%>
-				</tr>
-			</table>
-
-		</div>
-	</div>
-
-</body>
-</html>
+					</table>
+		
+				</div>
+			</div>
+		</td>
+		</tr>
+	</table>

@@ -53,19 +53,32 @@ function question(this_num,this_tr,this_photo,this_view,this_pension){
 </head>
 
 <body>
+<table>
+		<tr>
+			<td width="1000px" height="40px"></td>
+		</tr>
+</table>
+ <table border=1 class=review_table>
+			   <tr style="background-color: #CDCDCD; color : #4D4D4D;">
+			   	<td>평가</td>
+			   	<td>리뷰</td>
+			   	<td>작성자</td>
+			   	<td>작성일</td>
+			   	<td>조회수</td>
+			   </tr>
    <%
    request.setCharacterEncoding("utf-8");
    
    Review review=new Review();//객체생성
 
-   if(request.getParameter("flag").equals("insert")){
-	review.Insert_Review(request);//등록메서드 호출
-   }
+//   if(request.getParameter("flag").equals("insert")){
+//	review.Insert_Review(request);//등록메서드 호출
+//   }
 
-   		//★★★int pension_num=Integer.parseInt(request.getParameter("num"); -> 디테일뷰에서 num 받아오는 부분
-   		int pension_num=1; //★★★임의로 줌
+   		int pension_num=Integer.parseInt(request.getParameter("p_num"));// -> 디테일뷰에서 num 받아오는 부분
+   	//★★★int pension_num=1; //★★★임의로 줌
    		
-	   List list=review.List_Review(pension_num);
+	   List<Review_Dto> list=review.List_Review(pension_num);
    		
 	   Review_Dto review_dto=null;
 	   
@@ -73,7 +86,7 @@ function question(this_num,this_tr,this_photo,this_view,this_pension){
 		   for(int i=0;i<list.size();i++){
 			   review_dto=(Review_Dto)list.get(i);
 			   %>
-			   <table border=1 class=review_table>
+			  
 			   <tr>
 			     <td width=100px>
 			         <%
@@ -129,14 +142,19 @@ function question(this_num,this_tr,this_photo,this_view,this_pension){
 		   }//for
 	   }else{ //후기가 없으면
 		   %>
-			<table>
+			<table border=1 class=review_table>
 		    <tr>
-		     <td><b>이용 후기가 없습니다</b></td>
+		     <td style="padding: 15px 0 15px 0;"><b>이용 후기가 없습니다</b></td>
 		    </tr>
 		   </table>
 		   <%
 	  }//else
    %>
   </table>
+  <table>
+		<tr>
+			<td width="1000px" height="40px"></td>
+		</tr>
+</table>
 </body>
 </html>

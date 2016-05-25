@@ -7,8 +7,8 @@
 <%
 request.setCharacterEncoding("utf-8");
 // 추가사항 -- 세션을 통해 아이디를 전달 받음. 아이디는 변경이 불가능함.
-String u_id=(String)session.getAttribute("u_id");
-//String u_id="dj";
+String u_id=request.getParameter("u_id");
+int p_num=Integer.parseInt(request.getParameter("p_num"));
 
 int pageSize=10;
 SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
@@ -23,30 +23,30 @@ int startRow=(currentPage-1)*pageSize+1;
 int endRow=currentPage*pageSize;
 int count=0;	
 int number=0;
-List<Q_pension_Dto> list=null;
+List<Q_pension_Dto> q_List=null;
 
-PensionDao dao=PensionDao.getInstance();
-count=dao.getArticleCount();
+PensionDao qp_dao=PensionDao.getInstance();
+count=qp_dao.getArticleCount(p_num);
 
 if(count>0){
-	list=dao.getList(startRow, pageSize);
+	q_List=qp_dao.getList(startRow, pageSize, p_num);
 }
 number=count-(currentPage-1)*pageSize;
 
 //글번호
-String a = request.getParameter("qp_num");
-if(a==null){
-	a="0";
+String qp_num = request.getParameter("qp_num");
+if(qp_num==null){
+	qp_num="0";
 }
-int num=Integer.parseInt(a);
+int qp_number=Integer.parseInt(qp_num);
 
 try{
-	Q_pension_Dto dto=dao.ViewsIncrease(num);
+	Q_pension_Dto dto=qp_dao.ViewsIncrease(qp_number);
 }catch(Exception ex){}
 %>
 <html>
-	<head>
-	<title>List.jsp</title>
+<head>
+	<title>Q_Pension.jsp</title>
 	<style>
 	#qList{
 		margin : 0 auto;
@@ -55,7 +55,7 @@ try{
 	#QuestionList{
 		text-align : center;
 		border : 1px solid #BDBDBD;
-		color : #5D5D5D;
+		color : #4D4D4D;
 	}
 	
 	.ques{
@@ -79,6 +79,7 @@ try{
 		background-color : #CDCDCD;
 	} 
 	</style>
+	
 	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script>
 	$(function ReadAfter(){
@@ -109,12 +110,13 @@ try{
 				});
 			}
 		});
-		$("#qp_id").attr({"readonly":"readonly","value":"<%=u_id%>"}); 
+		 
 	});
 	
 	$(document).ready(function(){
+		$("#btn1").css({"float":"right"});
 		$("#btn1").click(function(){
-			if(<%=u_id%>==null){
+			if("<%=u_id%>"=='null'){
 				alert("로그인이 필요한 메뉴입니다.\n로그인 페이지로 이동합니다.");
 				location.href="Login.jsp";
 			}else{
@@ -128,13 +130,13 @@ try{
 			$("#btn1").show();
 			$(".bb").hide();
 		});
+		$("#qp_id").attr({"readonly":"readonly","value":"<%=u_id%>"});
 	});
 	</script>
-	
-	</head>	
-	<body>
+</head>	
+<body>
 	<!-- 
-	<form name="listForm" method="post" action="list.jsp">
+	<form name="listForm" method="post" action="Q_Pension.jsp">
 	-->
 		<table id="qList">
 			
@@ -142,13 +144,21 @@ try{
 			if(count==0){
 			%>
 			<tr>
-				<td>
-					<table>
+				<td><div class="aa">
+					<table id="QuestionList">
 						<tr>
-							<td align="center">게시판에 저장된 글이 없습니다</td>
+							<td class="tableList" align="center" width="80">답변상태</td>
+							<td class="tableList" align="center" width="500">글제목</td>
+							<td class="tableList" align="center" width="100">작성자</td>
+							<td class="tableList" align="center" width="160">작성일</td>
+							<td class="tableList" align="center" width="80">조회수</td>
+							<td class="tableList" align="center" width="80">글번호</td>
+						</tr>
+						<tr>
+							<td align="center" colspan="6" style="padding: 15px 0 15px 0;"><b>문의 내역이 없습니다</b></td>
 						</tr>
 					</table>
-				</td>
+				</div></td>
 			</tr>
 			<%
 			}else{
@@ -169,8 +179,8 @@ try{
 				<td class="tableList" align="center" width="80">글번호</td>
 			</tr>
 			<%
-			for(int i=0; i<list.size(); i++){
-				Q_pension_Dto dto=(Q_pension_Dto)list.get(i);
+			for(int i=0; i<q_List.size(); i++){
+				Q_pension_Dto dto=(Q_pension_Dto)q_List.get(i);
 			%>
 			
 			<tr>
@@ -229,7 +239,7 @@ try{
 			if(count>0){
 			%>
 				<tr align="center">
-					<td align="center">
+					<td align="center" colspan="6">
 					
 					<%
 					int pageCount=count/pageSize+(count%pageSize==0?0:1);
@@ -244,7 +254,7 @@ try{
 					//이전블럭
 					if(startPage>10){
 					%>
-					<a href="List.jsp?pageNum=<%=startPage-10 %>">[이전블럭]</a>
+					<a href="Q_Pension.jsp?pageNum=<%=startPage-10 %>">[이전블럭]</a>
 					
 					
 					<%
@@ -255,7 +265,7 @@ try{
 					for(int i=startPage; i<=endPage; i++){
 					%>
 					
-					<a href="List.jsp?pageNum=<%=i %>">[<%=i %>]</a>
+					<a href="DetailView.jsp?p_num=<%=p_num %>&pageNum=<%=i %>">[<%=i %>]</a>
 					
 					<%	
 					}
@@ -264,7 +274,7 @@ try{
 					<%
 					if(endPage<pageCount){
 					%>
-					<a href="List.jsp?pageNum=<%=startPage+10 %>">[다음블럭]</a>
+					<a href="Q_Pension.jsp?pageNum=<%=startPage+10 %>">[다음블럭]</a>
 					
 					<%
 					}
@@ -274,15 +284,12 @@ try{
 			<%
 			}
 			%>
-						<tr>
-							<td colspan=6 align="right">
-								<input type="button" id="btn1" value="문의하기">
-							</td>
-						</tr>
 						</table>
+						<input type="button" id="btn1" value="문의하기">
 					</div>
 					<div class="bb">
 						<form name="writeForm" method="post" action="Q_PensionProc.jsp">
+							<input type="hidden" name="p_num" value="<%=p_num %>">
 							<table>
 							
 							<!-- ID -->
