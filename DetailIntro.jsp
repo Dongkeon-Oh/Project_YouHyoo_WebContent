@@ -5,8 +5,9 @@
 <%
 request.setCharacterEncoding("utf-8");
 PensionDao dao=PensionDao.getInstance();
+int p_num=1;
+InsertDto dto=dao.PensionDetail(p_num);
 %>
-<<<<<<< HEAD:Detail_intro.jsp
 <html>
 <head>
   <meta charset="utf-8">
@@ -67,8 +68,6 @@ PensionDao dao=PensionDao.getInstance();
 	}
   </style>
   <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-=======
-
   <meta charset="utf-8">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <style>
@@ -76,7 +75,6 @@ PensionDao dao=PensionDao.getInstance();
   		width:1000px;
   	}
   </style>
->>>>>>> 07e48ae171c2f0fa032d23208f3d4ed3a162947d:DetailIntro.jsp
   <script>
   $(function(){
     $("#tabs-2").hide();
@@ -108,7 +106,6 @@ PensionDao dao=PensionDao.getInstance();
 	  
   };
   </script>
-<<<<<<< HEAD:Detail_intro.jsp
 </head>
 <body>
 <ul class="tabs">
@@ -121,28 +118,7 @@ PensionDao dao=PensionDao.getInstance();
   <div id="tabs-1" class="tab_content">
   	<table>
   	<tr>
-  		<td></td>
-    <%
-    PensionDao dao=PensionDao.getInstance();
-    //int p_num=Integer.parseInt(request.getParameter("p_num"));
-    p_num=1;
-=======
-  
-
-
-<div id="tabs">
-  <ul>
-    <li><a href="#tabs-1">소개/인사말</a></li>
-    <li><a href="#tabs-2">이용/시설 안내</a></li>
-    <li><a href="#tabs-3">주의/이용/취소안내</a></li>
-  </ul>
-  <div id="tabs-1">
-    <%
-    
->>>>>>> 07e48ae171c2f0fa032d23208f3d4ed3a162947d:DetailIntro.jsp
-    InsertDto dto=dao.PensionDetail(p_num);
-    %>
-    <p><%=dto.getP_intro() %></p>
+  		<td><p><%=dto.getP_intro() %></p></td>
   	</tr>
   	</table>
   </div>
