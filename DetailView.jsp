@@ -33,7 +33,8 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
     	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     	
     	<script>
-    	$(document).ready(function(){	
+    	$(document).ready(function(){
+    		
     		// 기간 출력
     		printPeriod();
     		
@@ -211,14 +212,32 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
 	    		</tr>
 	    	</table>
 	    	</form>
-	    	<div id="PhotoList"></div>
-	    	<div id="RoomOptionList"></div>
+	    	<!-- 
+	    	<div id="DetailIntro"></div>
+	    	-->
+	    	<div id="DetailPhotoArea">
+	    	<jsp:include page="DetailPhoto.jsp" />
+	    	</div>
+	    	
+	    	<div id="DetailIntroArea">
+	    	<jsp:include page="DetailIntro.jsp" >
+	    		<jsp:param value="<%=p_num %>" name="p_num"/>
+	    	</jsp:include>
+	    	</div>
+	    	
+	    	<div id="Q_pensionArea">
+	    	<jsp:include page="Q_Pension.jsp" >
+	    		<jsp:param value="<%=u_id %>" name="u_id"/>
+	    		<jsp:param value="<%=p_num %>" name="p_num"/>
+	    	</jsp:include>
+	    	</div>
+	    	
+	    	<div id="ReviewArea">
+	    	<jsp:include page="ReviewProc.jsp" >
+	    		<jsp:param value="<%=p_num %>" name="p_num"/>
+	    	</jsp:include>
+	    	</div>
 	    </div>
-	   
-	    
-	    <%@ include file="Review.jsp" %>
-	    
 	<%@ include file="Bottom.html" %>
-	<%@ include file="Detail_intro.jsp" %>
 </body>
 </html>
