@@ -5,11 +5,13 @@
     %>
 <%
 request.setCharacterEncoding("utf-8");
-int o_num=Integer.parseInt(request.getParameter("o_num"));
+int ou_num=Integer.parseInt(request.getParameter("ou_num"));
 
 //예약상세정보 얻기
 IndexMgr mgr=IndexMgr.getInstance();
-OrderRoom_Dto o=(OrderRoom_Dto)mgr.getOrderDetail(o_num);
+List<OrderRoom_Dto> oList=mgr.getOrderRoom(ou_num);
+OrderRoom_Dto o=oList.get(0);
+OrderUser_Dto ou=mgr.getOrderUser(ou_num);
 %>    
 <html>
 <head>
@@ -39,15 +41,15 @@ table.l{text-align:left;}
 		</tr>
 		<tr>
 			<th>예약번호</th>
-			<td class="l"><%=o.getO_num() %></td>		
+			<td class="l"><%=ou_num %></td>		
 		</tr>
 		<tr>
 			<th>예약자</th>
-			<td class="l"><%=o.getO_customer() %></td>		
+			<td class="l"><%=ou.getOu_customer() %></td>		
 		</tr>
 		<tr>
 			<th>요청사항</th>
-			<td class="l"><%=o.getO_request() %></td>		
+			<td class="l"><%=ou.getOu_request() %></td>		
 		</tr>
 	</table>
 </td>	
@@ -72,14 +74,21 @@ table.l{text-align:left;}
 			<th>추가요금</th>
 			<th>요금</th>
 		</tr>
+		<%
+		for(int i=0;i<oList.size();i++){
+			OrderRoom_Dto or=oList.get(i);
+		%>
 		<tr>
-			<td><%=o.getO_rname() %></td>
-			<td>DB에 없음</td>
-			<td>DB에 없음</td>
-			<td><%=o.getO_price() %></td>
-			<td>DB에 없음</td>
-			<td>DB에 없음</td>
+			<td><%=or.getO_rname() %></td>
+			<td><%=or.getO_date() %></td>
+			<td><%=or.getO_people() %></td>
+			<td><%=or.getO_price() %>원</td>
+			<td><%=or.getO_exprice() %>원</td>
+			<td><%=or.getO_price() + or.getO_exprice()%>원</td>
 		</tr>
+		<%
+		}//for
+		%>
 	</table>
 </td>	
 </tr>
@@ -99,7 +108,23 @@ table.l{text-align:left;}
 			<th>결제액</th>
 			<td>DB에 없음</td>
 			<th>결재방법</th>
-			<td>???</td>
+			<%
+			if(ou.getOu_paytype()==100){
+				%>
+				<td>신용카드</td>
+				<%
+			}
+			else if(ou.getOu_paytype()==10){
+				%>
+				<td>실시간계좌이체</td>
+				<%
+			}
+			else{
+				%>
+				<td>무통장입금</td>
+				<%
+			}
+			%>	
 			<th>예약상태</th>
 			<%
 			if(o.getO_state()==true){%>	
