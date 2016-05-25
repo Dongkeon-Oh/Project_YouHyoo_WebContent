@@ -234,5 +234,6 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
 	  
 	       
 	<%@ include file="Bottom.html" %>
+	<%@ include file="Detail_intro.jsp" %>
 </body>
 </html>
