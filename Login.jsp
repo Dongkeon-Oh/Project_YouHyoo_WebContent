@@ -18,22 +18,24 @@
   </script>
   </head>
   <body align=center>
-  <img src="imgs/top/youhyoo.PNG" width=200> 
+  <a href="Index.jsp">
+   <img src="imgs/top/youhyoo.PNG" width=300> 
+  </a>
   <form name=loginForm method=post action=Login_Proc.jsp onsubmit="return check()">
    <table align=center>   
     <tr>
      <td align=center>
-      <input type=text name=u_id placeholder="아이디">
+      <input type=text name=u_id style="font-size:13pt; padding:10px 40px 10px 10px" placeholder="아이디">
      </td>
      
      <td rowspan=2 align=center>
-      <input type="submit" value=로그인 style="width: 60px; height: 60px">
+      <input type="submit" value=로그인 style="width: 90px; height: 90px; font-size:13pt; margin-left: 5;">
      </td>
     </tr>
-    
+
     <tr>
      <td align=center>
-      <input type=password name=u_pwd placeholder="비밀번호">
+      <input type=password name=u_pwd style="font-size:13pt; padding:10px 40px 10px 10px; margin-top: 5" placeholder="비밀번호">
      </td>
     </tr>
     

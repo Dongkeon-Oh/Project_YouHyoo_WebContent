@@ -38,7 +38,7 @@ $(document).ready(function(){
 		var kMonth=$("#sMonth").text();
 		var kDate=$("#sDate").text();
 		var o_date=kYear+"-"+kMonth+"-"+kDate;
-		alert("location : "+location+" o_date : "+o_date);
+		//alert("location : "+location+" o_date : "+o_date);
 		
 		$.ajax({
 			type : 'POST',
@@ -57,7 +57,7 @@ $(document).ready(function(){
 		var kDate=$("#sDate").text();
 		var o_date=kYear+"-"+kMonth+"-"+kDate;
 		var location=$("#setLo").text();
-		alert("location : "+location+" o_date : "+o_date);
+		//alert("location : "+location+" o_date : "+o_date);
 		
 		$.ajax({
 			type : 'POST',
