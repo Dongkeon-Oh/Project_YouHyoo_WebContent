@@ -82,6 +82,18 @@ try{
 	
 	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script>
+	function checkForm(){
+		if($("#qp_title").val()==''){
+			alert("제목을 입력하시기 바랍니다.");
+			$("#qp_title").focus();
+			return false;
+		}else if($("#qp_question").val()==''){
+			
+		}else{
+			
+		}
+	}
+	
 	$(function ReadAfter(){
 		jQuery(".link").click(function(){
 			console.log(jQuery(this).attr("id"));
