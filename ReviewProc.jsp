@@ -53,6 +53,19 @@ function question(this_num,this_tr,this_photo,this_view,this_pension){
 </head>
 
 <body>
+<table>
+		<tr>
+			<td width="1000px" height="40px"></td>
+		</tr>
+</table>
+ <table border=1 class=review_table>
+			   <tr style="background-color: #CDCDCD; color : #4D4D4D;">
+			   	<td>평가</td>
+			   	<td>리뷰</td>
+			   	<td>작성자</td>
+			   	<td>작성일</td>
+			   	<td>조회수</td>
+			   </tr>
    <%
    request.setCharacterEncoding("utf-8");
    
@@ -73,7 +86,7 @@ function question(this_num,this_tr,this_photo,this_view,this_pension){
 		   for(int i=0;i<list.size();i++){
 			   review_dto=(Review_Dto)list.get(i);
 			   %>
-			   <table border=1 class=review_table>
+			  
 			   <tr>
 			     <td width=100px>
 			         <%
@@ -131,12 +144,17 @@ function question(this_num,this_tr,this_photo,this_view,this_pension){
 		   %>
 			<table border=1 class=review_table>
 		    <tr>
-		     <td><b>이용 후기가 없습니다</b></td>
+		     <td style="padding: 15px 0 15px 0;"><b>이용 후기가 없습니다</b></td>
 		    </tr>
 		   </table>
 		   <%
 	  }//else
    %>
   </table>
+  <table>
+		<tr>
+			<td width="1000px" height="40px"></td>
+		</tr>
+</table>
 </body>
 </html>

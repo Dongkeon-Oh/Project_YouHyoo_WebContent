@@ -6,6 +6,7 @@
 request.setCharacterEncoding("utf-8");
 PensionDao dao=PensionDao.getInstance();
 int p_num=Integer.parseInt(request.getParameter("p_num"));
+
 InsertDto dto=dao.PensionDetail(p_num);
 %>
 <html>
@@ -80,21 +81,21 @@ InsertDto dto=dao.PensionDetail(p_num);
     $("#tabs-2").hide();
     $("#tabs-3").hide();
     
-    $("#la_tab1").click(function(){
-    	$("#tabs-1").show();
-    	$("#tabs-2").hide();
-    	$("#tabs-3").hide();
-    });
-    $("#la_tab2").click(function(){
-    	$("#tabs-1").hide();
-    	$("#tabs-3").hide();
-    	$("#tabs-2").show();
-    });
-    $("#la_tab3").click(function(){
-    	$("#tabs-2").hide();
-    	$("#tabs-1").hide();
-    	$("#tabs-3").show();
-    });
+    $(document).on("click","#la_tab1",function(){
+      	$("#tabs-1").show();
+      	$("#tabs-2").hide();
+      	$("#tabs-3").hide();
+      });
+    $(document).on("click","#la_tab2",function(){
+      	$("#tabs-1").hide();
+      	$("#tabs-3").hide();
+      	$("#tabs-2").show();
+      });
+    $(document).on("click","#la_tab3",function(){
+      	$("#tabs-2").hide();
+      	$("#tabs-1").hide();
+      	$("#tabs-3").show();
+      });
   });
   
   function nullDestroy(){
@@ -108,6 +109,16 @@ InsertDto dto=dao.PensionDetail(p_num);
   </script>
 </head>
 <body>
+
+<table>
+		<tr>
+			<td width="1000px" height="40px"></td>
+		</tr>
+		<tr>
+	<tr>
+		<td>
+		
+		
 <ul class="tabs">
 	<li><lable id="la_tab1">소개/인사말</lable></li>
 	<li><lable id="la_tab2">이용/시설안내</lable></li>
@@ -295,7 +306,12 @@ InsertDto dto=dao.PensionDetail(p_num);
 		<br>
 	  </div>
 </div>
-	
+			<tr>
+				<td width="1000px" height="40px"></td>
+			</tr>
+		</td>
+	</tr>
+</table>
 <script>
 nullDestroy();
 </script>

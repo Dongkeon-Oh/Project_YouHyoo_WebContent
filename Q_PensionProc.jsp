@@ -4,7 +4,7 @@
     %>
 <%
 request.setCharacterEncoding("utf-8");
-String p_num=request.getParameter("p_num");
+int p_num=Integer.parseInt(request.getParameter("p_num"));
 %>
 <jsp:useBean id="dto" class="youhyoo.Q_pension_Dto">
 	<jsp:setProperty name="dto" property="*"/>
@@ -12,7 +12,7 @@ String p_num=request.getParameter("p_num");
 
 <%
 PensionDao dao=PensionDao.getInstance();
-dao.insertQuestion(dto);
+dao.insertQuestion(dto, p_num);
 //response.sendRedirect("Detailview.jsp?p_num=");
 %>
 <script>

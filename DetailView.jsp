@@ -215,25 +215,29 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
 	    	<!-- 
 	    	<div id="DetailIntro"></div>
 	    	-->
-	    	<div id="PhotoList"><%@ include file="DetailPhoto.jsp" %></div>
-	    	<div id="RoomOptionList"></div>
+	    	<div id="DetailPhotoArea">
+	    	<jsp:include page="DetailPhoto.jsp" />
+	    	</div>
+	    	
+	    	<div id="DetailIntroArea">
+	    	<jsp:include page="DetailIntro.jsp" >
+	    		<jsp:param value="<%=p_num %>" name="p_num"/>
+	    	</jsp:include>
+	    	</div>
+	    	
 	    	<div id="Q_pensionArea">
 	    	<jsp:include page="Q_Pension.jsp" >
 	    		<jsp:param value="<%=u_id %>" name="u_id"/>
 	    		<jsp:param value="<%=p_num %>" name="p_num"/>
 	    	</jsp:include>
 	    	</div>
+	    	
 	    	<div id="ReviewArea">
 	    	<jsp:include page="ReviewProc.jsp" >
 	    		<jsp:param value="<%=p_num %>" name="p_num"/>
 	    	</jsp:include>
 	    	</div>
 	    </div>
-	   
-	    
-	  
-	       
 	<%@ include file="Bottom.html" %>
-	<%@ include file="Detail_intro.jsp" %>
 </body>
 </html>
