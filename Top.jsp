@@ -79,7 +79,7 @@ String u_id=(String)session.getAttribute("u_id");
 		<tr>
 			<td id="top_search">
 				<a class="top_menu" href="S_Location.jsp">지역별 펜션</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<a class="top_menu" href="http://www.google.com">잔여객실 즉시할인</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a class="top_menu" href="S_Discount.jsp">잔여객실 즉시할인</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<a class="top_menu" href="S_OneShot.jsp">맞춤으로 한방에 검색</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<a class="top_menu" href="S_OnMap.jsp">지도에서 한눈에 검색</a>
 			</td>

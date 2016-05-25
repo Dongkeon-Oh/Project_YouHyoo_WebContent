@@ -9,6 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="TopBottom.css" type="text/css" rel="stylesheet">
 <style type="text/css">
+#selDate{font-size : 35px}
 body {width: 1000px; margin: 0 auto;}
      td.today {color: #ffffff;   font-weight:bold; border:solid thin 0pt; font-size:9pt; background-color: #cc0033; }  
      td.workday {color: #000099;    font-weight:normal; border:solid thin 0.5pt; font-size:9pt; }  

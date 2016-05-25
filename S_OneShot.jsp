@@ -229,9 +229,9 @@ and ra_pnum=(select p_num from pension where p_addr2='가평군'))
   <%
   String p_num=p_dto.getP_num()+"";
   String p_num2;
-  if(Integer.parseInt(p_num)/100==1){
+  if(Integer.parseInt(p_num)/100>=1){
 	  p_num2="P"+p_num;
-  }else if(Integer.parseInt(p_num)/10==1){
+  }else if(Integer.parseInt(p_num)/10>=1){
 	  p_num2="P0"+p_num;
   }else{
 	  p_num2="P00"+p_num;
