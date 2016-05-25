@@ -5,7 +5,7 @@
 <%
 request.setCharacterEncoding("utf-8");
 PensionDao dao=PensionDao.getInstance();
-int p_num=1;
+int p_num=Integer.parseInt(request.getParameter("p_num"));
 InsertDto dto=dao.PensionDetail(p_num);
 %>
 <html>
