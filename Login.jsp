@@ -29,13 +29,13 @@
      </td>
      
      <td rowspan=2 align=center>
-      <input type="submit" value=로그인 style="width: 90px; height: 90px; font-size:13pt; margin-left: 5;">
+      <input type="submit" value=로그인 style="border-radius:4px; width: 90px; height: 90px; font-size:13pt; font-weight:bold; margin-left:5; background-color: cornflowerblue;">
      </td>
     </tr>
 
     <tr>
      <td align=center>
-      <input type=password name=u_pwd style="font-size:13pt; padding:10px 40px 10px 10px; margin-top: 5" placeholder="비밀번호">
+      <input type=password name=u_pwd style="font-size:13pt; padding:10px 40px 10px 10px; margin-top:5" placeholder="비밀번호">
      </td>
     </tr>
     
@@ -48,10 +48,14 @@
     <tr>
      <td colspan=2 align=center>
       <a href="Join.jsp">회원가입</a> |
-      <a href="aaa.jsp">아이디/비밀번호찾기</a>
+      <a href="search.jsp">아이디/비밀번호찾기</a>
      </td>
-    </tr>
+    </tr>  
    </table>
   </form>
+  
+  <footer style="text-align:center;">
+   <p>ⓒYou休</p>
+  </footer>
   </body>
 </html>
