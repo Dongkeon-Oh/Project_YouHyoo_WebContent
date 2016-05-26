@@ -30,11 +30,11 @@ List<Room_Dto> roomList=indexMgr.getIndexRoomList(pensionNumber);
 		<link href="TopBottom.css" type="text/css" rel="stylesheet">
 	  	<link href="S_Location.css" type="text/css" rel="stylesheet">
 		<script>
+			
 			function jjimSet(thisForm,pensionNumber){
-				 
-				if(<%=(String)session.getAttribute("u_id")%>==null){
+				if('<%=(String)session.getAttribute("u_id")%>'=='null'){
 					alert("로그인이 필요한 메뉴입니다.\n로그인 페이지로 이동합니다.");
-					location.href="http://google.com";
+					location.href="Login.jsp";
 				}else{
 					thisForm.pension.value=pensionNumber;
 					thisForm.submit();
@@ -51,7 +51,7 @@ List<Room_Dto> roomList=indexMgr.getIndexRoomList(pensionNumber);
 		<%@ include file="Top.jsp" %>
 		<table id="S_LocMainFrame">
 			<tr>
-				<td>
+				<td id="S_LocPadding">
 					<div id="S_LocMenu">
 						<form method="post" name="locationChoice" id="locationChoice" action="S_Location.jsp">
 							<img src="imgs/S_Location/good.jpg" class="S_LocImg">
@@ -128,7 +128,7 @@ List<Room_Dto> roomList=indexMgr.getIndexRoomList(pensionNumber);
 											</td>
 										</tr>
 										<tr>
-											<td class="index_link">
+											<td class="S_Locindex_link">
 												<font size="2">주중 </font>
 												<font size="2" color="red"><%=room.getR_min_wd() %></font>~ / 
 												<font size="2">주말 </font>

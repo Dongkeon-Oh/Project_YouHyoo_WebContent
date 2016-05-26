@@ -26,12 +26,11 @@ List<Room_Dto> roomList=indexMgr.getIndexRoomList(pensionNumber);
 		<link href="Index.css" type="text/css" rel="stylesheet">
 		<link href="TopBottom.css" type="text/css" rel="stylesheet">
 		<script>
-			function jjimSet(thisForm,pensionNumber){				 
-				if(<%=(String)session.getAttribute("u_id")%>!=null){
+			function jjimSet(thisForm,pensionNumber){
+				if('<%=(String)session.getAttribute("u_id")%>'=='null'){
 					alert("로그인이 필요한 메뉴입니다.\n로그인 페이지로 이동합니다.");
 					location.href="Login.jsp";
 				}else{
-					alert("dd");
 					thisForm.pension.value=pensionNumber;
 					thisForm.submit();
 				}
