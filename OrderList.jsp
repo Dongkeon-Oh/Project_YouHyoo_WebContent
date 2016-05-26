@@ -24,6 +24,14 @@ $(function(){
 		
 		window.open("OrderDetail.jsp?ou_num="+ou_num,+"예약내역상세","left=600,top=250,width=800,height=500");
 	});
+	/*
+	$(".reviewBt").click(function(){
+		var ou_num=eval($(~ this).text());
+		alert(ou_num);
+		var url="Review.jsp?ou_num="+ou_num+"&rv_pension="+rv_pension+"&u_id="+u_id+"";
+		window.open(url,"이용후기","left=600,top=250,width=800,height=500");
+	});
+	*/
 });	
 </script>
 <link href="MyPage.css" type="text/css" rel="stylesheet">
@@ -54,10 +62,10 @@ $(function(){
 			<tr id="Ordertr">
 				<td><span class="ou_numBt"><%=ou.getOu_num() %></span></td>
 				<td><%=ou.getOu_date() %></td>
-				<td><%=o.getO_pname() %></td>
+				<td class="pname"><%=o.getO_pname() %></td>
 				<td><%=ou.getOu_customer() %>(<%=ou.getOu_cell() %>)</td>
 				<td>결제완료</td>		
-				<td><a href="Review.jsp"><span class="bt">이용후기</span></a></td>
+				<td><a href="#"><span class="bt" onclick="javascript:window.open('Review.jsp?ou_num=<%=ou.getOu_num() %>&rv_pension=<%=o.getO_pname()%>&u_id=<%=u_id%>','이용후기','left=600,top=250,width=800,height=500')">이용후기</span></a></td>
 			</tr>
 	<%
 		}//for
