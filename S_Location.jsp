@@ -32,7 +32,7 @@ List<Room_Dto> roomList=indexMgr.getIndexRoomList(pensionNumber);
 		<script>
 			function jjimSet(thisForm,pensionNumber){
 				 
-				if(<%=(String)session.getAttribute("memberSession")%>==null){
+				if(<%=(String)session.getAttribute("u_id")%>==null){
 					alert("로그인이 필요한 메뉴입니다.\n로그인 페이지로 이동합니다.");
 					location.href="http://google.com";
 				}else{
@@ -137,7 +137,7 @@ List<Room_Dto> roomList=indexMgr.getIndexRoomList(pensionNumber);
 										</tr>
 										<tr>
 											<td>
-												<form method="post" name="jjim" class="jjim" action="http://www.naver.com">
+												<form method="post" name="jjim" class="jjim" action="WishlistProc.jsp">
 													<input type="button" id="index_Button" onclick="javascript:jjimSet(this.form,'<%=pension.getP_num() %>')">
 													<input type="hidden" name="pension">
 													&nbsp;
