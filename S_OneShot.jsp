@@ -319,7 +319,7 @@ and ra_pnum=(select p_num from pension where p_addr2='가평군'))
 	 }else{ //검색리스트 결과가 없으면
 		  %>
 		<tr>
-			<td colspan="6"><font color="blue"><b>검색결과가 없습니다.</b></font></td>
+			<td colspan="7"><font color="blue"><b>검색결과가 없습니다.</b></font></td>
 		</tr>
 	</table>
 	<%

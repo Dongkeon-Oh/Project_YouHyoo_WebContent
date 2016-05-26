@@ -107,7 +107,7 @@ table.l{text-align:left;}
 		<tr>
 			<th>결제액</th>
 			<td>DB에 없음</td>
-			<th>결재방법</th>
+			<th>결제방법</th>
 			<%
 			if(ou.getOu_paytype()==100){
 				%>

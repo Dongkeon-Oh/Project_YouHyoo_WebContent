@@ -85,16 +85,26 @@ InsertDto dto=dao.PensionDetail(p_num);
       	$("#tabs-1").show();
       	$("#tabs-2").hide();
       	$("#tabs-3").hide();
+      	$("#tabs-4").hide();
       });
     $(document).on("click","#la_tab2",function(){
       	$("#tabs-1").hide();
-      	$("#tabs-3").hide();
       	$("#tabs-2").show();
+      	$("#tabs-3").hide();
+      	$("#tabs-4").hide();
+      	
       });
     $(document).on("click","#la_tab3",function(){
-      	$("#tabs-2").hide();
       	$("#tabs-1").hide();
+      	$("#tabs-2").hide();
       	$("#tabs-3").show();
+      	$("#tabs-4").hide();
+      });
+    $(document).on("click","#la_tab4",function(){
+      	$("#tabs-1").hide();
+      	$("#tabs-2").hide();
+      	$("#tabs-3").hide();
+      	$("#tabs-4").show();
       });
   });
   
@@ -123,6 +133,7 @@ InsertDto dto=dao.PensionDetail(p_num);
 	<li><lable id="la_tab1">소개/인사말</lable></li>
 	<li><lable id="la_tab2">이용/시설안내</lable></li>
 	<li><lable id="la_tab3">주의/이용/취소안내</lable></li>
+	<li><lable id="la_tab4">찾아오시는 길</lable></li>
 </ul>
 <div class=tab_container>
   <!-- 소개/인사말 -->
@@ -304,6 +315,13 @@ InsertDto dto=dao.PensionDetail(p_num);
 			</tr>
 		</table>
 		<br>
+	  </div>
+	  <div id="tabs-4" class="tab_content">
+	  	<table>
+	  	<tr>
+	  		<td><p><%=dto.getP_contect() %></p></td>
+	  	</tr>
+	  	</table>
 	  </div>
 </div>
 			<tr>

@@ -39,7 +39,7 @@ $(function(){
 			<col width="15%" />
 	</colgroup>
 	<tr>
-		<th>에약번호</th>
+		<th>예약번호</th>
 		<th>주문날짜</th>
 		<th>업소명</th>
 		<th>예약자명</th>
@@ -56,7 +56,7 @@ $(function(){
 				<td><%=ou.getOu_date() %></td>
 				<td><%=o.getO_pname() %></td>
 				<td><%=ou.getOu_customer() %>(<%=ou.getOu_cell() %>)</td>
-				<td>결재완료</td>		
+				<td>결제완료</td>		
 				<td><a href="Review.jsp"><span class="bt">이용후기</span></a></td>
 			</tr>
 	<%
