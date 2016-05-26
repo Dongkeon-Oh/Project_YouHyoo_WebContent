@@ -75,6 +75,7 @@
  	 //변수
  	 tempArea=""; //선택 된 라디오버튼 값 담을변수
  	 subSql=""; //서브쿼리
+ 	 //sql=" and "; //넘겨줄 최종 쿼리
  	 sql=""; //넘겨줄 최종 쿼리
   
 	 //내일날짜 셋팅하기
@@ -104,16 +105,7 @@
         	var checkboxValues=$(this).val();
         	sql=sql+checkboxValues+" is not null and ";
         		});  
-    	$("input[name=quickDate]")
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
+
         sql=sql+"ra_pnum=any("+subSql+"))";
  
         $("#msql").attr("value",sql);
@@ -211,14 +203,15 @@ and ra_pnum=(select p_num from pension where p_addr2='가평군'))
 			<tr>
 				<th colspan=2 height="40px">이용기준</th>
 				<th>이용일 <input type="text" name="quickDate" class="datepicker" id="datepicker" value="">부터 
-				<select name="quickTerm" id="quickTerm" size="1">
-						<option value="1">1박 2일</option>
-						<option value="2">2박 3일</option>
-						<option value="3">3박 4일</option>
-						<option value="4">4박 5일</option>
-						<option value="5">5박 6일</option>
-						<option value="6">6박 7일</option>
+				<select name="quickTerm" id="quickTerm">
+						<option class="quickTerm" value="1">1박 2일</option>
+						<option class="quickTerm" value="2">2박 3일</option>
+						<option class="quickTerm" value="3">3박 4일</option>
+						<option class="quickTerm" value="4">4박 5일</option>
+						<option class="quickTerm" value="5">5박 6일</option>
+						<option class="quickTerm" value="6">6박 7일</option>
 				</select> &nbsp; 
+				
 				<input type="text" name="quickMember" id="quickMember" size="2">명
 				</th>
 			</tr>
@@ -250,8 +243,15 @@ and ra_pnum=(select p_num from pension where p_addr2='가평군'))
 
 		<%
   One_shotDao you=new One_shotDao();
-    
+  String ordsql="";
   List p_list=you.get_P_List(sql);
+  
+  
+  if(request.getParameter("quickTerm").equals("1")){
+	 System.out.println(sql);
+	 ordsql="select o_num from order_room where o_date='2016-05-30')";
+	 
+  }//
 	 if(p_list.size()>0){
  		for(int i=0;i<p_list.size();i++){
 	
@@ -295,7 +295,7 @@ and ra_pnum=(select p_num from pension where p_addr2='가평군'))
 			<%=r_dto.getR_name()%> 
 			<a onclick="open('DetailView.jsp?p_num=<%=p_num%>','ord','width=1050,height=800,scrollbars=yes')">
 				<input type="button" name="ord" value="예약"></a> 
-			<a	onclick="open('Photo_view.jsp?p_num=<%=p_num%>','view','width=1050,height=800,scrollbars=yes')">
+			<a	onclick="open('DetailPhoto.jsp?p_num=<%=p_num%>','view','width=1050,height=800,scrollbars=yes')">
 				<img alt="미리보기" src="imgs/search/view.jpg"></a>
 			</td>
 			<td>
