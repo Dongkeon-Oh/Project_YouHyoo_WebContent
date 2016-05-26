@@ -16,7 +16,7 @@ body {width: 1000px; margin: 0 auto;}
      td.sunday{color: #cc0033; font-weight:normal; border:solid thin 0.5pt; font-size:9pt; }  
      td.satday{color: #0000ff;    font-weight:normal; border:solid thin 0.5pt; font-size:9pt; }  
      td.week  {color: #000000;   font-weight:normal; border:solid thin 0.5pt; font-size:9pt; background-color:#e6e6e6;width: 18px;text-align:center}  
-  
+  	 #kCal td {cursor:pointer;}
     .preNext {color: #000099;text-decoration: none;} 
 </style>
 
@@ -58,6 +58,7 @@ $(document).ready(function(){
 		var kDate=$("#sDate").text();
 		var o_date=kYear+"-"+kMonth+"-"+kDate;
 		var location=$("#setLo").text();
+		//$(this).css("color","yellow");
 		//alert("location : "+location+" o_date : "+o_date);
 		
 		$.ajax({

@@ -5,13 +5,20 @@
     import="youhyoo.*"
     %>
     
-
 <%
-String userId=(String)session.getAttribute("u_Id");
+String userId=(String)session.getAttribute("u_id");
 int roomNumber=Integer.parseInt(request.getParameter("pension"));
-System.out.println(userId+"?"+roomNumber);
 
 IndexMgr indexMgr=IndexMgr.getInstance();
-indexMgr.setWishlist(userId, roomNumber);
-response.sendRedirect("MyPage.jsp");
+if(indexMgr.checkWishlist(userId, roomNumber)){
+	indexMgr.setWishlist(userId, roomNumber);
+	response.sendRedirect("MyPage.jsp");
+}else{
+%>
+	<script>
+		alert("이미 찜리스트에 있는 펜션입니다.");
+		history.back();
+	</script>
+<%	
+}
 %>

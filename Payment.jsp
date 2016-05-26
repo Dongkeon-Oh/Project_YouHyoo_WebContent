@@ -173,6 +173,63 @@ for(int i=0; i<orderAmount; i++){
 	    			$("input[class=payTypeSet]").focus();
 	    			alert("결제 정보를 확인해주시기 바랍니다.");
 	    		}else{
+	    			var yy=$("input[name=ou_birth]").val().substring(0,2);
+	    			var mm=$("input[name=ou_birth]").val().substring(2,4);
+	    			var dd=$("input[name=ou_birth]").val().substring(4,6);
+	    			
+	    			alert(yy+":"+mm+":"+dd);
+	    			
+	    			if($("input[name=ou_birth]").val()<101){
+	    				$("input[name=ou_birth]").focus();
+		    			alert("생년월일을 확인해주시기 바랍니다.");
+		    			return false;
+	    			}else if(mm>13||mm<0||mm==null){
+	    				$("input[name=ou_birth]").focus();
+		    			alert("생년월일을 확인해주시기 바랍니다.");
+		    			return false;
+	    			}
+	    			
+	    			switch(mm){
+	    			case 1:
+	    			case 3:
+	    			case 5:
+	    			case 7:
+	    			case 8:
+	    			case 10:
+	    			case 12:{
+	    				if(dd>31||dd>0||dd==null){
+	    					$("input[name=ou_birth]").focus();
+			    			alert("생년월일을 확인해주시기 바랍니다.");
+			    			return false;
+	    				}
+	    			}
+	    			case 4:
+	    			case 6:
+	    			case 9:
+	    			case 11:{
+	    				if(dd>30||dd>0||dd==null){
+	    					$("input[name=ou_birth]").focus();
+			    			alert("생년월일을 확인해주시기 바랍니다.");
+			    			return false;
+	    				}
+	    			}
+	    			case 2:{
+		    				if(yy%4==0){
+			    				if(dd>29||dd>0||dd==null){
+			    					$("input[name=ou_birth]").focus();
+					    			alert("생년월일을 확인해주시기 바랍니다.");
+					    			return false;
+			    				}
+		    				}else{
+			    				if(dd>28||dd>0||dd==null){
+			    					$("input[name=ou_birth]").focus();
+					    			alert("생년월일을 확인해주시기 바랍니다.");
+					    			return false;
+			    				}
+		    				}
+	    				}
+	    			}
+	    				
 	    			if($("textarea[name=ou_request]").val()==''){
 	    				if(confirm("요청사항 없이 결제를 진행하시겠습니까?")){
 	    					

@@ -9,6 +9,7 @@
 #S_LocMenu{
 	width: 150px;
 	float: left;
+	vertical-align: top;
 }
 
 #locationChoice{

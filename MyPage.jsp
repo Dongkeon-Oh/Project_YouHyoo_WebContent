@@ -44,6 +44,13 @@
 				}
 			});
 	  	});
+		
+		$("#point").click(function(){
+			var u_id=$("#u_id").val();
+			//alert(num);
+			
+			window.open("UserPoint.jsp?u_id="+u_id,+"적립금내역","left=600,top=250,width=800,height=500");
+		});
 	});
 </script>
 
@@ -131,7 +138,7 @@ List<Q_pension_Dto> qList=mgr.getQList(u_id);
 					<div class="help">적립금은 숙박이용일이 지나면 자동 적립됩니다.</div>
 				</div>
 				<div class="btnArea">
-					<a href="UserPoint.jsp"><span class="bt">적립금 내역보기</span></a>
+					<a href="#"><span id="point" class="bt">적립금 내역보기</span></a>
 				</div>
 			</td>
 		</tr>
