@@ -149,12 +149,12 @@
 	 url="Zipcheck.jsp?check=y";
 	 window.open(url,"zip","width=500,height=300,status=yes,scrollbars=yes");
  }//zipCheck() 
-
  </script>
  </head>
  <body>
   <form method=post name=joinForm action="Join_Proc.jsp" onsubmit="return checkIt()">
-  <div align=center><img src="imgs/top/youhyoo.PNG" width=200>
+  <div align=center>
+  <a href="Index.jsp"><img src="imgs/top/youhyoo.PNG" width=300></a>
   <table align=center border="0" cellpadding="0" cellspacing="0">
    <tr>
     <td>
@@ -310,69 +310,75 @@
    <tr> 
     <td width=150>아이디</td>
     <td>
-     <input type=text name=u_id id=u_id size=20 onclick="rechkId()"> 
+     <input type=text name=u_id id=u_id size=20 style="font-size:12pt; padding:5px 40px 5px 5px; margin-top: 5" onclick="rechkId()"> 
      <input type=hidden name=checkid id=checkid value="0">
-     <input type="button" value="중복확인" onclick="confirmId(this.form)">
+     <input type="button" value="중복확인" style="font-size:10pt; width: 65px; height: 30px" onclick="confirmId(this.form)">
     </td>
    </tr>
    <tr>
     <td>이름</td>
     <td>
-     <input type=text name=u_name id=u_name size=10>
+     <input type=text name=u_name id=u_name style="font-size:12pt; padding:5px 40px 5px 5px; margin-top: 5">
     </td>
    </tr>
    <tr>
     <td>비밀번호</td>
-    <td><input type="password" name="u_pwd" id=u_pwd size=20></td>
+    <td><input type="password" name="u_pwd" id=u_pwd size=20 style="font-size:12pt; padding:5px 40px 5px 5px; margin-top: 5"></td>
    </tr> 
    <tr>
     <td>회원유형</td>
     <td>
-     <input type="radio" name=u_type id=u_type size=20 value="일반">일반&nbsp;
-     <input type="radio" name=u_type id=u_type size=20 value="업체">업체&nbsp;
+     <input type="radio" name=u_type id=u_type size=20 style="margin-top: 5" value="일반">일반&nbsp;
+     <input type="radio" name=u_type id=u_type size=20 style="margin-top: 5" value="업체">업체&nbsp;
     </td>
    </tr>
    <tr>
     <td>핸드폰</td>
     <td>
-     <input type=text name=u_cell1 id=u_cel1l maxlength="3" size="4"> -
-     <input type=text name=u_cell2 id=u_cell2 maxlength="4" size="4"> -
-     <input type=text name=u_cell3 id=u_cell3 maxlength="4" size="4">
+     <input type=text name=u_cell1 id=u_cel1l maxlength="3" size="4" style="font-size:12pt; padding:5px 5px 5px 5px; margin-top:5"> -
+     <input type=text name=u_cell2 id=u_cell2 maxlength="4" size="4" style="font-size:12pt; padding:5px 5px 5px 5px; margin-top:5"> -
+     <input type=text name=u_cell3 id=u_cell3 maxlength="4" size="4" style="font-size:12pt; padding:5px 5px 5px 5px; margin-top:5">
     </td>
    </tr>
    <tr>
    <td>우편번호</td>
     <td>
-     <input type=text name=u_zipcode id=u_zipcode size=7>
-     <input type=button value="우편번호" onclick="zipCheck()">
+     <input type=text name=u_zipcode id=u_zipcode size=7 style="font-size:12pt; padding:5px 5px 5px 5px; margin-top:5">
+     <input type=button value="우편번호" style="font-size:10pt; width: 65px; height: 30px" onclick="zipCheck()">
     </td>
    </tr>
    <tr>
     <td>주소</td>
     <td>
-     <input type=text name=u_addr id=u_addr size=40 placeholder=상세주소>
+     <input type=text name=u_addr id=u_addr size=40 style="font-size:12pt; padding:5px 5px 5px 5px; margin-top:5" placeholder=상세주소>
     </td>
    </tr>
    <tr>
     <td>생년월일</td>
     <td>
-     <input type=text name=u_birth id=u_birth size=6 placeholder="900101">
+     <input type=text name=u_birth id=u_birth size=6 style="font-size:12pt; padding:5px 5px 5px 5px; margin-top:5" placeholder="ex)900101">
     </td> 
    </tr>
    <tr>
     <td>이메일</td>
     <td>
-     <input type=text name=u_email id=u_email size=40>
+     <input type=text name=u_email id=u_email size=40 style="font-size:12pt; padding:5px 5px 5px 5px; margin-top:5" placeholder=example@naver.com>
     </td>
    </tr>  
    
    <tr>
     <td colspan=2 align=center>
-     <input type=submit value=가입하기 style="width: 200px; height: 30px"> 
+     <input type=submit value=가입하기 style="font-size:12pt; width: 200px; height: 40px"> 
+     <br><br>
     </td>
    </tr>
   </table>
   </div>
   </form>
+  
+  <footer style="text-align:center;">
+   <p>ⓒYou休</p>
+  </footer>
+  
  </body>
 </html>
