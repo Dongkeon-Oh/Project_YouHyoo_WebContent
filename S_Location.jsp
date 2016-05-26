@@ -40,6 +40,11 @@ List<Room_Dto> roomList=indexMgr.getIndexRoomList(pensionNumber);
 					thisForm.submit();
 				}
 			}
+
+			function locationDetail(loc){
+				$("input[type=hidden]").attr("value",loc);
+				locationChoice.submit();
+			}
 		</script>
 	</head>
 	<body>
@@ -70,12 +75,12 @@ List<Room_Dto> roomList=indexMgr.getIndexRoomList(pensionNumber);
 							<br><br>
 							<img src="imgs/S_Location/good.jpg" class="S_LocImg">
 							<font size="4" color="#3F48CC">전체 지역</font><br>
-							<a href="#" OnClick="locationDetail('hot용인')"><font size="3">경기도</font></a><br>
-							<a href="#" OnClick="locationDetail('hot용인')"><font size="3">강원도</font></a><br>
-							<a href="#" OnClick="locationDetail('hot용인')"><font size="3">충청도</font></a><br>
-							<a href="#" OnClick="locationDetail('hot용인')"><font size="3">경상도</font></a><br>
-							<a href="#" OnClick="locationDetail('hot용인')"><font size="3">전라도</font></a><br>
-							<a href="#" OnClick="locationDetail('hot용인')"><font size="3">제주도</font></a><br>
+							<a href="#" OnClick="locationDetail('경기도')"><font size="3">경기도</font></a><br>
+							<a href="#" OnClick="locationDetail('강원도')"><font size="3">강원도</font></a><br>
+							<a href="#" OnClick="locationDetail('충청도')"><font size="3">충청도</font></a><br>
+							<a href="#" OnClick="locationDetail('경상도')"><font size="3">경상도</font></a><br>
+							<a href="#" OnClick="locationDetail('전라도')"><font size="3">전라도</font></a><br>
+							<a href="#" OnClick="locationDetail('제주도')"><font size="3">제주도</font></a><br>
 			
 							<input type="hidden" name="location">
 						</form>
