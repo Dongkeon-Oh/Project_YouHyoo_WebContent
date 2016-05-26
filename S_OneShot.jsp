@@ -44,7 +44,7 @@
 </style>
 
 <script type="text/javascript">
- 
+
  //날짜 한글처리
  $(function() {
 	 $.datepicker.regional['ko'] = {
@@ -76,17 +76,71 @@
  	 tempArea=""; //선택 된 라디오버튼 값 담을변수
  	 subSql=""; //서브쿼리
  	 //sql=" and "; //넘겨줄 최종 쿼리
- 	 sql=""; //넘겨줄 최종 쿼리
+ 	 date_sql=""; //넘겨줄 최종 쿼리
+ 	 select_sql="";
   
 	 //내일날짜 셋팅하기
-	 //tomorrow = moment() .format("YYYY-MM-DD");
 	 tomorrow = moment().add(1,'days').format("YYYY-MM-DD");
-	 
 	 $('#datepicker').attr('value',tomorrow);
-	 
 	 
 	 //옵션 체크
       $("#bu").click(function() {
+
+    	   sel=$("select[name=sel]").val();
+    	   add_date="";
+
+    	  switch (sel) {
+			case "1": {
+				sql="'"+ $('#datepicker').val()+"') and ";
+				break;
+			}
+			case "2": {
+				sql="'"+ $('#datepicker').val()+"'or ";
+				add_date=moment(moment($('#datepicker').val())).add(1,'days').format("YYYY-MM-DD");
+				sql=sql+"'"+add_date+"') and ";
+				break;
+			}
+			case "3": {
+				sql="'"+$('#datepicker').val()+"'";
+				for(var i=1;i<3;i++){
+				add_date=moment($('#datepicker').val()).add(i,'days').format("YYYY-MM-DD");
+				sql=sql+"or'"+add_date+"'";
+				}
+				sql=sql+") and ";
+				break;
+
+			}
+			case "4": {
+				sql="'"+$('#datepicker').val()+"'";
+				for(var i=1;i<4;i++){
+				add_date=moment($('#datepicker').val()).add(i,'days').format("YYYY-MM-DD");
+				sql=sql+"or'"+add_date+"'";
+				}
+				sql=sql+") and ";
+				break;
+
+			}
+			case "5": {
+				sql="'"+$('#datepicker').val()+"'";
+				for(var i=1;i<5;i++){
+				add_date=moment($('#datepicker').val()).add(i,'days').format("YYYY-MM-DD");
+				sql=sql+"or'"+add_date+"'";
+				}
+				sql=sql+") and ";
+				break;
+
+			}
+			case "6": {
+				sql="'"+$('#datepicker').val()+"'";
+				for(var i=1;i<6;i++){
+				add_date=moment($('#datepicker').val()).add(i,'days').format("YYYY-MM-DD");
+				sql=sql+"or'"+add_date+"'";
+				}
+				sql=sql+") and ";
+				break;
+			}
+			}//switch
+    	     	  
     	 tempArea=$("input:radio[name='Area']:checked").val();
     	        if(tempArea=="allArea"){
     	        	subSql="select p_num from pension"
@@ -98,12 +152,12 @@
         $("input[name='check']:checked").each(function(){
     	var checkboxValues=$(this).val()
     			                  
-    	sql=sql+checkboxValues+"=1 and ";
+    	select_sql=date_sql+checkboxValues+"=1 and ";
     		});
     	//check2 -> DB 값이 varchar
         $("input[name='check2']:checked").each(function(){
         	var checkboxValues=$(this).val();
-        	sql=sql+checkboxValues+" is not null and ";
+        	select_sql=date_sql+checkboxValues+" is not null and ";
         		});  
 
         sql=sql+"ra_pnum=any("+subSql+"))";
@@ -117,12 +171,14 @@
  });
 /*
 select p_num,p_name,p_addr1,p_addr2 from pension
-where p_num=(select distinct ra_pnum from 
+where p_num=any(select distinct ra_pnum from
 detail_Around inner join detail_Facility
 on ra_pnum=rf_pnum inner join detail_Support
 on ra_pnum=rs_pnum inner join detail_Structure
-on ra_pnum=rr_pnum where ra_sea is not null
-and ra_pnum=(select p_num from pension where p_addr2='가평군'))
+on ra_pnum=rr_pnum where
+ra_valley=1 and ra_pnum=any(select p_num from pension where p_addr2='가평군'))
+
+//sql = ra_valley=1 and ra_pnum=any(select p_num from pension where p_addr2='가평군'))
 
  select p_num,p_name,p_addr1,p_addr2 from pension
  where p_num=any(select distinct ra_pnum from
@@ -202,14 +258,17 @@ and ra_pnum=(select p_num from pension where p_addr2='가평군'))
 			</tr>
 			<tr>
 				<th colspan=2 height="40px">이용기준</th>
-				<th>이용일 <input type="text" name="quickDate" class="datepicker" id="datepicker" value="">부터 
-				<select name="quickTerm" id="quickTerm">
-						<option class="quickTerm" value="1">1박 2일</option>
-						<option class="quickTerm" value="2">2박 3일</option>
-						<option class="quickTerm" value="3">3박 4일</option>
-						<option class="quickTerm" value="4">4박 5일</option>
-						<option class="quickTerm" value="5">5박 6일</option>
-						<option class="quickTerm" value="6">6박 7일</option>
+				<th>이용일 <input type="text" name="quickDate" class="datepicker" id="datepicker" value="" >부터 
+				
+				<select name="sel" id="sel">
+				<option>선택하세요</option>
+						<option value="1">1박 2일</option>
+						<option value="2">2박 3일</option>
+						<option value="3">3박 4일</option>
+						<option value="4">4박 5일</option>
+						<option value="5">5박 6일</option>
+						<option value="6">6박 7일</option>
+
 				</select> &nbsp; 
 				
 				<input type="text" name="quickMember" id="quickMember" size="2">명
@@ -242,26 +301,20 @@ and ra_pnum=(select p_num from pension where p_addr2='가평군'))
 		</tr>
 
 		<%
-  One_shotDao you=new One_shotDao();
-  String ordsql="";
-  List p_list=you.get_P_List(sql);
-  
-  
-  if(request.getParameter("quickTerm").equals("1")){
-	 System.out.println(sql);
-	 ordsql="select o_num from order_room where o_date='2016-05-30')";
-	 
-  }//
-	 if(p_list.size()>0){
- 		for(int i=0;i<p_list.size();i++){
-	
-			  Pension_Dto p_dto=new Pension_Dto();
-  			  p_dto=(Pension_Dto)p_list.get(i);
-  
-  			  List r_list=you.get_R_List(p_dto.getP_num());
-  			 int r_size=r_list.size();
-  
- 	%>
+		One_shotDao you=new One_shotDao();
+		  
+		List p_list=you.get_P_List(sql);
+		  
+				if (p_list.size() > 0) {
+					for (int i = 0; i < p_list.size(); i++) {
+						System.out.println("p_list.size() :"+p_list.size());
+						
+						Pension_Dto p_dto = new Pension_Dto();
+						p_dto = (Pension_Dto) p_list.get(i);
+
+						List r_list = you.get_R_List(p_dto.getP_num());
+						int r_size = r_list.size();
+		%>
 		<tr>
 			<td rowspan="<%=r_size+1%>" style="border-right: 0;">
 				<%
@@ -272,7 +325,7 @@ and ra_pnum=(select p_num from pension where p_addr2='가평군'))
 	  			p_num2="P"+p_num;
  			 }else if(Integer.parseInt(p_num)/10>0){
 				  p_num2="P0"+p_num;
- 			 }else{
+ 			 }else{			 
 				  p_num2="P00"+p_num;
  			 }//if
   %> 
@@ -319,7 +372,7 @@ and ra_pnum=(select p_num from pension where p_addr2='가평군'))
 	 }else{ //검색리스트 결과가 없으면
 		  %>
 		<tr>
-			<td colspan="7"><font color="blue"><b>검색결과가 없습니다.</b></font></td>
+			<td colspan="6"><font color="blue"><b>검색결과가 없습니다.</b></font></td>
 		</tr>
 	</table>
 	<%
