@@ -111,6 +111,10 @@ String u_id=(String)session.getAttribute("u_id");
 	     $("#date_top").attr("value",date_sql);
 	     document.top_form.submit();
      });	
+     $("#button_sel").click(function() {
+    	document.top_form2.submit();
+    	 
+     });
      });
 </script>
   
@@ -175,12 +179,13 @@ String u_id=(String)session.getAttribute("u_id");
 					<button id="button"><img src="imgs/top/search.PNG"></button>
 					<input type="hidden" name="msql_top" id="msql_top" value="">
 				    <input type="hidden" name="date_top" id="date_top">
-					
-					<%---- --%>
+				    </form>
+
+					<form name="top_form2" id="top_form2" method=post action="Top_Searchproc.jsp">
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<font size="2">통합 검색</font>
 					<input type="text" name="totalSearch" id="totalSearch" size="15">
-					<img src="imgs/top/search.PNG">	
+					<button name="button_sel" id="button_sel"><img src="imgs/top/search.PNG"></button>
 					</form>
 			</td>
 		</tr>
