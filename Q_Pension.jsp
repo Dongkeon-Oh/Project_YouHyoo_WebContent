@@ -67,6 +67,10 @@ try{
 		border : 1px solid #FF0000;
 	}
 	
+	.pageNum{
+		cursor:pointer;
+	}
+	
 	a.link{
 		cursor:pointer;
 	}
@@ -112,6 +116,29 @@ try{
 		});
 		 
 	});
+	
+	//$(function pageNum(p_num,pg){
+	function pageNum(p_num,pg){
+		alert("p_num :"+p_num+"pg:"+pg);
+		jQuery(".pageNum").click(function(){
+			//console.log(jQuery(this).attr("id"));
+			//var pn=jQuery(this).attr("id");
+			
+			$.ajax({
+				type:'POST',
+				url:'DetailView.jsp',
+				data:'p_num'+p_num+"&page="+pg,
+				datatype:'json',
+				success:function(data){
+					alert($(data.pageNum));	
+					//$(data.pageNum);
+				},
+				error:function(data){
+					alert("실패");
+				}
+				});
+		});
+	}
 	
 	$(document).ready(function(){
 		$("#btn1").css({"float":"right"});
@@ -227,7 +254,7 @@ try{
 			<%
 			}//for
 			%>
-		<!-- 글 리스트 end -->
+			<!-- 글 리스트 end -->
 		
 			<%
 			}//else
@@ -254,9 +281,8 @@ try{
 					//이전블럭
 					if(startPage>10){
 					%>
-					<a href="Q_Pension.jsp?pageNum=<%=startPage-10 %>">[이전블럭]</a>
 					
-					
+					<a class="pageBlock" id="<%=pageNum%><%=startPage-10%>">[이전블럭]</a>
 					<%
 					}
 					%>
@@ -264,20 +290,24 @@ try{
 					<%
 					for(int i=startPage; i<=endPage; i++){
 					%>
-					
-					<a href="DetailView.jsp?p_num=<%=p_num %>&pageNum=<%=i %>">[<%=i %>]</a>
-					
+					<a class="pageNum" onClick="pageNum('<%=p_num %>','<%=i %>')">
+					[<%=i %>]
+					</a>
+					<%--
+					<a href="DetailView.jsp?p_num=<%=p_num %>&pageNum=<%=i %>">
+					[<%=i %>]
+					</a>
+					 --%>
 					<%	
-					}
+					}//for
 					%>
 					
 					<%
 					if(endPage<pageCount){
 					%>
 					<a href="Q_Pension.jsp?pageNum=<%=startPage+10 %>">[다음블럭]</a>
-					
 					<%
-					}
+					}//if
 					%>
 							</td>
 						</tr>

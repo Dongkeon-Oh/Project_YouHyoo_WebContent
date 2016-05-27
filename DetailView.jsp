@@ -225,12 +225,20 @@ List<OrderRoom_Dto> order=detail.getOrder(p_num);
 	    	</jsp:include>
 	    	</div>
 	    	
+	    	<%
+	    	//int page=2;
+	    	//if(Integer.parseInt(request.getParameter("page"))>0){
+	    	%>
 	    	<div id="Q_pensionArea">
 	    	<jsp:include page="Q_Pension.jsp" >
 	    		<jsp:param value="<%=u_id %>" name="u_id"/>
 	    		<jsp:param value="<%=p_num %>" name="p_num"/>
 	    	</jsp:include>
 	    	</div>
+	    	<%
+	    	//}
+	    	%>
+	    	
 	    	
 	    	<div id="ReviewArea">
 	    	<jsp:include page="ReviewProc.jsp" >
