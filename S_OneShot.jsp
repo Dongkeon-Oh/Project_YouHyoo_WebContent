@@ -73,11 +73,12 @@
 			    });
 			  
  	 //변수
- 	 tempArea=""; //선택 된 라디오버튼 값 담을변수
- 	 subSql=""; //서브쿼리
- 	 //sql=" and "; //넘겨줄 최종 쿼리
- 	 date_sql=""; //넘겨줄 최종 쿼리
- 	 select_sql="";
+ 		 
+ 	date_sql=""; //날짜 서브쿼리
+ 	subSql=""; //지역 서브쿼리
+ 	tempArea=""; //선택 된 지역라디오버튼 담을변수
+ 	member_sql=""; //인원수 서브쿼리
+ 	select_sql=""; //최종 전송
   
 	 //내일날짜 셋팅하기
 	 tomorrow = moment().add(1,'days').format("YYYY-MM-DD");
@@ -88,84 +89,91 @@
 
     	   sel=$("select[name=sel]").val();
     	   add_date="";
-
+    	   
+		  //선택한 날짜 구하기
     	  switch (sel) {
 			case "1": {
-				sql="'"+ $('#datepicker').val()+"') and ";
+				date_sql="'"+ $('#datepicker').val()+"') and ";
 				break;
 			}
 			case "2": {
-				sql="'"+ $('#datepicker').val()+"'or ";
+				date_sql="'"+ $('#datepicker').val()+"'or ";
 				add_date=moment(moment($('#datepicker').val())).add(1,'days').format("YYYY-MM-DD");
-				sql=sql+"'"+add_date+"') and ";
+				date_sql=date_sql+"'"+add_date+"') and ";
 				break;
 			}
 			case "3": {
-				sql="'"+$('#datepicker').val()+"'";
+				date_sql="'"+$('#datepicker').val()+"'";
 				for(var i=1;i<3;i++){
 				add_date=moment($('#datepicker').val()).add(i,'days').format("YYYY-MM-DD");
-				sql=sql+"or'"+add_date+"'";
+				date_sql=date_sql+"or'"+add_date+"'";
 				}
-				sql=sql+") and ";
+				date_sql=date_sql+") and ";
 				break;
 
 			}
 			case "4": {
-				sql="'"+$('#datepicker').val()+"'";
+				date_sql="'"+$('#datepicker').val()+"'";
 				for(var i=1;i<4;i++){
 				add_date=moment($('#datepicker').val()).add(i,'days').format("YYYY-MM-DD");
-				sql=sql+"or'"+add_date+"'";
+				date_sql=date_sql+"or'"+add_date+"'";
 				}
-				sql=sql+") and ";
+				date_sql=date_sql+") and ";
 				break;
 
 			}
-			case "5": {
-				sql="'"+$('#datepicker').val()+"'";
+			case "5": {e
+				date_sql="'"+$('#datepicker').val()+"'";
 				for(var i=1;i<5;i++){
 				add_date=moment($('#datepicker').val()).add(i,'days').format("YYYY-MM-DD");
-				sql=sql+"or'"+add_date+"'";
+				date_sql=date_sql+"or'"+add_date+"'";
 				}
-				sql=sql+") and ";
+				date_sql=date_sql+") and ";
 				break;
 
 			}
 			case "6": {
-				sql="'"+$('#datepicker').val()+"'";
+				date_sql="'"+$('#datepicker').val()+"'";
 				for(var i=1;i<6;i++){
 				add_date=moment($('#datepicker').val()).add(i,'days').format("YYYY-MM-DD");
-				sql=sql+"or'"+add_date+"'";
+				date_sql=date_sql+"or'"+add_date+"'";
 				}
-				sql=sql+") and ";
+				date_sql=date_sql+") and ";
 				break;
 			}
 			}//switch
-    	     	  
+			
+			//인원수
+			member_sql="ra_pnum=any(select r_pension from room where r_maxcapa>="+$('#member').val()+")";
+			select_sql=date_sql+member_sql;
+			
+    	 //지역  	  
     	 tempArea=$("input:radio[name='Area']:checked").val();
     	        if(tempArea=="allArea"){
     	        	subSql="select p_num from pension"
     	        }else{
     	        	subSql="select p_num from pension where p_addr2="+"'"+tempArea+"'";
     	        }//if
-    	  
+  
+    	        
     	//check->DB 값이 0 or 1
         $("input[name='check']:checked").each(function(){
     	var checkboxValues=$(this).val()
-    			                  
-    	select_sql=date_sql+checkboxValues+"=1 and ";
+    	select_sql=select_sql+checkboxValues+"=1 and ";
     		});
     	//check2 -> DB 값이 varchar
         $("input[name='check2']:checked").each(function(){
         	var checkboxValues=$(this).val();
-        	select_sql=date_sql+checkboxValues+" is not null and ";
+        	select_sql=select_sql+checkboxValues+" is not null and ";
         		});  
 
-        sql=sql+"ra_pnum=any("+subSql+"))";
+        select_sql=select_sql+" and ra_pnum=any("+subSql+"))";
  
-        $("#msql").attr("value",sql);
+        $("#msql").attr("value",select_sql);
+        console.log($("#msql").val());
+        $("#date").attr("value",date_sql);
         $("input[name='check']:checked").attr("checked","");
-        
-        
+           
         document.searchForm.submit();
    	 	});
  });
@@ -261,7 +269,6 @@ ra_valley=1 and ra_pnum=any(select p_num from pension where p_addr2='가평군')
 				<th>이용일 <input type="text" name="quickDate" class="datepicker" id="datepicker" value="" >부터 
 				
 				<select name="sel" id="sel">
-				<option>선택하세요</option>
 						<option value="1">1박 2일</option>
 						<option value="2">2박 3일</option>
 						<option value="3">3박 4일</option>
@@ -271,7 +278,7 @@ ra_valley=1 and ra_pnum=any(select p_num from pension where p_addr2='가평군')
 
 				</select> &nbsp; 
 				
-				<input type="text" name="quickMember" id="quickMember" size="2">명
+				<input type="text" name="member" id="member" value=2 size=2>명
 				</th>
 			</tr>
 		</table>
@@ -280,13 +287,30 @@ ra_valley=1 and ra_pnum=any(select p_num from pension where p_addr2='가평군')
 			<tr>
 				<th align=center style="background-color: white;">
 				<input type="button" value=검색하기 name=bu id=bu> 
-				<input type="hidden" name="msql" id="msql"></th>
+				<input type="hidden" name="msql" id="msql">
+				<input type="hidden" name="date" id="date"></th>
 			</tr>
 		</table>
 		<p>
 	</form>
 	<%
-  String sql=request.getParameter("msql");
+	String sql="";
+	String date="";
+	int member=0;
+	if(request.getParameter("msql")!=null){
+    	sql=request.getParameter("msql");
+		date=request.getParameter("date");
+		if(request.getParameter("member")!=null){
+		member=Integer.parseInt(request.getParameter("member"));
+		}
+	}else{
+		sql=request.getParameter("msql_top");
+		date=request.getParameter("date_top");
+		if(request.getParameter("member_top")!=null){
+		member=Integer.parseInt(request.getParameter("member_top"));
+		}
+	}
+
   if(sql!=null){
 	  %>
 
@@ -306,13 +330,14 @@ ra_valley=1 and ra_pnum=any(select p_num from pension where p_addr2='가평군')
 		List p_list=you.get_P_List(sql);
 		  
 				if (p_list.size() > 0) {
-					for (int i = 0; i < p_list.size(); i++) {
-						System.out.println("p_list.size() :"+p_list.size());
-						
+					for (int i = 0; i < p_list.size(); i++) {						
 						Pension_Dto p_dto = new Pension_Dto();
 						p_dto = (Pension_Dto) p_list.get(i);
-
-						List r_list = you.get_R_List(p_dto.getP_num());
+						System.out.println("sq;:"+p_list.size()+"qq");
+	
+						
+						
+						List r_list = you.get_R_List(p_dto.getP_num(),member,date);
 						int r_size = r_list.size();
 		%>
 		<tr>

@@ -65,7 +65,7 @@ $(function(){
 				<td class="pname"><%=o.getO_pname() %></td>
 				<td><%=ou.getOu_customer() %>(<%=ou.getOu_cell() %>)</td>
 				<td>결제완료</td>		
-				<td><a href="#"><span class="bt" onclick="javascript:window.open('Review.jsp?ou_num=<%=ou.getOu_num() %>&rvPnum=<%=o.getO_pnum() %>&rvPname=<%=o.getO_pname()%>&u_id=<%=u_id%>','이용후기','left=600,top=250,width=600,height=650')">이용후기</span></a></td>
+				<td><a href="#"><span class="bt" onclick="javascript:window.open('Review.jsp?ou_num=<%=ou.getOu_num() %>&rvPnum=<%=o.getO_pnum() %>&rvPname=<%=o.getO_pname()%>&rv_id=<%=u_id%>','이용후기','left=600,top=250,width=600,height=650')">이용후기</span></a></td>
 			</tr>
 	<%
 		}//for

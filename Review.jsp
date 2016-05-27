@@ -34,7 +34,8 @@
   <%
    
      String ou_num=request.getParameter("ou_num");
-     String rv_pension=request.getParameter("rv_pension");
+     String rvPname=request.getParameter("rvPname");
+     int rvPnum=Integer.parseInt(request.getParameter("rvPnum"));
      String rv_id=request.getParameter("rv_id");    
    
      %>
@@ -44,7 +45,7 @@
     <th>예약번호</th>
     <td><%=ou_num%></td>
     <th>업소명</th>
-    <td><%=rv_pension%></td>
+    <td><%=rvPname%></td>
     </tr>
     <tr>
     <th>평가/추천</th>
@@ -71,9 +72,9 @@
      
     
      <%--★★★★hidden 값 "rv_pension,rv_id" - 임의로 값 준것임  //ou_num --%>
-      <input type="hidden" name="rv_pension" value="<%=rv_pension%>"> 
-      <input type="hidden" name="rv_id" value="<%=rv_pension%>">
-      <input type="submit" value="저장하기" onclick="self.close()">
+      <input type="hidden" name="rv_pension" value="<%=rvPnum%>"> 
+      <input type="hidden" name="rv_id" value="<%=rv_id%>">
+      <input type="submit" value="저장하기">
       <input type="button" onclick="self.close()"value="작성취소">
      </td>
     </tr>  
