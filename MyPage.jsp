@@ -51,6 +51,13 @@
 			
 			window.open("UserPoint.jsp?u_id="+u_id,+"적립금내역","left=600,top=250,width=800,height=500");
 		});
+		
+		$("#qYH").click(function(){
+			var u_id=$("#u_id").val();
+			//alert(num);
+			
+			window.open("Q_Youhyoo.jsp?u_id="+u_id,+"일대일상담","left=600,top=250,width=600,height=500");
+		});
 	});
 </script>
 
@@ -211,7 +218,7 @@ List<Q_pension_Dto> qList=mgr.getQList(u_id);
 	</div>
 
 	<div class="btnArea">
-		<a href="Q_youhyoo.jsp" class="btn"><span class="bt">일대일문의하기</span></a>
+		<a href="#" class="btn"><span id="qYH" class="bt">일대일문의하기</span></a>
 	</div>
 	<div class="mTitle">찜리스트</div>
 	<div><!-- 여기에 찜내역이 들어온다!! -->

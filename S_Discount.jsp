@@ -10,17 +10,19 @@
 <link href="TopBottom.css" type="text/css" rel="stylesheet">
 <style type="text/css">
 #selDate{font-size : 35px}
-body {width: 1000px; margin: 0 auto;}
-     td.today {color: #ffffff;   font-weight:bold; border:solid thin 0pt; font-size:9pt; background-color: #cc0033; }  
-     td.workday {color: #000099;    font-weight:normal; border:solid thin 0.5pt; font-size:9pt; }  
-     td.sunday{color: #cc0033; font-weight:normal; border:solid thin 0.5pt; font-size:9pt; }  
-     td.satday{color: #0000ff;    font-weight:normal; border:solid thin 0.5pt; font-size:9pt; }  
-     td.week  {color: #000000;   font-weight:normal; border:solid thin 0.5pt; font-size:9pt; background-color:#e6e6e6;width: 18px;text-align:center}  
-  	 #kCal td {cursor:pointer;}
-    .preNext {color: #000099;text-decoration: none;} 
+#s_discount {width: 1000px; margin: 0 auto;}
+td.today {width: 40px; color: #ffffff;   font-weight:bold; border:solid thin 0pt; font-size:12pt; background-color: #cc0033; }  
+td.workday {width: 40px; color: #000099;    font-weight:normal; border:solid thin 0.5pt; font-size:12pt; }  
+td.sunday{width: 40px; color: #cc0033; font-weight:normal; border:solid thin 0.5pt; font-size:12pt; }  
+td.satday{width: 40px; color: #0000ff;    font-weight:normal; border:solid thin 0.5pt; font-size:12pt; }  
+td.week  {width: 40px; color: #000000;   font-weight:normal; border:solid thin 0.5pt; font-size:12pt; background-color:#e6e6e6;width: 18px;text-align:center}  
+#kCal td {width: 40px; cursor:pointer;}
+.preNext {width: 20px; color: #000099;text-decoration: none;}
+#dLocation{align : justify;}
+     
 </style>
 
-<title>Insert title here</title>
+<title>잔여객실 즉시 확인</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 <script src="Dcalendar.js"></script>
 <script>
@@ -30,7 +32,21 @@ $(document).ready(function(){
 	today();
 	
 	var location="경기";
-	$("#setLo").text(location);
+	$("#setLo").text(location).css("display","none");
+	
+	var kYear=$("#sYear").text();
+	var kMonth=$("#sMonth").text();
+	var kDate=$("#sDate").text();
+	var o_date=kYear+"-"+kMonth+"-"+kDate;
+	$.ajax({
+		type : 'POST',
+		url : 'S_Discount_rs.jsp',
+		data : "location="+location+"&o_date="+o_date,
+		dataType : 'html',
+		success : function(data){//콜백 성공 응답시 실행
+			$("#result").html(data);	
+		}
+	});
 
 	$(".location").click(function(){
 		var location=$(this).text()
@@ -97,7 +113,7 @@ $(document).ready(function(){
 <%@ include file="Top.jsp" %>
 
 <body>
-
+<div id="s_discount">
 <div class="mbug">
 1. 펜션주에겐 취소된예약 및 미예약 잔여객실 빠르게 채우기 위해
 <br />
@@ -130,7 +146,7 @@ $(document).ready(function(){
 </tr>
 </table>
 <hr>
-<div>
+<div id="dLocation">
 <a href="#"><span class="location">경기도</span></a>
 <a href="#"><span class="location">충청도</span></a>
 <a href="#"><span class="location">경상도</span></a>
@@ -153,6 +169,7 @@ $(document).ready(function(){
 <!-- 검색결과 -->
 <div id="result">
 		
+</div>
 </div>
 <span id="setLo"></span>
 <%@ include file="Bottom.html" %>
