@@ -31,14 +31,20 @@
   베스트 이용후기 선정된 회원님은 추첨을 통해 적립금이 지급될 수 있습니다.<font size="1.8" color="red">( 행사기간에 한함 )</font><br>
   </font>
   <hr width=550px align=left>
-  
-   <form method="post" name="viewForm" action="ReviewProc.jsp?flag=insert" enctype="multipart/form-data">
+  <%
+   
+     String ou_num=request.getParameter("ou_num");
+     String rv_pension=request.getParameter("rv_pension");
+     String rv_id=request.getParameter("rv_id");    
+   
+     %>
+     <form method="post" name="viewForm" action="Review_insert.jsp" enctype="multipart/form-data">
     <table class=review_table cellpadding=3 cellspacing=10 border=1>
     <tr>
     <th>예약번호</th>
-    <td>asd</td>
+    <td><%=ou_num%></td>
     <th>업소명</th>
-    <td>asd</td>
+    <td><%=rv_pension%></td>
     </tr>
     <tr>
     <th>평가/추천</th>
@@ -63,10 +69,11 @@
     <tr>
      <td colspan=4 align="right" style="border: none;">
      
-     <%--★★★★hidden 값 "rv_pension,rv_id" - 임의로 값 준것임 --%>
-      <input type="hidden" name="rv_pension" value=1> 
-      <input type="hidden" name="rv_id" value=1>
-      <input type="submit" value="저장하기">
+    
+     <%--★★★★hidden 값 "rv_pension,rv_id" - 임의로 값 준것임  //ou_num --%>
+      <input type="hidden" name="rv_pension" value="<%=rv_pension%>"> 
+      <input type="hidden" name="rv_id" value="<%=rv_pension%>">
+      <input type="submit" value="저장하기" onclick="self.close()">
       <input type="button" onclick="self.close()"value="작성취소">
      </td>
     </tr>  
