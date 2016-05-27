@@ -86,7 +86,7 @@ List<Room_Dto> roomList=indexMgr.getIndexRoomList(pensionNumber);
 						</form>
 					</div>
 					</td>
-					<td>
+					<td id="S_LocmainLocation">
 					<table id="S_LocmainTab">
 						<tr>
 						<%

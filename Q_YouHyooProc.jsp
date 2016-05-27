@@ -9,8 +9,11 @@ request.setCharacterEncoding("utf-8");
 	<jsp:setProperty name="dto" property="*"/>
 </jsp:useBean>
 
+
 <%
 PensionDao dao=PensionDao.getInstance();
-dao.insertPension(dto);
-response.sendRedirect("List.jsp");
+dao.Q_ToYouHyoo(dto);
 %>
+<script>
+window.close();
+</script>
