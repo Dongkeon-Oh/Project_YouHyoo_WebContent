@@ -4,11 +4,33 @@
 <head>
  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
  <script type="text/javascript">
- 
+ function searcheck(){
+	 var search=eval("document.searchForm");
+	 if(searchIdForm.u_name.value==''){
+		 alert("이름은 필수 입력입니다");
+		 searchIdForm.u_name.focus();
+		 return false;
+	 }
+	 if(searchIdForm.u_cell1.value==''){
+		 alert("핸드폰번호를 입력하시오");
+		 searchIdForm.u_cell1.focus();
+		 return false;
+	 }
+	 if(searchIdForm.u_cell2.value==''){
+		 alert("핸드폰번호를 다시 입력하시오");
+		 searchIdForm.u_cell2.focus();
+		 return false;
+	 }
+	 if(searchIdForm.u_cell3.value==''){
+		 alert("핸드폰번호를 전부 입력하시오");
+		 searchIdForm.u_cell3.focus();
+		 return false;
+	 }
+ } 
  </script>
 </head>
 <body>
-<form method=post name=searchForm action="search_Proc.jsp">
+<form method=post name=searchIdForm action="search_Proc.jsp" onsubmit=" return searcheck()">
  <div align=center>
   <a href="Index.jsp"><img src="imgs/top/youhyoo.PNG" width=300></a>
   <table align=center width=750 cellspacing=0 cellpadding=3>
@@ -38,7 +60,7 @@
  </form>
  
  
- <form method=post name=searchForm action="search_Proc.jsp">
+ <form method=post name=searchPwdForm action="search_Proc.jsp">
  <div>
   <table align=center width=750 cellspacing=0 cellpadding=3>
    <tr>

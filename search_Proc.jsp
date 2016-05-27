@@ -12,14 +12,18 @@ String u_pwd=request.getParameter("u_pwd");
 String u_cell=request.getParameter("u_cell1");
 u_cell=u_cell+request.getParameter("u_cell2");
 u_cell=u_cell+request.getParameter("u_cell3");
-
 User_Dao dao=User_Dao.getInstance(); //dao 객체 얻기 
+String id="";
+String pwd="";
+
 %>
 <html>
 <body>
 <%
 if(u_id==null){
-	String id=dao.searchId(u_name, u_cell);
+	id=dao.searchId(u_name, u_cell);
+	
+	if(!(id.equals(""))||id==null){
 	%>
 	<form name=seachId method="post" action="Login.jsp">
  	 <div align=center>
@@ -40,11 +44,35 @@ if(u_id==null){
         </td>
        </tr>
       </table>
-    </div>
-    </form>
-	<%
+    </div>      
+    <%
+    }else{
+    %>
+    <div align=center>
+  	 <a href="Index.jsp"><img src="imgs/top/youhyoo.PNG" width=300></a>
+  	  <table align=center width=750 cellpadding="0" cellspacing="0">
+       <tr>
+    	<td colspan=2 height=30><h3>아이디 찾기</h3></td>
+       </tr>
+       <tr>
+        <td align=center>
+         <p>검색한 ID가 없습니다</p><br><br>
+        </td>
+       </tr>
+       <tr>
+        <td align=center>
+         <input type=button name=searchid value="아이디 찾기" onclick="location.href='search.jsp'">
+        </td>
+       </tr>
+      </table>
+     </div> 
+     </form> 
+    <%
+    }//
 }else{
-	String pwd=dao.searchPwd(u_id, u_name);
+	pwd=dao.searchPwd(u_id, u_name);
+
+	if(!(pwd.equals(""))||pwd==null){
 	%>
 	<form name=searchPwd method="post" action="Login.jsp">
  	 <div align=center>
@@ -65,8 +93,15 @@ if(u_id==null){
        </tr>
       </table>
      </div>
-    </form>
 	<%
+	}else{
+	%>
+	<script>
+	alert("ID 또는 이름을 다시 입력하세요");
+	history.back();
+	</script>
+    <%
+    }//
 }
 %>
 <footer style="text-align:center;">

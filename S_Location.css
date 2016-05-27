@@ -5,7 +5,9 @@
 	margin: 0 auto;
 	width: 1000px;
 }
-
+#S_LocPadding{
+	vertical-align : top; 
+}
 #S_LocMenu{
 	width: 150px;
 	float: left;
@@ -14,6 +16,10 @@
 
 #locationChoice{
 	padding: 30px 0px 0px 30px;
+}
+
+#S_LocmainLocation{
+	vertical-align: top;
 }
 
 #S_LocmainTab{
