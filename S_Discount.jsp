@@ -11,15 +11,20 @@
 <style type="text/css">
 #selDate{font-size : 35px}
 #s_discount {width: 1000px; margin: 0 auto;}
-td.today {width: 40px; color: #ffffff;   font-weight:bold; border:solid thin 0pt; font-size:12pt; background-color: #cc0033; }  
+td.today {width: 40px; color: #000000;   font-weight:bold; border:solid thin 0pt; font-size:12pt; background-color: #E08888; }  
 td.workday {width: 40px; color: #000099;    font-weight:normal; border:solid thin 0.5pt; font-size:12pt; }  
 td.sunday{width: 40px; color: #cc0033; font-weight:normal; border:solid thin 0.5pt; font-size:12pt; }  
 td.satday{width: 40px; color: #0000ff;    font-weight:normal; border:solid thin 0.5pt; font-size:12pt; }  
 td.week  {width: 40px; color: #000000;   font-weight:normal; border:solid thin 0.5pt; font-size:12pt; background-color:#e6e6e6;width: 18px;text-align:center}  
-#kCal td {width: 40px; cursor:pointer;}
+.kCal td {width: 40px; cursor:pointer;}
 .preNext {width: 20px; color: #000099;text-decoration: none;}
 #dLocation{align : justify;}
-     
+.location {position:relative; font:12px/12px dotum; display:inline-block; text-decoration:none; background-color:#ffffff; cursor:pointer; white-space:nowrap; vertical-align:middle;}
+.location {left:3px; padding:8px 10px 8px 10px; color:#555; background-position:right -45px; border-radius:5px; font-weight:bold;}
+#sel{background-color:#E08888;}
+table.tableshot {background-color:#e6e6e6; width:100%; border-collapse:separate;}
+table.tableshot th { height:33px; background:#F1F1F2 repeat-x; text-align:center; font-weight:bold;}
+table.tableshot td {background-color:#FFFFFF; padding:0px 0px 0px 0px; text-align:center;}
 </style>
 
 <title>잔여객실 즉시 확인</title>
@@ -56,6 +61,8 @@ $(document).ready(function(){
 		var kDate=$("#sDate").text();
 		var o_date=kYear+"-"+kMonth+"-"+kDate;
 		//alert("location : "+location+" o_date : "+o_date);
+		$(".location").css("background-color","#fffff");
+		$(this).css("background-color","#E08888");		
 		
 		$.ajax({
 			type : 'POST',
@@ -67,45 +74,6 @@ $(document).ready(function(){
 			}
 		});
 	});
-	
-	$("#kCal td").click(function(){
-		var kYear=$("#sYear").text();
-		var kMonth=$("#sMonth").text();
-		var kDate=$("#sDate").text();
-		var o_date=kYear+"-"+kMonth+"-"+kDate;
-		var location=$("#setLo").text();
-		//$(this).css("color","yellow");
-		//alert("location : "+location+" o_date : "+o_date);
-		
-		$.ajax({
-			type : 'POST',
-			url : 'S_Discount_rs.jsp',
-			data : "location="+location+"&o_date="+o_date,
-			dataType : 'html',
-			success : function(data){//콜백 성공 응답시 실행
-				$("#result").html(data);	
-			}
-		});
-		
-	});
-	
-	/*
-	$("#location").click(function(){
-		var location=$("#location").val();
-		var p_num=$("#p_num").val();
-		var o_date=$("#o_date").val();
-		
-		$.ajax({
-			type : 'POST',
-			url : 'S_Discount_rs.jsp',
-			data : "location="+location+"&o_date="+o_date,
-			dataType : 'html',
-			success : function(data){//콜백 성공 응답시 실행
-				$("#result").html(data);	
-			}
-		});
-  	});
-	*/
 });
 
 </script>
@@ -129,7 +97,7 @@ $(document).ready(function(){
 </div>
 <hr>
 
-<table width="90%">
+<table width="100%">
 <tr>
 	<td>
 	<div id="cal"></div>
@@ -147,7 +115,7 @@ $(document).ready(function(){
 </table>
 <hr>
 <div id="dLocation">
-<a href="#"><span class="location">경기도</span></a>
+<a href="#"><span class="location" id="sel">경기도</span></a>
 <a href="#"><span class="location">충청도</span></a>
 <a href="#"><span class="location">경상도</span></a>
 <a href="#"><span class="location">전라도</span></a>

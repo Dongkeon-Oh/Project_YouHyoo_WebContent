@@ -75,7 +75,7 @@ function calendar(tYear, tMonth) { //달력 함수
 			lastDay = 29;
 		} // 0월 부터 시작하므로 1는 2월임. 윤달 계산 4년마다 29일 , 100년는 28일, 400년 째는 29일  
 
-		calendarStr = "<TABLE id='kCal'>"
+		calendarStr = "<TABLE class='kCal'>"
 		calendarStr += "<TR align=center><TD valign=middle>"
 		calendarStr += "<a href=javascript:calendar(" + tYear + ","
 				+ (tMonth - 1) + ") class=preNext>◀</a>" //월을 넘길때 빼기 -1을 해서 넘긴다(년도는 자동 계산됨)  
@@ -100,7 +100,7 @@ function calendar(tYear, tMonth) { //달력 함수
 		for (i = 1; i <= lastDay; i++) { // 해당 월의 달력   
 			if (eDate.getFullYear() == nYear && eDate.getMonth() == nMonth
 					&& i == nDate) {//오늘이면 today 스타일로 표시  
-				calendarStr += "<TD class=today onmouseover=onMouse(this) onmouseout=outMouse(this,'today') onClick=datePicker("
+				calendarStr += "<TD class=today onClick=datePicker("
 						+ tYear
 						+ ","
 						+ tMonth
@@ -112,7 +112,7 @@ function calendar(tYear, tMonth) { //달력 함수
 			} else {
 
 				if (col == 0) { //일요일이면  
-					calendarStr += "<TD class=sunday onmouseover=onMouse(this) onmouseout=outMouse(this,'notToday') onClick=datePicker("
+					calendarStr += "<TD class=sunday onClick=datePicker("
 							+ tYear
 							+ ","
 							+ tMonth
@@ -121,7 +121,7 @@ function calendar(tYear, tMonth) { //달력 함수
 							+ ",'"
 							+ dayName[col] + "')>" + i + "</TD>"
 				} else if (1 <= col && col <= 5) {//그외 평범한 날이면  
-					calendarStr += "<TD class=workday onmouseover=onMouse(this) onmouseout=outMouse(this,'notToday') onClick=datePicker("
+					calendarStr += "<TD class=workday onClick=datePicker("
 							+ tYear
 							+ ","
 							+ tMonth
@@ -130,7 +130,7 @@ function calendar(tYear, tMonth) { //달력 함수
 							+ ",'"
 							+ dayName[col] + "')>" + i + "</TD>"
 				} else if (col == 6) { //토요일이면  
-					calendarStr += "<TD class=satday onmouseover=onMouse(this) onmouseout=outMouse(this,'notToday') onClick=datePicker("
+					calendarStr += "<TD class=satday onClick=datePicker("
 							+ tYear
 							+ ","
 							+ tMonth
@@ -155,4 +155,25 @@ function calendar(tYear, tMonth) { //달력 함수
 
 		calendarStr += "</TR><TR align=center><TD colspan=7 ></TD></TR></TABLE>";
 		document.getElementById('cal').innerHTML = calendarStr;
+		
+		$(".kCal td").click(function(){
+			var kYear=$("#sYear").text();
+			var kMonth=$("#sMonth").text();
+			var kDate=$("#sDate").text();
+			var o_date=kYear+"-"+kMonth+"-"+kDate;
+			var location=$("#setLo").text();
+			
+			$(".kCal td").css("background-color","#fffff");
+			$(this).css("background-color","#E08888");
+			
+			$.ajax({
+				type : 'POST',
+				url : 'S_Discount_rs.jsp',
+				data : "location="+location+"&o_date="+o_date,
+				dataType : 'html',
+				success : function(data){//콜백 성공 응답시 실행
+					$("#result").html(data);	
+				}
+			});
+		});
 	}

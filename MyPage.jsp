@@ -86,7 +86,7 @@ List<Pension_Dto> wList=mgr.getWishlist(u_id);
 //List<OrderRoom_Dto> oList=mgr.getOrder(u_id,sDate,eDate);
 
 //일대일상담내역(펜션질문)
-List<Q_pension_Dto> qList=mgr.getQList(u_id);
+List<Q_Youhyoo_Dto> qList=mgr.getQList(u_id);
 %> 
 <div id="member">
 	<div class="mTitle">회원정보</div>
@@ -191,18 +191,18 @@ List<Q_pension_Dto> qList=mgr.getQList(u_id);
 		</tr>
 		<%
 		for(int i=0;i<qList.size();i++ ){
-			Q_pension_Dto q=qList.get(i);
+			Q_Youhyoo_Dto q=qList.get(i);
 		%>
 			<tr id="Qtr">
-				<td><%=q.getQp_num() %></td>
-				<td><%=q.getQp_title() %></td>
+				<td><%=q.getQy_num() %></td>
+				<td><%=q.getQy_title() %></td>
 				<%
-				if(q.getQp_state()==true){%>	
+				if(q.getQy_state()==true){%>	
 				<td>답변완료</td><%
 				}else{%>
 				<td>답변대기</td>	<%
 				}%>
-				<td><%=q.getQp_date() %></td>
+				<td><%=q.getQy_date() %></td>
 			</tr>
 		<%
 		}//for

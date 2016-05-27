@@ -14,7 +14,7 @@ String o_date=request.getParameter("o_date");
 			
 %>
 
-		<table width="100%" border=1 style="text-align: left;" class="tableshot">
+		<table width="100%" style="text-align: left;" class="tableshot">
 			<tr style="text-align: center;">
 				<th colspan="2">업소</th>
 				<th>빈객실</th>
