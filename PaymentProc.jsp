@@ -61,5 +61,5 @@ OU_dto.setOu_paytype(ou_paytype);
 OU_dto.setOu_group(maxOrderNum);
 
 detail.insertOrderUser(OU_dto);
-//insertOrder();
+response.sendRedirect("MyPage.jsp");
 %>  

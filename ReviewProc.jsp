@@ -72,7 +72,7 @@ function question(this_num,this_tr,this_photo,this_view,this_pension){
    Review review=new Review();//객체생성
 
 //   if(request.getParameter("flag").equals("insert")){
-//	review.Insert_Review(request);//등록메서드 호출
+//	 review.Insert_Review(request);//등록메서드 호출
 //   }
 
    		int pension_num=Integer.parseInt(request.getParameter("p_num"));// -> 디테일뷰에서 num 받아오는 부분

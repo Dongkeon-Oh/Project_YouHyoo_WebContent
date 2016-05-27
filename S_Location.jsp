@@ -30,15 +30,20 @@ List<Room_Dto> roomList=indexMgr.getIndexRoomList(pensionNumber);
 		<link href="TopBottom.css" type="text/css" rel="stylesheet">
 	  	<link href="S_Location.css" type="text/css" rel="stylesheet">
 		<script>
+			
 			function jjimSet(thisForm,pensionNumber){
-				 
-				if(<%=(String)session.getAttribute("memberSession")%>==null){
+				if('<%=(String)session.getAttribute("u_id")%>'=='null'){
 					alert("로그인이 필요한 메뉴입니다.\n로그인 페이지로 이동합니다.");
-					location.href="http://google.com";
+					location.href="Login.jsp";
 				}else{
 					thisForm.pension.value=pensionNumber;
 					thisForm.submit();
 				}
+			}
+
+			function locationDetail(loc){
+				$("input[type=hidden]").attr("value",loc);
+				locationChoice.submit();
 			}
 		</script>
 	</head>
@@ -46,7 +51,7 @@ List<Room_Dto> roomList=indexMgr.getIndexRoomList(pensionNumber);
 		<%@ include file="Top.jsp" %>
 		<table id="S_LocMainFrame">
 			<tr>
-				<td>
+				<td id="S_LocPadding">
 					<div id="S_LocMenu">
 						<form method="post" name="locationChoice" id="locationChoice" action="S_Location.jsp">
 							<img src="imgs/S_Location/good.jpg" class="S_LocImg">
@@ -70,12 +75,12 @@ List<Room_Dto> roomList=indexMgr.getIndexRoomList(pensionNumber);
 							<br><br>
 							<img src="imgs/S_Location/good.jpg" class="S_LocImg">
 							<font size="4" color="#3F48CC">전체 지역</font><br>
-							<a href="#" OnClick="locationDetail('hot용인')"><font size="3">경기도</font></a><br>
-							<a href="#" OnClick="locationDetail('hot용인')"><font size="3">강원도</font></a><br>
-							<a href="#" OnClick="locationDetail('hot용인')"><font size="3">충청도</font></a><br>
-							<a href="#" OnClick="locationDetail('hot용인')"><font size="3">경상도</font></a><br>
-							<a href="#" OnClick="locationDetail('hot용인')"><font size="3">전라도</font></a><br>
-							<a href="#" OnClick="locationDetail('hot용인')"><font size="3">제주도</font></a><br>
+							<a href="#" OnClick="locationDetail('경기도')"><font size="3">경기도</font></a><br>
+							<a href="#" OnClick="locationDetail('강원도')"><font size="3">강원도</font></a><br>
+							<a href="#" OnClick="locationDetail('충청도')"><font size="3">충청도</font></a><br>
+							<a href="#" OnClick="locationDetail('경상도')"><font size="3">경상도</font></a><br>
+							<a href="#" OnClick="locationDetail('전라도')"><font size="3">전라도</font></a><br>
+							<a href="#" OnClick="locationDetail('제주도')"><font size="3">제주도</font></a><br>
 			
 							<input type="hidden" name="location">
 						</form>
@@ -123,7 +128,7 @@ List<Room_Dto> roomList=indexMgr.getIndexRoomList(pensionNumber);
 											</td>
 										</tr>
 										<tr>
-											<td class="index_link">
+											<td class="S_Locindex_link">
 												<font size="2">주중 </font>
 												<font size="2" color="red"><%=room.getR_min_wd() %></font>~ / 
 												<font size="2">주말 </font>
@@ -132,7 +137,7 @@ List<Room_Dto> roomList=indexMgr.getIndexRoomList(pensionNumber);
 										</tr>
 										<tr>
 											<td>
-												<form method="post" name="jjim" class="jjim" action="http://www.naver.com">
+												<form method="post" name="jjim" class="jjim" action="WishlistProc.jsp">
 													<input type="button" id="index_Button" onclick="javascript:jjimSet(this.form,'<%=pension.getP_num() %>')">
 													<input type="hidden" name="pension">
 													&nbsp;
