@@ -51,8 +51,7 @@ int totalList=vec.size(); //동을 검색하는 레코드 수
   <table>
   <%
   if(check.equals("n")){
-	  if(vec.isEmpty()){
-		  
+	  if(vec.isEmpty()){	  
 		  out.println("<tr><td align=center><br>검색된 결과가 없습니다</td></tr>");
 	  }else{ //검색된 주소가 있을때
 		  %>
