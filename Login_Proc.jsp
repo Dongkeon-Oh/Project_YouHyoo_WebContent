@@ -12,6 +12,9 @@ int check=dao.userCheck(u_id, u_pwd); //dao 메소드 호출
 if(check==1){
 	session.setAttribute("u_id", u_id);
 	response.sendRedirect("Index.jsp");
+}else if(check==2){
+	session.setAttribute("u_id", u_id);
+	response.sendRedirect("MyPageAdmin.jsp");
 }else{
 	%>
 	<script>

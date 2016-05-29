@@ -160,25 +160,42 @@ for(int i=0; i<orderAmount; i++){
 	    		if($("input[name=ou_customer]").val()==''){
 	    			$("input[name=ou_customer]").focus();
 	    			alert("예약자명을 확인해주시기 바랍니다.");
+    				return false;
 	    		}else if($("input[name=ou_birth]").val()==''){
 	    			$("input[name=ou_birth]").focus();
 	    			alert("생년월일을 확인해주시기 바랍니다.");
+    				return false;
 	    		}else if($("input[name=ou_emercall2]").val()==''){
 	    			$("input[name=ou_emercall2]").focus();
 	    			alert("전화번호를 확인해주시기 바랍니다.");
+    				return false;
 	    		}else if($("input[name=ou_emercall3]").val()==''){
 	    			$("input[name=ou_emercall3]").focus();
 	    			alert("전화번호를 확인해주시기 바랍니다.");
+    				return false;
 	    		}else if(radioSet==0){
 	    			$("input[class=payTypeSet]").focus();
 	    			alert("결제 정보를 확인해주시기 바랍니다.");
+    				return false;
 	    		}else{
+	    			if($("input[name=ou_emercall2]").val()<1000
+	    					||$("input[name=ou_emercall2]").val()>10000){
+		    			$("input[name=ou_emercall2]").focus();
+		    			alert("전화번호를 확인해주시기 바랍니다.");
+	    				return false;
+		    		}
+	    			
+	    			if($("input[name=ou_emercall3]").val()<1000
+	    					||$("input[name=ou_emercall3]").val()>10000){
+		    			$("input[name=ou_emercall3]").focus();
+		    			alert("전화번호를 확인해주시기 바랍니다.");
+	    				return false;
+		    		}
+	    			
 	    			var yy=$("input[name=ou_birth]").val().substring(0,2);
 	    			var mm=$("input[name=ou_birth]").val().substring(2,4);
 	    			var dd=$("input[name=ou_birth]").val().substring(4,6);
-	    			
-	    			alert(yy+":"+mm+":"+dd);
-	    			
+	    				    			
 	    			if($("input[name=ou_birth]").val()<101){
 	    				$("input[name=ou_birth]").focus();
 		    			alert("생년월일을 확인해주시기 바랍니다.");
@@ -249,7 +266,11 @@ for(int i=0; i<orderAmount; i++){
 	    				$(item).prop("checked",true);
 	    			}
 	    		});
-	    	}	    	
+	    	}	    
+			
+			function goBack(){
+				history.back();
+			}
 		</script>
 	</head>
 	<body>
@@ -419,7 +440,7 @@ for(int i=0; i<orderAmount; i++){
 					</tr>
 					<tr>
 						<td colspan="2">
-							<input type="button" value="취소하기">&nbsp;&nbsp;
+							<input type="button" value="취소하기" Onclick="goBack()">&nbsp;&nbsp;
 							<input type="button" value="결제하기" Onclick="commitPay()">
 						</td>
 					</tr>
