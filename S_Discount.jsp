@@ -3,33 +3,17 @@
     import="youhyoo.*"
     import="java.util.*"
     %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="TopBottom.css" type="text/css" rel="stylesheet">
-<style type="text/css">
-#selDate{font-size : 35px}
-#s_discount {width: 1000px; margin: 0 auto;}
-td.today {width: 40px; color: #000000;   font-weight:bold; border:solid thin 0pt; font-size:12pt; background-color: #E08888; }  
-td.workday {width: 40px; color: #000099;    font-weight:normal; border:solid thin 0.5pt; font-size:12pt; }  
-td.sunday{width: 40px; color: #cc0033; font-weight:normal; border:solid thin 0.5pt; font-size:12pt; }  
-td.satday{width: 40px; color: #0000ff;    font-weight:normal; border:solid thin 0.5pt; font-size:12pt; }  
-td.week  {width: 40px; color: #000000;   font-weight:normal; border:solid thin 0.5pt; font-size:12pt; background-color:#e6e6e6;width: 18px;text-align:center}  
-.kCal td {width: 40px; cursor:pointer;}
-.preNext {width: 20px; color: #000099;text-decoration: none;}
-#dLocation{align : justify;}
-.location {position:relative; font:12px/12px dotum; display:inline-block; text-decoration:none; background-color:#ffffff; cursor:pointer; white-space:nowrap; vertical-align:middle;}
-.location {left:3px; padding:8px 10px 8px 10px; color:#555; background-position:right -45px; border-radius:5px; font-weight:bold;}
-#sel{background-color:#E08888;}
-table.tableshot {background-color:#e6e6e6; width:100%; border-collapse:separate;}
-table.tableshot th { height:33px; background:#F1F1F2 repeat-x; text-align:center; font-weight:bold;}
-table.tableshot td {background-color:#FFFFFF; padding:0px 0px 0px 0px; text-align:center;}
-</style>
-
 <title>잔여객실 즉시 확인</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link href="TopBottom.css" type="text/css" rel="stylesheet">
+<link href="S_Discount.css" type="text/css" rel="stylesheet">
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 <script src="Dcalendar.js"></script>
+
 <script>
 
 $(document).ready(function(){

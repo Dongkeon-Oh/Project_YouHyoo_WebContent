@@ -4,6 +4,7 @@ div.mTitle {font-size: 18px; font-weight:bold; margin:10px 0px 10px 0px; }
 div.emptyMsg {border:solid 1px #dddddd; padding:10px; text-align:center; clear:both;}
 span.bt {display:inline-block; border:solid 2px silver; text-decoration:none; cursor:pointer; white-space:nowrap; vertical-align:middle; color:Black; font-size:14px; padding:5px 10px 5px 10px; background-color:White;}
 span.ou_numBt {cursor:pointer;}
+a.lin {cursor:pointer;}
 
 table.mInfo {width:100%; background:#d7d7d7; padding:0px; }
 table.mInfo th {background:#F1F1F2 repeat-x; padding:0px 0px 0px 10px ; vertical-align:top; line-height:31px; text-align:left;}
@@ -17,3 +18,4 @@ span.help {color:#439903; background: left 2px; padding-left:12px; background-re
 table.listb {background-color:#d7d7d7; width:100%; border-collapse:separate;}
 table.listb th { height:33px; background:#F1F1F2 repeat-x; text-align:center; font-weight:bold;}
 table.listb td {background-color:#FFFFFF; padding:3px 2px 3px 2px; text-align:center;}
+.qyContent {display: none;}

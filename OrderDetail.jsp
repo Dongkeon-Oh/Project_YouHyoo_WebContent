@@ -12,16 +12,17 @@ IndexMgr mgr=IndexMgr.getInstance();
 List<OrderRoom_Dto> oList=mgr.getOrderRoom(ou_num);
 OrderRoom_Dto o=oList.get(0);
 OrderUser_Dto ou=mgr.getOrderUser(ou_num);
+
+int sum=0;
 %>    
 <html>
 <head>
 <title>예약내역상세</title>
 <style type="text/css">
-table.info{background-color:#d7d7d7; width:100%; border-collapse:separate;}
-
-th { height:33px; background:#F1F1F2 repeat-x; text-align:center; font-weight:bold;}
-td {background-color:#FFFFFF; padding:3px 2px 3px 2px; text-align:center;}
-table.l{text-align:left;}
+	table.info{background-color:#d7d7d7; width:100%; border-collapse:separate;}
+	th { height:33px; background:#F1F1F2 repeat-x; text-align:center; font-weight:bold;}
+	td {background-color:#FFFFFF; padding:3px 2px 3px 2px; text-align:center;}
+	table.l{text-align:left;}
 </style>
 </head>
 <body>
@@ -33,7 +34,6 @@ table.l{text-align:left;}
 	<colgroup>
 			<col width="22%" />
 			<col width="78%" />
-			
 	</colgroup>
 		<tr>
 			<th>업소명</th>
@@ -77,6 +77,7 @@ table.l{text-align:left;}
 		<%
 		for(int i=0;i<oList.size();i++){
 			OrderRoom_Dto or=oList.get(i);
+			sum=or.getO_price() + or.getO_exprice();
 		%>
 		<tr>
 			<td><%=or.getO_rname() %></td>
@@ -106,7 +107,7 @@ table.l{text-align:left;}
 	</colgroup>
 		<tr>
 			<th>결제액</th>
-			<td>DB에 없음</td>
+			<td><%=sum%>원</td>
 			<th>결제방법</th>
 			<%
 			if(ou.getOu_paytype()==100){

@@ -3,7 +3,6 @@
     import="youhyoo.*"
     import="java.util.*"
     %>
-    
 <%
 request.setCharacterEncoding("utf-8");
 String u_id=request.getParameter("u_id");
@@ -18,20 +17,11 @@ List<OrderUser_Dto> ouList=mgr.getUser(u_id,sDate,eDate);
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 <script type="text/javascript">
 $(function(){
+	//클릭하면 예약내역상세 팝업
 	$(".ou_numBt").click(function(){
 		var ou_num=eval($(this).text());
-		//alert(num);
-		
 		window.open("OrderDetail.jsp?ou_num="+ou_num,+"예약내역상세","left=600,top=250,width=800,height=500");
 	});
-	/*
-	$(".reviewBt").click(function(){
-		var ou_num=eval($(~ this).text());
-		alert(ou_num);
-		var url="Review.jsp?ou_num="+ou_num+"&rv_pension="+rv_pension+"&u_id="+u_id+"";
-		window.open(url,"이용후기","left=600,top=250,width=800,height=500");
-	});
-	*/
 });	
 </script>
 <link href="MyPage.css" type="text/css" rel="stylesheet">
@@ -65,7 +55,12 @@ $(function(){
 				<td class="pname"><%=o.getO_pname() %></td>
 				<td><%=ou.getOu_customer() %>(<%=ou.getOu_cell() %>)</td>
 				<td>결제완료</td>		
-				<td><a href="#"><span class="bt" onclick="javascript:window.open('Review.jsp?ou_num=<%=ou.getOu_num() %>&rvPnum=<%=o.getO_pnum() %>&rvPname=<%=o.getO_pname()%>&rv_id=<%=u_id%>','이용후기','left=600,top=250,width=600,height=650')">이용후기</span></a></td>
+				<td>
+				<a href="#">
+				<!-- 주문번호,펜션넘버,펜션이름,사용자ID 리뷰작성페이지에 get으로 넘긴다 -->
+				<span class="bt" onclick="javascript:window.open('Review.jsp?ou_num=<%=ou.getOu_num() %>&rvPnum=<%=o.getO_pnum() %>&rvPname=<%=o.getO_pname()%>&rv_id=<%=u_id%>','이용후기','left=600,top=250,width=600,height=650')">이용후기</span>
+				</a>
+				</td>
 			</tr>
 	<%
 		}//for

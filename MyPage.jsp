@@ -8,31 +8,41 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>유휴~! 마이페이지</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
+<!-- css링크 -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<link href="TopBottom.css" type="text/css" rel="stylesheet">
+<link href="MyPage.css" type="text/css" rel="stylesheet">
+
+<!-- script 플러그인 제이쿼리,날짜-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src="moment.js"></script>
+
+<!-- 사용자정의 -->
 <script>
   	$(function($){
   		
+  		//달력 한글처리
   		$.datepicker.regional['ko'] = {
-  		closeText: '닫기',
-  		 prevText: '이전',
-  		 nextText: '다음',
-  		 currentText: '오늘',
-  		 monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-  		 monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
-  		 dayNames: ['일','월','화','수','목','금','토'],
-  		 dayNamesShort: ['일','월','화','수','목','금','토'],
-  		 dayNamesMin: ['일','월','화','수','목','금','토'],
-  		 weekHeader: 'Wk',
-  		 dateFormat: 'yy-mm-dd',
-  		 firstDay: 0,
-  		 isRTL: false,
-  		 showMonthAfterYear: true,
-  		 yearSuffix: ''};
-  		 $.datepicker.setDefaults($.datepicker.regional['ko']);
+	  		 closeText: '닫기',
+	  		 prevText: '이전',
+	  		 nextText: '다음',
+	  		 currentText: '오늘',
+	  		 monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	  		 monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
+	  		 dayNames: ['일','월','화','수','목','금','토'],
+	  		 dayNamesShort: ['일','월','화','수','목','금','토'],
+	  		 dayNamesMin: ['일','월','화','수','목','금','토'],
+	  		 weekHeader: 'Wk',
+	  		 dateFormat: 'yy-mm-dd',
+	  		 firstDay: 0,
+	  		 isRTL: false,
+	  		 showMonthAfterYear: true,
+	  		 yearSuffix: ''};
+ 	 	$.datepicker.setDefaults($.datepicker.regional['ko']);
   		
+  		//input 태그에서 날짜 받아와 변수로 저장 
 		$("#sDate").val(moment().add(-13,'days').format('YYYY-MM-DD'));
 		$("#eDate").val(moment().format('YYYY-MM-DD'));
 		
@@ -40,6 +50,7 @@
 		var sDate=$("#sDate").val();
 		var eDate=$("#eDate").val();
 		
+		//나의 주문내역 요청
 		$.ajax({
 			type : 'POST',
 			url : 'OrderList.jsp',
@@ -50,6 +61,7 @@
 			}
 		});
 		
+		//예약내역 리스트 얻기 (날짜지정해서)
 		$("#oCheck").click(function(){
 			var u_id=$("#u_id").val();
 			var sDate=$("#sDate").val();
@@ -66,6 +78,7 @@
 			});
 	  	});
 		
+		//적립금 내역 얻기
 		$("#point").click(function(){
 			var u_id=$("#u_id").val();
 			//alert(num);
@@ -73,6 +86,7 @@
 			window.open("UserPoint.jsp?u_id="+u_id,+"적립금내역","left=600,top=250,width=800,height=500");
 		});
 		
+		//일대일 상담하기 입력폼으로 이동
 		$("#qYH").click(function(){
 			var u_id=$("#u_id").val();
 			//alert(num);
@@ -80,7 +94,7 @@
 			window.open("Q_Youhyoo.jsp?u_id="+u_id,+"일대일상담","left=600,top=250,width=600,height=500");
 		});
 		
-
+		//팝업 달력 (시작날짜)
 		$('#sDate').datepicker({
 			showOn : "button",
 			buttonImage : "imgs/top/cal.png",
@@ -88,25 +102,40 @@
 			buttonText : "Select date"
 		});
 		
+		//팝업 달력 (끝날짜)
 		$('#eDate').datepicker({
 			showOn : "button",
 			buttonImage : "imgs/top/cal.png",
 			buttonImageOnly : true,
 			buttonText : "Select date"
 		});
+		
+		//일대일 상담 내역에서 글제목을 클릭하면 글내용 보이게
+		$(".lin").click(function(){	
+			
+			var con = jQuery(this).attr("qyNum");
+			var trdes = jQuery(this).closest("tr").next();
+				
+			jQuery("#tb_Qy tr.qyContent").hide();		//모두 감추기
+
+			if(jQuery(".qyContent").attr("abc") == con)
+			{
+				jQuery(".qyContent").attr("abc","");
+				trdes.hide();		
+			}
+			else
+			{
+				jQuery(".qyContent").attr("abc",con);
+				trdes.show();	
+			}				
+		});
 	});
 </script>
-
-<link href="TopBottom.css" type="text/css" rel="stylesheet">
-<link href="MyPage.css" type="text/css" rel="stylesheet">
-
 </head>
+
 <body>
 <%@ include file="Top.jsp" %>
 <%
-//String u_id=(String)session.getAttribute("u_id");
-//String u_id="dj";
-
 //오늘 날짜 얻기
 Calendar cal=Calendar.getInstance();
 
@@ -117,9 +146,6 @@ User_Dto uDto=uDao.getUser(u_id);
 //찜리스트 얻기
 IndexMgr mgr=IndexMgr.getInstance();
 List<Pension_Dto> wList=mgr.getWishlist(u_id);
-
-//예약정보 얻기
-//List<OrderRoom_Dto> oList=mgr.getOrder(u_id,sDate,eDate);
 
 //일대일상담내역(펜션질문)
 List<Q_Youhyoo_Dto> qList=mgr.getQList(u_id);
@@ -212,7 +238,7 @@ List<Q_Youhyoo_Dto> qList=mgr.getQList(u_id);
 	<div><!-- 여기에 일대일상담내역이 들어온다!! -->
 	<%
 	if(!qList.isEmpty()){%>	
-		<table class="listb">
+		<table class="listb" id="tb_Qy">
 		<colgroup>
 			<col width="8%" />
 			<col width="50%" />
@@ -231,7 +257,9 @@ List<Q_Youhyoo_Dto> qList=mgr.getQList(u_id);
 		%>
 			<tr id="Qtr">
 				<td><%=q.getQy_num() %></td>
-				<td><%=q.getQy_title() %></td>
+				<td>
+				<a class="lin" qyNum="<%=q.getQy_num() %>"><%=q.getQy_title() %></a>
+				</td>
 				<%
 				if(q.getQy_state()==true){%>	
 				<td>답변완료</td><%
@@ -239,6 +267,12 @@ List<Q_Youhyoo_Dto> qList=mgr.getQList(u_id);
 				<td>답변대기</td>	<%
 				}%>
 				<td><%=q.getQy_date() %></td>
+			</tr>
+			
+			<tr class="qyContent">
+				<td colspan=5 id="con">
+				<%=q.getQy_content() %>
+				</td>
 			</tr>
 		<%
 		}//for
@@ -302,6 +336,7 @@ List<Q_Youhyoo_Dto> qList=mgr.getQList(u_id);
 	}//else
 	%>
 	</div>			
+</div>
 </div>
 <%@ include file="Bottom.html" %>
 </body>

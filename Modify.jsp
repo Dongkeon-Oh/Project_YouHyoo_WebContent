@@ -10,6 +10,8 @@ User_Dto dto=dao.getUser(id);
 %>
 <html>
 <head>
+ <link href="TopBottom.css" type="text/css" rel="stylesheet">
+
  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
  <script type="text/javascript">
  function zipCheck(){
