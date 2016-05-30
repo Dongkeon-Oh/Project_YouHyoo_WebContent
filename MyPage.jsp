@@ -9,9 +9,30 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>유휴~! 마이페이지</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src="moment.js"></script>
 <script>
   	$(function($){
+  		
+  		$.datepicker.regional['ko'] = {
+  		closeText: '닫기',
+  		 prevText: '이전',
+  		 nextText: '다음',
+  		 currentText: '오늘',
+  		 monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+  		 monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
+  		 dayNames: ['일','월','화','수','목','금','토'],
+  		 dayNamesShort: ['일','월','화','수','목','금','토'],
+  		 dayNamesMin: ['일','월','화','수','목','금','토'],
+  		 weekHeader: 'Wk',
+  		 dateFormat: 'yy-mm-dd',
+  		 firstDay: 0,
+  		 isRTL: false,
+  		 showMonthAfterYear: true,
+  		 yearSuffix: ''};
+  		 $.datepicker.setDefaults($.datepicker.regional['ko']);
+  		
 		$("#sDate").val(moment().add(-13,'days').format('YYYY-MM-DD'));
 		$("#eDate").val(moment().format('YYYY-MM-DD'));
 		
@@ -57,6 +78,21 @@
 			//alert(num);
 			
 			window.open("Q_Youhyoo.jsp?u_id="+u_id,+"일대일상담","left=600,top=250,width=600,height=500");
+		});
+		
+
+		$('#sDate').datepicker({
+			showOn : "button",
+			buttonImage : "imgs/top/cal.png",
+			buttonImageOnly : true,
+			buttonText : "Select date"
+		});
+		
+		$('#eDate').datepicker({
+			showOn : "button",
+			buttonImage : "imgs/top/cal.png",
+			buttonImageOnly : true,
+			buttonText : "Select date"
 		});
 	});
 </script>

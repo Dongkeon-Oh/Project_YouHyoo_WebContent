@@ -27,7 +27,7 @@ String o_date=request.getParameter("o_date");
 			<%
 				IndexMgr mgr =IndexMgr.getInstance();
 						
-					List<Pension_Dto> p_list = mgr.getDPList(location);
+					List<Pension_Dto> p_list = mgr.getDPList(location,o_date);
 					if (p_list.size() > 0) {
 						for (int i = 0; i < p_list.size(); i++) {
 
