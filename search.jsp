@@ -17,12 +17,12 @@
 		 return false;
 	 }
 	 if(searchIdForm.u_cell2.value==''){
-		 alert("핸드폰번호를 다시 입력하시오");
+		 alert("핸드폰번호를 입력하시오");
 		 searchIdForm.u_cell2.focus();
 		 return false;
 	 }
 	 if(searchIdForm.u_cell3.value==''){
-		 alert("핸드폰번호를 전부 입력하시오");
+		 alert("핸드폰번호를 입력하시오");
 		 searchIdForm.u_cell3.focus();
 		 return false;
 	 }

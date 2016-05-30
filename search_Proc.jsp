@@ -56,7 +56,8 @@ if(u_id==null){
        </tr>
        <tr>
         <td align=center>
-         <p>검색한 정보가 없습니다</p><br><br>
+         <p>입력하신 회원정보는 없는 정보입니다.<br>
+         다시 입력하세요.</p><br><br>
         </td>
        </tr>
        <tr>

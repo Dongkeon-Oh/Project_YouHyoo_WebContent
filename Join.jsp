@@ -143,7 +143,7 @@
 		 return false;
 	 }
 	 url="ConfirmId.jsp?u_id="+joinForm.u_id.value;
-	 open(url,"confirm","width=300,height=200");
+	 open(url,"confirm","width=500,height=300");
  }//ConfirmId()
  
  function rechkId(){

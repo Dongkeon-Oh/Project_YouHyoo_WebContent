@@ -10,18 +10,18 @@ String u_pwd=request.getParameter("u_pwd");
 User_Dao dao=User_Dao.getInstance();
 int check=dao.deleteUser(id,u_pwd);
 if(check==1){
+	session.invalidate();
 	%>
 	<script>
-	alert("탈퇴처리 되었습니다. 안녕히가세요~!");
+	alert("탈퇴처리 되었습니다. 안녕히가세요");
+	location.href='Index.jsp';
 	</script>
 	<%
-	session.invalidate(); //세션무효화
-	response.sendRedirect("Index.jsp");
-}else if(check==0){
+}else{
 	%>
 	<script>
 	alert("비밀번호가 틀립니다");
-	history.back();
+	history.go(-1);
 	</script>
 	<%
 }

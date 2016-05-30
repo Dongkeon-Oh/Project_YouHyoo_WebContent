@@ -22,49 +22,9 @@ User_Dto dto=dao.getUser(id);
  function checkIt(){
 	 var join=eval("document.joinForm");
  
-	 if(joinForm.u_name.value==''){
-		 alert("이름은 필수 입력입니다");
-		 joinForm.u_name.focus();
-		 return false;
-	 }
 	 if(joinForm.u_pwd.value==''){
 		 alert("pwd는 필수 입력입니다");
 		 joinForm.u_pwd.focus();
-		 return false;
-	 }
-	 if(joinForm.u_cell1.value==''){
-		 alert("핸드폰번호를 입력하시오");
-		 joinForm.u_cell1.focus();
-		 return false;
-	 }
-	 if(joinForm.u_cell2.value==''){
-		 alert("핸드폰번호를 다시 입력하시오");
-		 joinForm.u_cell2.focus();
-		 return false;
-	 }
-	 if(joinForm.u_cell3.value==''){
-		 alert("핸드폰번호를 전부 입력하시오");
-		 joinForm.u_cell3.focus();
-		 return false;
-	 }
-	 if(joinForm.u_zipcode.value==''){
-		 alert("우편번호를 입력하시오");
-		 joinForm.u_zipcode.focus();
-		 return false;
-	 }
-	 if(joinForm.u_addr.value==''){
-		 alert("주소를 입력하시오");
-		 joinForm.u_addr.focus();
-		 return false;
-	 }
-	 if(join.u_birth.value==''){
-		 alert("생년월일을 입력하세요");
-		 joinForm.u_birth.focus();
-		 return false;
-	 }
-	 if(join.u_email.value==''){
-		 alert("이메일을 입력하세요");
-		 joinForm.u_email.focus();
 		 return false;
 	 }
 	 return true;

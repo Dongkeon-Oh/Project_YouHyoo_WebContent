@@ -21,17 +21,18 @@ int check=dao.confirmId(u_id);
   
   </script>
  </head>
- <body>
+ <body align=center>
+ <img src="imgs/top/youhyoo.PNG" width=300>
  <%
  if(check==1){ //사용중
 	 %>
-	 <table width=270 border=1 cellspacing=0 cellpadding=5>
+	 <table width=270 border=1 cellspacing=0 cellpadding=5 align=center>
 	  <tr>
 	   <td align=center><%=u_id%>는 사용중인 ID입니다</td>
 	  </tr>
 	 </table>
 	 <form name=checkForm method=post action=ConfirmId.jsp>
-	  <table width=270 border=1 cellspacing=0 cellpadding=5>
+	  <table width=270 border=1 cellspacing=0 cellpadding=5 align=center>
 	   <tr>
 	    <td align=center>
 	        <p>다른아이디를 입력하세요</p>
@@ -44,7 +45,7 @@ int check=dao.confirmId(u_id);
 	 <%
  }else{
 	 %>
-	 <table border=1 cellspacing=0 cellpadding=5>
+	 <table border=1 cellspacing=0 cellpadding=5 align=center>
 	  <tr>
 	   <td align=center>
 	    <p>
