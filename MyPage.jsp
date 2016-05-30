@@ -53,7 +53,7 @@
 		//나의 주문내역 요청
 		$.ajax({
 			type : 'POST',
-			url : 'OrderList.jsp',
+			url : 'M_OrderList.jsp',
 			data : "u_id="+u_id+"&sDate="+sDate+"&eDate="+eDate,
 			dataType : 'html',
 			success : function(data){//콜백 성공 응답시 실행
@@ -69,7 +69,7 @@
 			
 			$.ajax({
 				type : 'POST',
-				url : 'OrderList.jsp',
+				url : 'M_OrderList.jsp',
 				data : "u_id="+u_id+"&sDate="+sDate+"&eDate="+eDate,
 				dataType : 'html',
 				success : function(data){//콜백 성공 응답시 실행

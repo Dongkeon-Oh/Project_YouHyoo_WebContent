@@ -5,23 +5,26 @@
     %>  
 <%
 request.setCharacterEncoding("utf-8");
+
 String u_id=request.getParameter("u_id");
 
+//결제액 총액 변수 지정
+int sum=0;
+
+//적립금 포인트 내역 얻기
 IndexMgr mgr=IndexMgr.getInstance();
 List<OrderRoom_Dto> poList=mgr.getPoint(u_id);
 List<OrderUser_Dto> uList=mgr.getPuser(u_id);
-
-int sum=0;
 %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <style type="text/css">
-table.info{background-color:#d7d7d7; width:100%; border-collapse:separate;}
-
-.l th { height:33px; background:#F1F1F2 repeat-x; text-align:center; font-weight:bold;}
-.l td {background-color:#FFFFFF; padding:3px 2px 3px 2px; text-align:center;}
-table .l{text-align:left;}
+	table.info{background-color:#d7d7d7; width:100%; border-collapse:separate;}
+	
+	.l th { height:33px; background:#F1F1F2 repeat-x; text-align:center; font-weight:bold;}
+	.l td {background-color:#FFFFFF; padding:3px 2px 3px 2px; text-align:center;}
+	table .l{text-align:left;}
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>적립금내역~!</title>

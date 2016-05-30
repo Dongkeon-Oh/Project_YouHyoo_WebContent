@@ -20,7 +20,7 @@ $(function(){
 	//클릭하면 예약내역상세 팝업
 	$(".ou_numBt").click(function(){
 		var ou_num=eval($(this).text());
-		window.open("OrderDetail.jsp?ou_num="+ou_num,+"예약내역상세","left=600,top=250,width=800,height=500");
+		window.open("M_OrderDetail.jsp?ou_num="+ou_num,+"예약내역상세","left=600,top=250,width=800,height=500");
 	});
 });	
 </script>
