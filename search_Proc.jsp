@@ -56,7 +56,7 @@ if(u_id==null){
        </tr>
        <tr>
         <td align=center>
-         <p>검색한 ID가 없습니다</p><br><br>
+         <p>검색한 정보가 없습니다</p><br><br>
         </td>
        </tr>
        <tr>
