@@ -43,6 +43,17 @@ img{
 #top_form{
 	margin: 0 auto;
 }
+.top_button{
+	background:rgba(255,255,255,0); 
+	border-color:rgba(255,255,255,0);
+	vertical-align:middle;
+}
+.top_form_div{
+	font-size:10px;
+	 display: inline;
+	 padding-left: 20;
+	 padding: 10px;
+}
 
 /*bottom.html*/
 #bottom_mainTab{

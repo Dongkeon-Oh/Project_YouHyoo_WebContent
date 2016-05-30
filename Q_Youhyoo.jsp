@@ -3,13 +3,18 @@
 <%
 response.setCharacterEncoding("utf-8");
 String u_id=request.getParameter("u_id");
+
+if(u_id==null){
+	u_id=(String)session.getAttribute("u_id");}
+if(session.getAttribute("u_id")!=null){
+
 %>
 <html>
 	<head>
 	</head>
 	
 	<body>
-	
+	<center><h2>일대일 상담</h2></center>
 	<form name="writeForm" method="post" action="Q_YouHyooProc.jsp">
 
 	<table width="500" cellspacing="0" cellpadding="5" align="center">
@@ -42,11 +47,23 @@ String u_id=request.getParameter("u_id");
 		<td colspan="2" align="center">
 			<input type="submit" value="글쓰기">
 			<input type="reset" value="다시쓰기">
+			<input type="hidden" name="state" value=<%=request.getParameter("state") %>>
 		</td>
 	</tr>
 	</table>
 	
 	</form>
-	
+	<%
+
+}else{
+	%>
+	<script>
+	alert("로그인 후 이용해 주세요.");
+	location.href="Login.jsp";
+	</script>
+	<%
+}
+
+	%>
 	</body>
 </html>

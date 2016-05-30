@@ -22,7 +22,7 @@ String u_id=(String)session.getAttribute("u_id");
 	   monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 	   monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
 	   dayNames: ['일','월','화','수','목','금','토'],
-	   dayNamesShort: ['일','월','화','수','목','금','토'],
+	   dayNamesShort: ['일','월','화','수','목','금','토'],	
 	   dayNamesMin: ['일','월','화','수','목','금','토'],
 	   weekHeader: 'Wk',
 	   dateFormat: 'yy-mm-dd',
@@ -35,34 +35,36 @@ String u_id=(String)session.getAttribute("u_id");
 	  $('#datepicker_top').datepicker({
 	      showOn: "button",
 	      buttonImage: "imgs/top/cal.png",
+	      
 	      buttonImageOnly: true,
 	      buttonText: "Select date"
 	    });
 	
- 
-  date_sql="";
-  member_sql="";
-  add_date="";
-  
-//내일날짜 셋팅하기
+
+	//변수 
+	add_date=""; //날짜+숙박일 = 최종숙박일
+	date_sql=""; //날짜 sql
+	option_sql=""; //최종 전송 sql
+	
+	//기본값 - 내일날짜 셋팅하기
 	 tomorrow = moment().add(1,'days').format("YYYY-MM-DD");
 	 $('#datepicker_top').attr('value',tomorrow);
   
-	//버튼클릭
+	//날짜search 검색
      $("#button").click(function() {
-	   sel=$("select[name=sel_top]").val();
+	   sel_date=$("select[name=sel_date]").val();
 	   
 	  //선택한 날짜 구하기
-	  switch (sel) {
+	  switch (sel_date) {
 		case "1": {
-			date_sql="'"+ $('#datepicker_top').val()+"') and ";
+			date_sql="'"+ $('#datepicker_top').val()+"')";
 			break;
 		}
 		case "2": {
 			date_sql="'"+ $('#datepicke_topr').val()+"'or ";
 			add_date=moment(moment($('#datepicker_top').val())).add(1,'days').format("YYYY-MM-DD");
-			date_sql=date_sql+"'"+add_date+"') and ";			
-  break;
+			date_sql=date_sql+"'"+add_date+"')";			
+  			break;
 		}
 		case "3": {
 			date_sql="'"+$('#datepicker_top').val()+"'";
@@ -70,7 +72,7 @@ String u_id=(String)session.getAttribute("u_id");
 			add_date=moment($('#datepicker_top').val()).add(i,'days').format("YYYY-MM-DD");
 			date_sql=date_sql+"or'"+add_date+"'";
 			}
-			date_sql=date_sql+") and ";
+			date_sql=date_sql+")";
 			break;
 		}
 		case "4": {
@@ -79,9 +81,8 @@ String u_id=(String)session.getAttribute("u_id");
 			add_date=moment($('#datepicker_top').val()).add(i,'days').format("YYYY-MM-DD");
 			date_sql=date_sql+"or'"+add_date+"'";
 			}
-			date_sql=date_sql+") and ";
+			date_sql=date_sql+")";
 			break;
-
 		}
 		case "5": {
 			date_sql="'"+$('#datepicker_top').val()+"'";
@@ -89,7 +90,7 @@ String u_id=(String)session.getAttribute("u_id");
 			add_date=moment($('#datepicker_top').val()).add(i,'days').format("YYYY-MM-DD");
 			date_sql=date_sql+"or'"+add_date+"'";
 			}
-			date_sql=date_sql+") and ";
+			date_sql=date_sql+")";
 			break;
 
 		}
@@ -99,18 +100,16 @@ String u_id=(String)session.getAttribute("u_id");
 			add_date=moment($('#datepicker_top').val()).add(i,'days').format("YYYY-MM-DD");
 			date_sql=date_sql+"or'"+add_date+"'";
 			}
-			date_sql=date_sql+") and ";
+			date_sql=date_sql+")";
 			break;
 		}
 		}//switch
 		
-		//인원수
-		member_sql=date_sql+"ra_pnum=any(select r_pension from room where r_maxcapa>="+$('#member_top').val()+"))";
-		 
-		 $("#msql_top").attr("value",member_sql);
-	     $("#date_top").attr("value",date_sql);
+	     $("#date_sql_top").attr("value",date_sql);
 	     document.top_form.submit();
-     });	
+     	});	
+     
+     //통합검색search
      $("#button_sel").click(function() {
     	document.top_form2.submit();
     	 
@@ -143,9 +142,9 @@ String u_id=(String)session.getAttribute("u_id");
 		<%
 	    	}
 	    %>
-	<a class="top_menu" href="http://www.google.com">업소 관리</a>
+	<a class="top_menu" href="Management.jsp">업소 관리</a>
 	<font color="#FFFFFF"> | </font>
-	<a class="top_menu" href="http://www.google.com">일대일 상담</a>
+	<a class="top_menu" href="Q_Youhyoo.jsp?state=top">일대일 상담</a>
 </div>
 <center>
 	<table>
@@ -164,10 +163,11 @@ String u_id=(String)session.getAttribute("u_id");
 		</tr>
 		<tr>
 			<td id="top_option">
+			<div class="top_form_div" style="float: left;">
 				<form name="top_form" id="top_form" method=post action="S_OneShot.jsp">
 					<font size="2">실시간 빈방 검색</font>
-					<input type="text" name="datepicker_top" class="datepicker" id="datepicker_top" size="15">
-					<select name="sel_top" id="sel_top" size="1"> 
+					<input type="text" name="datepicker_top" class="datepicker" id="datepicker_top" size="13">&nbsp;
+					<select name="sel_date" id="sel_date" size="1"> 
 				        <option value="1">1박 2일</option> 
 				        <option value="2">2박 3일</option> 
 				        <option value="3">3박 4일</option> 
@@ -176,17 +176,23 @@ String u_id=(String)session.getAttribute("u_id");
 				        <option value="6">6박 7일</option>
 				    </select>
 					<input type="text" name="member_top" id="member_top" size="1" value=2><font size="2">명</font>
-					<button id="button"><img src="imgs/top/search.PNG"></button>
-					<input type="hidden" name="msql_top" id="msql_top" value="">
-				    <input type="hidden" name="date_top" id="date_top">
-				    </form>
-
-					<form name="top_form2" id="top_form2" method=post action="Top_Searchproc.jsp">
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button id="button" class="top_button">
+						<img src="imgs/top/search.PNG" width=60>
+					</button>
+					<input type="hidden" name="state" id="state" value=top>
+				    <input type="hidden" name="date_sql_top" id="date_sql_top">
+				</form>
+			</div>
+					
+			<div class="top_form_div" style="float:right;">
+				<form name="top_form2" id="top_form2" method=post action="Top_Searchproc.jsp" >
 					<font size="2">통합 검색</font>
-					<input type="text" name="totalSearch" id="totalSearch" size="15">
-					<button name="button_sel" id="button_sel"><img src="imgs/top/search.PNG"></button>
-					</form>
+					<input type="text" name="totalSearch" id="totalSearch" size="13">
+					<button name="button_sel" id="button_sel" class="top_button">
+						<img src="imgs/top/search.PNG" width=60>
+					</button>
+				</form>
+			</div>
 			</td>
 		</tr>
 	</table>

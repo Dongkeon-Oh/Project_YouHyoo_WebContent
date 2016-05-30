@@ -13,7 +13,12 @@ request.setCharacterEncoding("utf-8");
 <%
 PensionDao dao=PensionDao.getInstance();
 dao.Q_ToYouHyoo(dto);
+System.out.println(request.getParameter("state")+"asdf");
+if(request.getParameter("state").equals("top")){
+	response.sendRedirect("MyPage.jsp");
+}else{
 %>
 <script>
 window.close();
 </script>
+<%} %>

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="youhyoo.*" import="java.util.*"%>
 
-<%response.setCharacterEncoding("utf-8"); %>
+<%request.setCharacterEncoding("utf-8"); %>
 <html>
 <head>
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -10,9 +10,12 @@
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <link href="TopBottom.css" type="text/css" rel="stylesheet">
 <style type="text/css">
+
 .tableshot {
 	width: 1000px;
 	margin: auto;
+	margin-top:20px;
+	margin-bottom: 20px;
 	text-align: center;
 	border-collapse: collapse;
 	border-color: #BDBDBD;
@@ -41,11 +44,10 @@
 	width: 150;
 }
 </style>
-
 <script type="text/javascript">
 
- //날짜 한글처리
  $(function() {
+	 //날짜 한글처리
 	 $.datepicker.regional['ko'] = {
 			   closeText: '닫기',
 			   prevText: '이전',
@@ -71,34 +73,33 @@
 			      buttonText: "Select date"
 			    });
 			  
- 	 //변수
- 		 
- 	date_sql=""; //날짜 서브쿼리
- 	subSql=""; //지역 서브쿼리
- 	tempArea=""; //선택 된 지역라디오버튼 담을변수
- 	member_sql=""; //인원수 서브쿼리
- 	select_sql=""; //최종 전송
+ 	//변수 
+ 	tempArea=""; //선택 된 지역라디오버튼
+ 	add_date=""; //날짜+숙박일 = 최종숙박일
+ 	date_sql=""; //날짜 sql
+ 	areaSql=""; //지역 sql
+ 	option_sql=""; //최종 전송 sql
+ 	
   
-	 //내일날짜 셋팅하기
+	 //기본값 - 내일날짜 셋팅하기
 	 tomorrow = moment().add(1,'days').format("YYYY-MM-DD");
 	 $('#datepicker').attr('value',tomorrow);
 	 
 	 //옵션 체크
-      $("#bu").click(function() {
+      $("#bu").click(function() { //검색버튼 누르
 
-    	   sel=$("select[name=sel]").val();
-    	   add_date="";
-    	   
+    	  sel_date=$("select[name=sel_date]").val(); //selectbox - 숙박일
+    	    	   
 		  //선택한 날짜 구하기
-    	  switch (sel) {
-			case "1": {
-				date_sql="'"+ $('#datepicker').val()+"') and ";
+    	  switch (sel_date) {
+			case "1": { //1박2일
+				date_sql="'"+ $('#datepicker').val()+"')";
 				break;
 			}
-			case "2": {
+			case "2": { //2박3일
 				date_sql="'"+ $('#datepicker').val()+"'or ";
 				add_date=moment(moment($('#datepicker').val())).add(1,'days').format("YYYY-MM-DD");
-				date_sql=date_sql+"'"+add_date+"') and ";
+				date_sql=date_sql+"'"+add_date+"')";
 				break;
 			}
 			case "3": {
@@ -107,7 +108,7 @@
 				add_date=moment($('#datepicker').val()).add(i,'days').format("YYYY-MM-DD");
 				date_sql=date_sql+"or'"+add_date+"'";
 				}
-				date_sql=date_sql+") and ";
+				date_sql=date_sql+")";
 				break;
 
 			}
@@ -117,7 +118,7 @@
 				add_date=moment($('#datepicker').val()).add(i,'days').format("YYYY-MM-DD");
 				date_sql=date_sql+"or'"+add_date+"'";
 				}
-				date_sql=date_sql+") and ";
+				date_sql=date_sql+")";
 				break;
 
 			}
@@ -127,7 +128,7 @@
 				add_date=moment($('#datepicker').val()).add(i,'days').format("YYYY-MM-DD");
 				date_sql=date_sql+"or'"+add_date+"'";
 				}
-				date_sql=date_sql+") and ";
+				date_sql=date_sql+")";
 				break;
 
 			}
@@ -137,68 +138,49 @@
 				add_date=moment($('#datepicker').val()).add(i,'days').format("YYYY-MM-DD");
 				date_sql=date_sql+"or'"+add_date+"'";
 				}
-				date_sql=date_sql+") and ";
+				date_sql=date_sql+")";
 				break;
 			}
 			}//switch
 			
-			//인원수
-			member_sql="ra_pnum=any(select r_pension from room where r_maxcapa>="+$('#member').val()+")";
-			select_sql=date_sql+member_sql;
-			
+
     	 //지역  	  
     	 tempArea=$("input:radio[name='Area']:checked").val();
-    	        if(tempArea=="allArea"){
-    	        	subSql="select p_num from pension"
-    	        }else{
-    	        	subSql="select p_num from pension where p_addr2="+"'"+tempArea+"'";
+    	        if(tempArea!="allArea"){
+    	        	areaSql=" and p_addr2="+"'"+tempArea+"'";
     	        }//if
   
     	        
     	//check->DB 값이 0 or 1
         $("input[name='check']:checked").each(function(){
     	var checkboxValues=$(this).val()
-    	select_sql=select_sql+checkboxValues+"=1 and ";
+    	option_sql=option_sql+" and "+checkboxValues+"=1 ";
     		});
+    	
     	//check2 -> DB 값이 varchar
         $("input[name='check2']:checked").each(function(){
         	var checkboxValues=$(this).val();
-        	select_sql=select_sql+checkboxValues+" is not null and ";
+        	option_sql=option_sql+" and "+checkboxValues+" is not null ";
         		});  
 
-        select_sql=select_sql+" and ra_pnum=any("+subSql+"))";
+        option_sql=option_sql+areaSql;
+        
  
-        $("#msql").attr("value",select_sql);
-        console.log($("#msql").val());
-        $("#date").attr("value",date_sql);
+        $("#option_sql").attr("value",option_sql);
+        $("#date_sql").attr("value",date_sql);
+        
         $("input[name='check']:checked").attr("checked","");
-           
+        
+        document.searchForm.state.value="oneshot";
         document.searchForm.submit();
    	 	});
  });
-/*
-select p_num,p_name,p_addr1,p_addr2 from pension
-where p_num=any(select distinct ra_pnum from
-detail_Around inner join detail_Facility
-on ra_pnum=rf_pnum inner join detail_Support
-on ra_pnum=rs_pnum inner join detail_Structure
-on ra_pnum=rr_pnum where
-ra_valley=1 and ra_pnum=any(select p_num from pension where p_addr2='가평군'))
 
-//sql = ra_valley=1 and ra_pnum=any(select p_num from pension where p_addr2='가평군'))
-
- select p_num,p_name,p_addr1,p_addr2 from pension
- where p_num=any(select distinct ra_pnum from
- detail_Around inner join detail_Facility
- on ra_pnum=rf_pnum inner join detail_Support
- on ra_pnum=rs_pnum inner join detail_Structure
- on ra_pnum=rr_pnum where ra_sea is not null)
-*/
  </script>
 </head>
 <body>
 	<%@ include file="Top.jsp"%>
-	<p>
+
 	<form name="searchForm" method="get">
 		<table border="1" class="tableshot">
 			<tr>
@@ -265,9 +247,9 @@ ra_valley=1 and ra_pnum=any(select p_num from pension where p_addr2='가평군')
 			</tr>
 			<tr>
 				<th colspan=2 height="40px">이용기준</th>
-				<th>이용일 <input type="text" name="quickDate" class="datepicker" id="datepicker" value="" >부터 
+				<th>이용일 <input type="text" name="quickDate" class="datepicker" id="datepicker" value="" size=13>부터 
 				
-				<select name="sel" id="sel">
+				<select name="sel_date" id="sel_date">
 						<option value="1">1박 2일</option>
 						<option value="2">2박 3일</option>
 						<option value="3">3박 4일</option>
@@ -281,38 +263,42 @@ ra_valley=1 and ra_pnum=any(select p_num from pension where p_addr2='가평군')
 				</th>
 			</tr>
 		</table>
-		<p>
+
 		<table class="tableshot">
 			<tr>
 				<th align=center style="background-color: white;">
 				<input type="button" value=검색하기 name=bu id=bu> 
-				<input type="hidden" name="msql" id="msql">
-				<input type="hidden" name="date" id="date"></th>
+				<input type="hidden" name="state" id="state">
+				<input type="hidden" name="option_sql" id="option_sql">
+				<input type="hidden" name="date_sql" id="date_sql"></th>
 			</tr>
 		</table>
-		<p>
+
 	</form>
 	<%
-	String sql="";
-	String date="";
-	int member=0;
-	if(request.getParameter("msql")!=null){
-    	sql=request.getParameter("msql");
-		date=request.getParameter("date");
-		if(request.getParameter("member")!=null){
-		member=Integer.parseInt(request.getParameter("member"));
-		}
-	}else{
-		sql=request.getParameter("msql_top");
-		date=request.getParameter("date_top");
-		if(request.getParameter("member_top")!=null){
-		member=Integer.parseInt(request.getParameter("member_top"));
-		}
-	}
+	String option_sql=""; //라디오,체크박스 검색결과
+	String date_sql=""; //숙박일 검색결과
+	int member_sql=0; //인원수 검색결과
+	
+	
+  if(request.getParameter("state")!=null){ //리스트
+	  System.out.println(request.getParameter("state")+"123");
+		//맞춤검색일때
+		if(request.getParameter("state").equals("oneshot")){
+	    	option_sql=request.getParameter("option_sql");
+			date_sql=request.getParameter("date_sql");
+			
 
-  if(sql!=null){
+			if(request.getParameter("member")!=null){
+			member_sql=Integer.parseInt(request.getParameter("member"));
+			}
+		}else{//top 검색일떄
+			date_sql=request.getParameter("date_sql_top");
+			if(request.getParameter("member_top")!=null){
+			member_sql=Integer.parseInt(request.getParameter("member_top"));
+			}
+		}
 	  %>
-
 	<table border=1 style="text-align: left;" class="tableshot">
 		<tr style="text-align: center;">
 			<th colspan="2">업소</th>
@@ -326,17 +312,13 @@ ra_valley=1 and ra_pnum=any(select p_num from pension where p_addr2='가평군')
 		<%
 		One_shotDao you=new One_shotDao();
 		  
-		List p_list=you.get_P_List(sql);
-		  
-				if (p_list.size() > 0) {
+		List p_list=you.get_P_List(date_sql,member_sql,option_sql); //팬션리스트		 
+				if (p_list.size() > 0) { //검색리스트가 있으면
 					for (int i = 0; i < p_list.size(); i++) {						
 						Pension_Dto p_dto = new Pension_Dto();
-						p_dto = (Pension_Dto) p_list.get(i);
-						System.out.println("sq;:"+p_list.size()+"qq");
-	
+						p_dto = (Pension_Dto) p_list.get(i); 
 						
-						
-						List r_list = you.get_R_List(p_dto.getP_num(),member,date);
+						List r_list = you.get_R_List(p_dto.getP_num(),member_sql,date_sql);//룸리스트
 						int r_size = r_list.size();
 		%>
 		<tr>
