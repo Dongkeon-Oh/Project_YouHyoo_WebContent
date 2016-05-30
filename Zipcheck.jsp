@@ -37,12 +37,11 @@ int totalList=vec.size(); //동을 검색하는 레코드 수
  <body>
  <div align=center><img src="imgs/top/youhyoo.PNG" width=200>
   <form method=post name=zipForm action=Zipcheck.jsp>
-  
    <table>
     <tr>
      <td><br>
-         동 입력 <input type=text name=z_addr3>
-      <input type=button value=검색 onclick="dongCk()">
+         동 입력 <input type=text name=z_addr3 style="font-size:12pt; padding:5px 5px 5px 5px; margin-top:5">
+      <input type=button value=검색 style="font-size:12pt; padding:5px 5px 5px 5px; margin-top:5" onclick="dongCk()">
       <input type=hidden name=check value=n>
      </td>
     </tr>

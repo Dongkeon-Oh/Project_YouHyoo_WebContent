@@ -10,6 +10,8 @@ request.getParameter("u_type");
 <jsp:useBean id="dto" class="youhyoo.User_Dto">
  <jsp:setProperty name="dto" property="*"/>
 </jsp:useBean>
+<html>
+<body>
 <%
 String c=request.getParameter("u_cell1");
 c=c+request.getParameter("u_cell2");
@@ -17,5 +19,10 @@ c=c+request.getParameter("u_cell3");
 dto.setU_cell(c);
 User_Dao dao=User_Dao.getInstance(); //dao객체 얻기 
 dao.insertMember(dto); //메소드 호출
-response.sendRedirect("Login.jsp");
 %>
+<script>
+alert("환영합니다! 가입이 되었습니다!");
+location.href='Login.jsp';
+</script>
+</body>
+</html>

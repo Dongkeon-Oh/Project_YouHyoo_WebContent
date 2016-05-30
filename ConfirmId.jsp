@@ -36,8 +36,8 @@ int check=dao.confirmId(u_id);
 	   <tr>
 	    <td align=center>
 	        <p>다른아이디를 입력하세요</p>
-	     <input type=text name=u_id size=12>
-	     <input type=submit value="ID중복확인">
+	     <input type=text name=u_id style="font-size:12pt; padding:5px 5px 5px 5px; margin-bottom: 5">
+	     <input type=submit style="font-size:12pt; padding:5px 5px 5px 5px; margin-top: 5" value="ID중복확인">
 	    </td>
 	   </tr>
 	  </table>
@@ -50,7 +50,7 @@ int check=dao.confirmId(u_id);
 	   <td align=center>
 	    <p>
 	    <%=u_id%>는 사용가능한 ID입니다</p>
-	    <input type=button value=닫기 onclick="setId()">
+	    <input type=button value=닫기 style="font-size:12pt; padding:5px 5px 5px 5px; margin-top:5" onclick="setId()">
 	   </td>
 	  </tr>
 	 </table>

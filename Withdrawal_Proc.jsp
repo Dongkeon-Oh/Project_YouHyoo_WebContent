@@ -13,7 +13,7 @@ if(check==1){
 	session.invalidate();
 	%>
 	<script>
-	alert("탈퇴처리 되었습니다. 안녕히가세요");
+	alert("탈퇴처리가 완료 되었습니다. 안녕히 가세요");
 	location.href='Index.jsp';
 	</script>
 	<%
