@@ -81,14 +81,14 @@
  	option_sql=""; //최종 전송 sql
  	
   
-	 //기본값 - 내일날짜 셋팅하기
-	 tomorrow = moment().add(1,'days').format("YYYY-MM-DD");
-	 $('#datepicker').attr('value',tomorrow);
+	 //기본값 - 오늘날짜
+	 today = moment().format("YYYY-MM-DD");
+	 $('#datepicker').attr('value',today);
 	 
 	 //옵션 체크
       $("#bu").click(function() { //검색버튼 누르
 
-    	  sel_date=$("select[name=sel_date]").val(); //selectbox - 숙박일
+    	  sel_date=$("select[name=sel]").val(); //selectbox - 숙박일
     	    	   
 		  //선택한 날짜 구하기
     	  switch (sel_date) {
@@ -249,7 +249,7 @@
 				<th colspan=2 height="40px">이용기준</th>
 				<th>이용일 <input type="text" name="quickDate" class="datepicker" id="datepicker" value="" size=13>부터 
 				
-				<select name="sel_date" id="sel_date">
+				<select name="sel" id="sel">
 						<option value="1">1박 2일</option>
 						<option value="2">2박 3일</option>
 						<option value="3">3박 4일</option>
@@ -282,7 +282,6 @@
 	
 	
   if(request.getParameter("state")!=null){ //리스트
-	  System.out.println(request.getParameter("state")+"123");
 		//맞춤검색일때
 		if(request.getParameter("state").equals("oneshot")){
 	    	option_sql=request.getParameter("option_sql");

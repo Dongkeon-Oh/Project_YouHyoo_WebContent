@@ -46,13 +46,13 @@ String u_id=(String)session.getAttribute("u_id");
 	date_sql=""; //날짜 sql
 	option_sql=""; //최종 전송 sql
 	
-	//기본값 - 내일날짜 셋팅하기
-	 tomorrow = moment().add(1,'days').format("YYYY-MM-DD");
-	 $('#datepicker_top').attr('value',tomorrow);
+	//기본값 - 오늘날짜
+	 today = moment().format("YYYY-MM-DD");
+	 $('#datepicker_top').attr('value',today);
   
 	//날짜search 검색
      $("#button").click(function() {
-	   sel_date=$("select[name=sel_date]").val();
+	   sel_date=$("select[name=sel]").val();
 	   
 	  //선택한 날짜 구하기
 	  switch (sel_date) {
@@ -167,7 +167,7 @@ String u_id=(String)session.getAttribute("u_id");
 				<form name="top_form" id="top_form" method=post action="S_OneShot.jsp">
 					<font size="2">실시간 빈방 검색</font>
 					<input type="text" name="datepicker_top" class="datepicker" id="datepicker_top" size="13">&nbsp;
-					<select name="sel_date" id="sel_date" size="1"> 
+					<select name="sel" id="sel" size="1"> 
 				        <option value="1">1박 2일</option> 
 				        <option value="2">2박 3일</option> 
 				        <option value="3">3박 4일</option> 

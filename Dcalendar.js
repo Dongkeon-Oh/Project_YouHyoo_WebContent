@@ -19,6 +19,8 @@ function today(){
 	$("#sMonth").text(nMonth);
 	$("#sDate").text(nDate);
 	$("#sYoil").text(day);
+	
+	console.log($("#sYear").val());
 }//today() end
 
 // 텍스트박스에 날짜 넣기 위해 만든 함수
@@ -35,7 +37,6 @@ function datePicker(tYear,tMonth,tDay,tYoil){
 	$("#sDate").text(sDate);
 	$("#sYoil").text(sYoil);
 		
-	return aa;
 }//datePicker()end
 
 //달력 함수
@@ -75,6 +76,7 @@ function calendar(tYear, tMonth) {
 
 	calendarStr = "<TABLE class='kCal'>"
 	calendarStr += "<TR align=center><TD valign=middle>"
+		console.log(tMonth);
 	calendarStr += "<a href=javascript:calendar(" + tYear + ","+ (tMonth - 1) + ") class=preNext>◀</a>" //월을 넘길때 빼기 -1을 해서 넘긴다(년도는 자동 계산됨)  
 	calendarStr += "</TD><TD colspan=5 >"
 	calendarStr += "<font size=3 color=black>  <b>" + eDate.getFullYear()+ "년 " + (eDate.getMonth() + 1) + "월</b></font> "// 해당하는 년도와 월 표시  
