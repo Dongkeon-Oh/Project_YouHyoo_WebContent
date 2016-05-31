@@ -105,8 +105,11 @@ html ul.tabs li.active, html ul.tabs li.active lable:hover {
 			//초기상태지정
 			$("input:radio[value='photo_0']").attr("checked","checked");
 			$("#insertimg_room").attr("src",$(".photo_0").attr("src"));
-			$(".photo_1").parent().hide();
-			$(".photo_0").parent().show();
+			
+			for(var i=1;i<=$("input:radio[name='r_radio']").size()-1;i++){
+				$(".photo_"+i).hide();
+			}
+			$(".photo_0").show();
 			
 			$(".photo_0").mouseover(function(){
 				$("#insertimg_room").attr("src",$(this).attr("src"));
@@ -119,7 +122,7 @@ html ul.tabs li.active, html ul.tabs li.active lable:hover {
 			
 			//해당 룸사진 show 보여주기
 			$("."+$(this).val()).each(function(index,item){
-				$(item).parent().show();
+				$(item).show();
 			
 				//mouseover
 				$(item).mouseover(function(){
@@ -129,7 +132,7 @@ html ul.tabs li.active, html ul.tabs li.active lable:hover {
 			});
 			//해당하지 않는 룸 사진 hide 숨기기
 			$("input:radio[name='r_radio']:not(:checked)").each(function(index,item){
-				$("."+$(this).val()).parent().hide();
+				$("."+$(this).val()).hide();
 			});
 		});
 	});
@@ -201,6 +204,7 @@ html ul.tabs li.active, html ul.tabs li.active lable:hover {
 							<table>
 								<tr>
 								<td rowspan=2><img src="" id="insertimg_room"></td>
+								<td valign="top" rowspan=2>
 							<%
 								List list2 = dao.get_room_photo(num);
 								for (int i = 0; i < list2.size(); i++) {
@@ -213,18 +217,14 @@ html ul.tabs li.active, html ul.tabs li.active lable:hover {
 										j++;
 							%>
 							
-							<td valign="top" rowspan=2><img src="imgs/pension/<%=num%>/room/<%=st.nextToken()%>" class="photo_<%=i%>" width=100></td>
+							<img src="imgs/pension/<%=num%>/room/<%=st.nextToken()%>" class="photo_<%=i%>" width=100>
 							
 							<% 
-							if(j%2==0){//줄바꿈 위치
-								%>
-								</tr>
-								<tr>
-								<%
-									}//if
+							
 								}//while
 							}//for
 						%>
+						</td>
 						</tr>
 					</table>
 		

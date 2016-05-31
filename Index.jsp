@@ -18,7 +18,7 @@ for(int i=0; i<pensionList.size(); i++){
 }
 
 List<Room_Dto> roomList=indexMgr.getIndexRoomList(pensionNumber);
-%>   
+%>
 
 <html>
 	<head>
