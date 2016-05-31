@@ -49,7 +49,6 @@
 		var u_id=$("#u_id").val();
 		var sDate=$("#sDate").val();
 		var eDate=$("#eDate").val();
-		
 		//나의 주문내역 요청
 		$.ajax({
 			type : 'POST',
