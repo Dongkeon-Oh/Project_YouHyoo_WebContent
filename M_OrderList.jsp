@@ -52,7 +52,7 @@ $(function(){
 			<tr id="Ordertr">
 				<td><span class="ou_numBt"><%=ou.getOu_num() %></span></td>
 				<td><%=ou.getOu_date() %></td>
-				<td class="pname"><%=o.getO_pname() %></td>
+				<td class="pname"><a href="DetailView.jsp?p_num=<%=o.getO_pnum() %>"><%=o.getO_pname() %></a></td>
 				<td><%=ou.getOu_customer() %>(<%=ou.getOu_cell() %>)</td>
 				<td>결제완료</td>		
 				<td>
